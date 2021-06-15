@@ -1,0 +1,1341 @@
+<template>
+            <main class="main">
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Escritorio</a></li>
+            </ol>
+            <div class="container-fluid">
+                <!-- Ejemplo de tabla Listado -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Visita Linea Base
+                        <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
+                            <i class="icon-plus"></i>&nbsp;Nuevo
+                        </button>
+                      
+                    </div>
+                    <!-- Listado-->
+                    <template v-if="listado==1">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select class="form-control col-md-3" v-model="criterio">
+                                      <option value="personas">Nombre</option>
+                                      <option value="fechaVenta">Fecha-Hora</option>
+                                      <option value="totalKilos">Peso total</option>
+                                    </select>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarProductor(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarProductor(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Opciones</th>
+                                        <th>Productor</th>
+                                        <th>Tipo documento</th>
+                                        <th>Numero documento</th>
+                                        <th>Fecha Nacimiento</th>
+                                        <th>Sexo</th>
+                                        <th>Grado escolaridad</th>
+                                        <th>Telefono</th>
+                                        <th>Correo electronico</th>
+                                        <th>Vereda</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="productor in arrayProductor" :key="productor.id">
+                                        <td>
+                                            <button type="button" @click="verVenta(productor.id)" class="btn btn-success btn-sm">
+                                            <i class="icon-eye"></i>
+                                            </button> &nbsp;
+                                        </td>
+                                        <td v-text="productor.nombre"></td>
+                                        <td v-text="arrayTipoId[productor.tipo_id-1].nombre"></td>
+                                        <td v-text="productor.num_documento"></td>
+                                        <td v-text="productor.fechaNacimiento"></td>
+                                        <td v-text="productor.nombre_sexo"></td>
+                                        <td v-text="productor.nombre_escolaridad"></td>
+                                        <td v-text="productor.telefono"></td>
+                                        <td v-text="productor.email"></td>
+                                        <td v-text="productor.nombre_vereda"></td>
+                                    </tr>                                
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                                </li>
+                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    </template>
+                    <!--Fin Listado-->
+                    <!-- Detalle-->
+                    <template v-else-if="listado==0">
+                    <div class="card-body">
+                        <div class="form-group row">
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Productor</label>
+                                      <select class="form-control" v-model="productor_id" @click="selectFinca(productor_id)" @change="selectFinca(productor_id)">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="productor in arrayProductor2" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
+                                      </select>  
+                                </div>
+                                </div>
+                            <div class="col-md-3">
+                                 <div class="form-group">
+                                    <label for="">Finca</label>
+                                      <select class="form-control" v-model="finca_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="finca in arrayFinca" :key="finca.id" :value="finca.id" v-text="finca.nombre" ></option>
+                                      </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Area Produccion(Hectareas)</label>
+                                      <input type="number" v-model="num_documento"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Siembra Nueva(Hectareas)</label>
+                                       <input type="number" v-model="siembra"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Edad del cultivo</label>
+                                       <input type="number" v-model="edad"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Numero de arboles sembrados</label>
+                                       <input type="number" v-model="numeroArboles"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Produccion Mensual(Kg)</label>
+                                       <input type="number" v-model="produccion"  class="form-control" placeholder="">
+                                </div>
+                            </div>                          
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">A quien vende(*)</label>
+                                    <v-select
+                                        :on-search="selectLugarVenta"
+                                        label="nombre"
+                                        :options="arrayLugarVenta"
+                                        placeholder="Buscar..."
+                                        :onChange="getDatosLugarVenta"                                        
+                                    >
+                                    </v-select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Vendido Fresco(Kg)</label>
+                                       <input type="number" v-model="vendidoFresco"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Por vender Fresco(Kg)</label>
+                                       <input type="number" v-model="VenderFresco"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Vendido Seco(Kg)</label>
+                                       <input type="number" v-model="VendidoSeco"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Por vender Seco(Kg)</label>
+                                       <input type="number" v-model="VenderSeco"  class="form-control" placeholder="">
+                                </div>
+                            </div>                          
+                        </div>
+
+                         <div class="form-group">
+                            <div class="table-responsive col-md-12">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Compromiso</th>
+                                            <th>Porcentaje Ejecucion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP1"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP1"  class="form-control" placeholder="">
+                                            </td>   
+                                        </tr>
+                                    </tbody>  
+                                     <tbody>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP2"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP2"  class="form-control" placeholder="">
+                                            </td>
+                                        </tr>
+                                    </tbody> 
+                                    <tbody>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP3"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP3"  class="form-control" placeholder="">
+                                            </td> 
+                                        </tr>
+                                    </tbody> 
+                                    <tbody>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP4"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP4"  class="form-control" placeholder="">
+                                            </td>
+                                        </tr>
+                                    </tbody>   
+                                    <tbody>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP5"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP5"  class="form-control" placeholder="">
+                                            </td>
+                                        </tr>
+                                    </tbody>                             
+                                </table>
+                            </div>
+                        </div> 
+                        <div class="form-group row">
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Objetivos</label>
+                                       <input type="text" v-model="objetivos"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Estado actual finca</label>
+                                       <input type="text" v-model="estadoFinca"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Recomendaciones tecnico ambientales</label>
+                                       <input type="text" v-model="recomendaciones"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Observaciones</label>
+                                       <input type="text" v-model="observaciones"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                                <button type="button" class="btn btn-primary" @click="registrarProductor()">Registrar</button>
+                            </div>
+                        </div>
+                    </div>
+                    </template>
+                    <!-- Fin Detalle-->
+                    <!-- Ver ingreso -->
+                    <template v-else-if="listado==2">
+                    <div class="card-body">
+                        <div class="form-group row border">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Productor</label>
+                                    <p v-text="productor"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Lugar de Venta</label>
+                                    <p v-text="lugarVenta"></p>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha</label>
+                                    <p v-text="fechaVenta"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row border">
+                            <div class="table-responsive col-md-12">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo Cacao</th>
+                                            <th>Peso(Kg)</th>
+                                            <th>Valor Unitario</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-if="arrayDetalle.length">
+                                        <tr v-for="detalle in arrayDetalle" :key="detalle.id">
+                                            <td v-text="detalle.nombre_categoria">
+                                            </td>
+                                            <td v-text="detalle.peso">
+                                            </td>
+                                            <td v-text="detalle.valorUnitario">
+                                            </td>
+                                            <td v-text="detalle.subtotal">
+                                            </td>
+                                        </tr>
+                                       <tr style="background-color: #CEECF5;">
+                                            <td colspan="3" align="right"><strong>Peso Total(Kg):</strong></td>
+                                            <td v-text="totalKilos"></td>
+                                        </tr>
+                                         <tr style="background-color: #ff4d4d;">
+                                            <td colspan="3" align="right"><strong>Descuento por humedad:</strong></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr style="background-color: #CEECF5;">
+                                            <td colspan="3" align="right"><strong>Total Neto:</strong></td>
+                                            <td v-text="totalVenta"></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td colspan="4">
+                                                NO hay categorias agregadas
+                                            </td>
+                                        </tr>
+                                    </tbody>                                    
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </template>
+                    <!-- fin ver ingreso -->
+                </div>
+                <!-- Fin ejemplo de tabla Listado -->
+            </div>
+            <!--Inicio del modal agregar/actualizar-->
+            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="tituloModal"></h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select class="form-control col-md-3" v-model="criterioA">
+                                        <option value="nombre">Nombre</option>
+                                        <option value="valorUnitario">Valor Unitario</option>
+                                        </select>
+                                        <input type="text" v-model="buscarA" @keyup.enter="listarCategoria(buscarA,criterioA)" class="form-control" placeholder="Texto a buscar">
+                                        <button type="submit" @click="listarCategoria(buscarA,criterioA)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Opciones</th>
+                                            <th>Nombre</th>
+                                            <th>Valor Unitario</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="categoria in arrayCategoriaMoras" :key="categoria.id">
+                                            <td>
+                                                <button type="button" @click="agregarDetalleModal(categoria)" class="btn btn-success btn-sm">
+                                                <i class="icon-check"></i>
+                                                </button>
+                                            </td>
+                                            <td v-text="categoria.nombre"></td>
+                                            <td v-text="categoria.valorUnitario"></td>
+                                        </tr>                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                   
+                </div>   
+               
+            </div>
+            <!--Fin del modal-->
+        </main>
+</template>
+
+<script>
+    import vSelect from 'vue-select';
+    import Datepicker from 'vuejs-datepicker';
+    export default {
+        data (){
+            return {
+                persona_id:0, 
+                productor_id:0,
+                nombre:'',
+                tipo_id:0,
+                num_documento : '',
+                direccion : '',
+                telefono : '',
+                email : '',   
+                estadoCivil_id:0,
+                etnia_id:0,
+                sexo_id:0,
+                fechaNacimiento:'',
+                vereda_id:0,
+                vivienda_id:0,
+                tipovivienda_id:0,
+                escolaridad_id:0,
+                carnetSalud:0,
+                discapacitado:0,
+                personasAcargo:0,
+                desplazado:0,
+                asociacion_id:0,
+                programaEstado_id:0,
+                asistencia:0,
+                entidad:'',
+                capacitacion:0,
+                temas:'',
+                parentesco1:'',
+                NombreP1:'',
+                ccP1:0,
+                fechaNacimientoP1:'',
+                escolaridad_idP1:'',
+                parentesco2:'',
+                NombreP2:'',
+                ccP2:0,
+                fechaNacimientoP2:'',
+                escolaridad_idP2:'',
+                parentesco3:'',
+                NombreP3:'',
+                ccP3:0,
+                fechaNacimientoP3:'',
+                escolaridad_idP3:'',
+                parentesco4:'',
+                NombreP4:'',
+                ccP4:0,
+                fechaNacimientoP4:'',
+                escolaridad_idP4:'',
+                parentesco5:'',
+                NombreP5:'',
+                ccP5:0,
+                fechaNacimientoP5:'',
+                escolaridad_idP5:'',
+
+                arrayTipoId:[],
+                arrayEstadoCivil:[],
+                arrayEtnia:[],
+                arraySexo:[],
+                arrayProductor : [],
+                arrayProductor2 : [],
+                arrayFinca : [],
+                arrayVereda:[],
+                arrayParentesco:[],
+                arrayEscolaridad:[],
+                arrayLugarVenta: [],
+                arrayLinea:[],
+                arrayVivienda:[],
+                arrayTipoVivienda:[],
+                arrayOpcion:[],
+                arrayAsociacion:[],
+                arrayProgramaEstado:[],
+                
+                arrayDetalle : [],
+                listado:1,
+                modal : 0,
+                tituloModal : '',
+                tipoAccion : 0,
+                errorProductor : 0,
+                errorMostrarMsjProductor : [],
+                pagination : {
+                    'total' : 0,
+                    'current_page' : 0,
+                    'per_page' : 0,
+                    'last_page' : 0,
+                    'from' : 0,
+                    'to' : 0,
+                },
+                offset : 3,
+                criterio : 'personas',
+                buscar : '',
+                criterioA:'nombre',
+                buscarA: 'Cacao',
+                arrayCategoriaMoras: [],
+                categoria_id: 0,
+                categoria:'',
+                codigo:0,
+                peso:0,
+                valorUnitario: 0,
+                ValorDonacion: 0,
+                valorTransporte:0,
+                valorAsohof:0,
+                valorCuatroPorMil:0,
+                totalSinDescuento:0,
+                totalDonacion:0,
+                totalTransporte:0,
+                totalAsohof:0,
+                totalCuatroXmil:0,
+                subtotal:0,
+                estado:'',
+                fechaVenta:'',
+            }
+        },
+        components: {
+            vSelect
+        },
+        computed:{
+            isActived: function(){
+                return this.pagination.current_page;
+            },
+            //Calcula los elementos de la paginación
+            pagesNumber: function() {
+                if(!this.pagination.to) {
+                    return [];
+                }
+                
+                var from = this.pagination.current_page - this.offset; 
+                if(from < 1) {
+                    from = 1;
+                }
+
+                var to = from + (this.offset * 2); 
+                if(to >= this.pagination.last_page){
+                    to = this.pagination.last_page;
+                }  
+
+                var pagesArray = [];
+                while(from <= to) {
+                    pagesArray.push(from);
+                    from++;
+                }
+                return pagesArray;
+            },
+        },
+        methods : {
+            listarProductor (page,buscar,criterio){
+                this.selectTipoId();
+                let me=this;
+                var url= 'productor?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    me.arrayProductor = respuesta.personas.data;
+                    me.pagination= respuesta.pagination;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             selectTipoId(){
+                let me =this;
+                var url ='tipoId/selectTipoId';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayTipoId= respuesta.tipoIds;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             selectEstadoCivil(){
+                let me =this;
+                var url ='estadoCivil/selectEstadoCivil';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayEstadoCivil= respuesta.estadoCivil;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectEtnia(){
+                let me =this;
+                var url ='etnia/selectEtnia';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayEtnia= respuesta.etnias;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             selectSexo(){
+                let me =this;
+                var url ='sexo/selectSexo';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arraySexo= respuesta.sexos;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             selectParentesco(){
+                let me =this;
+                var url ='parentesco/selectParentesco';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayParentesco= respuesta.parentescos;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectProductor(){
+                let me =this;
+                var url ='productor/selectProductor';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayProductor2= respuesta.personas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+             selectFinca(id){
+                let me =this;
+                var url ='finca/selectFinca/'+id;
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayFinca= respuesta.fincas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+             selectLugarVenta(search,loading){
+                let me=this;
+                loading(true)
+
+                var url= 'lugarVenta/selectLugarVenta2?filtro='+search;
+                axios.get(url).then(function (response) {
+                    let respuesta = response.data;
+                    q: search
+                    me.arrayLugarVenta=respuesta.lugarVentas;
+                    loading(false)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             selectEscolaridad(){
+                let me =this;
+                var url ='escolaridad/selectEscolaridad';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayEscolaridad= respuesta.grados;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectVivienda(){
+                let me =this;
+                var url ='vivienda/selectVivienda';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayVivienda= respuesta.viviendas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectTipoVivienda(){
+                let me =this;
+                var url ='tipoVivienda/selectTipoVivienda';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayTipoVivienda= respuesta.tipoViviendas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectOpcion(){
+                let me =this;
+                var url ='opcion/selectOpcion';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayOpcion= respuesta.opciones;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             selectAsociacion(){
+                let me =this;
+                var url ='asociacion/selectAsociacion';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayAsociacion= respuesta.asociaciones;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectProgramaEstado(){
+                let me =this;
+                var url ='estado/selectProgramaEstado';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayProgramaEstado= respuesta.programasEstado;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            selectVereda(search,loading){
+                let me=this;
+                loading(true)
+
+                var url= 'vereda/selectVereda2?filtro='+search;
+                axios.get(url).then(function (response) {
+                    let respuesta = response.data;
+                    q: search
+                    me.arrayVereda=respuesta.veredas;
+                    loading(false)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getDatosVereda(val1){
+                let me = this;
+                me.loading = true;
+                me.vereda_id = val1.id;
+            },
+            selectLinea(search,loading){
+                let me=this;
+                loading(true)
+
+                var url= 'linea/selectLinea2?filtro='+search;
+                axios.get(url).then(function (response) {
+                    let respuesta = response.data;
+                    q: search
+                    me.arrayLinea=respuesta.lineas;
+                    loading(false)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getDatosLinea(val1){
+                let me = this;
+                me.loading = true;
+                me.linea_id = val1.id;
+            },
+            selectLugarVenta(search,loading){
+                let me=this;
+                loading(true)
+
+                var url= 'lugarVenta/selectLugarVenta2?filtro='+search;
+                axios.get(url).then(function (response) {
+                    let respuesta = response.data;
+                    q: search
+                    me.arrayLugarVenta=respuesta.lugarVentas;
+                    loading(false)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getDatosLugarVenta(val1){
+                let me = this;
+                me.loading = true;
+                me.lugarVenta_id = val1.id;
+            },
+            buscarCategoria(){
+                let me=this;
+                var url= 'categoriaMora/buscarCategoria?filtro=' + me.codigo;
+
+                axios.get(url).then(function (response) {
+                   var respuesta= response.data;
+                    me.arrayCategoriaMoras = respuesta.categoriaMoras;
+                   
+                    if (me.arrayCategoriaMoras.length>0){
+                        me.categoria=me.arrayCategoriaMoras[0]['nombre'];
+                        me.categoria_id=me.arrayCategoriaMoras[0]['id'];
+                        me.valorUnitario=me.arrayCategoriaMoras[0]['valorUnitario'];
+                        me.ValorDonacion=me.arrayCategoriaMoras[0]['ValorDonacion'];
+                        me.valorTransporte=me.arrayCategoriaMoras[0]['valorTransporte'];
+                        me.valorAsohof=me.arrayCategoriaMoras[0]['valorAsohof'];
+                        me.valorCuatroPorMil=me.arrayCategoriaMoras[0]['valorCuatroPorMil'];
+                    }
+                    else{
+                        me.categoria='No existe categoria';
+                        me.categoria_id=0;
+                        me.valorUnitario=0;
+                        me.ValorDonacion=0;
+                        me.valorTransporte=0;
+                        me.valorAsohof=0;
+                        me.valorCuatroPorMil=0;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            pdfVenta(id){
+                window.open('http://gestion.asofrut.org/venta/pdf/'+id);
+            },
+            cargarPdf(){
+                window.open('http://gestion.asofrut.org/venta/listarPdf');
+            },
+            reporteDiario(){
+                window.open('http://gestion.asofrut.org/venta/listarDiario');
+            },
+            cambiarPagina(page,buscar,criterio){
+                let me = this;
+                //Actualiza la página actual
+                me.pagination.current_page = page;
+                //Envia la petición para visualizar la data de esa página
+                me.listarProductor(page,buscar,criterio);
+            },
+            encuentra(id){
+                var sw=0;
+                for(var i=0;i<this.arrayDetalle.length;i++){
+                    if(this.arrayDetalle[i].categoria_id==id){
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            eliminarDetalle(index){
+                let me = this;
+                me.arrayDetalle.splice(index, 1);
+            },
+            agregarDetalle(){
+                let me=this;
+                if(me.categoria_id==0){
+                }
+                else{
+                    if(me.encuentra(me.categoria_id)){
+                        swal.fire({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Esta categoria ya se encuentra agregada!',
+                            })
+                    }
+                    else{
+                      
+                       me.arrayDetalle.push({
+                            categoria_id: me.categoria_id,
+                            categoria: me.categoria,
+                            peso: me.peso,
+                            valorUnitario:me.valorUnitario,
+                            subtotal:me.subtotal,
+                           
+                            });
+                        me.codigo="";
+                        me.categoria_id=0;
+                        me.categoria="";
+                        me.peso=0;
+                        me.valorUnitario=0;
+                        me.subtotal=0;
+                        
+                    }
+                    
+                }
+
+                
+
+            },
+            agregarDetalleModal(data =[]){
+                let me=this;
+                if(me.encuentra(data['id'])){
+                        swal.fire({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Esta categoria ya se encuentra agregada!',
+                            })
+                    }
+                    else{
+                       me.arrayDetalle.push({
+                            categoria_id: data['id'],
+                            categoria: data['nombre'],
+                            valorUnitario:data['valorUnitario'],
+                            subtotal:data['subtotal'],
+                            peso: 1,
+                        }); 
+                    }
+            },
+            listarCategoria (buscar,criterio){
+                let me=this;
+                var url= 'categoriaMora/listarCategoria?buscar='+ buscar + '&criterio='+ criterio;
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    me.arrayCategoriaMoras = respuesta.categoriaMoras.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            registrarProductor(){
+                if (this.validarProductor()){
+                    return;
+                }
+                
+                let me = this;
+                axios.post('productor/registrar',{
+                    'nombre':this.nombre,
+                    'tipo_id':this.tipo_id,
+                    'num_documento' :this.num_documento,
+                    'direccion' :this.telefono,
+                    'telefono' :this.telefono,
+                    'email' :this.email,   
+                    'estadoCivil_id':this.estadoCivil_id,
+                    'etnia_id':this.etnia_id,
+                    'sexo_id':this.sexo_id,
+                    'fechaNacimiento':this.fechaNacimiento,
+                    'vereda_id':this.vereda_id,
+                    'vivienda_id':this.vivienda_id,
+                    'tipovivienda_id':this.tipovivienda_id,
+                    'escolaridad_id':this.escolaridad_id,
+                    'carnetSalud':this.carnetSalud,
+                    'discapacitado':this.discapacitado,
+                    'personasAcargo':this.personasAcargo,
+                    'desplazado':this.desplazado,
+                    'asociacion_id':this.asociacion_id,
+                    'programaEstado_id':this.programaEstado_id,
+                    'asistencia':this.asistencia,
+                    'entidad':this.entidad,
+                    'capacitacion':this.capacitacion,
+                    'temas':this.temas,
+                    'parentesco1':this.parentesco1,
+                    'NombreP1':this.NombreP1,
+                    'ccP1':this.ccP1,
+                    'fechaNacimientoP1':this.fechaNacimientoP1,
+                    'escolaridad_idP1':this.escolaridad_idP1,
+                    'parentesco2':this.parentesco2,
+                    'NombreP2':this.NombreP2,
+                    'ccP2':this.ccP2,
+                    'fechaNacimientoP2':this.fechaNacimientoP2,
+                    'escolaridad_idP2':this.escolaridad_idP2,
+                    'parentesco3':this.parentesco3,
+                    'NombreP3':this.NombreP3,
+                    'ccP3':this.ccP3,
+                    'fechaNacimientoP3':this.fechaNacimientoP3,
+                    'escolaridad_idP3':this.escolaridad_idP3,
+                    'parentesco4':this.parentesco4,
+                    'NombreP4':this.NombreP4,
+                    'ccP4':this.ccP4,
+                    'fechaNacimientoP4':this.fechaNacimientoP4,
+                    'escolaridad_idP4':this.escolaridad_idP4,
+                    'parentesco5':this.parentesco5,
+                    'NombreP5':this.NombreP5,
+                    'ccP5':this.ccP5,
+                    'fechaNacimientoP5':this.fechaNacimientoP5,
+                    'escolaridad_idP5':this.escolaridad_idP5
+                }).then(function (response) {
+                    me.listado=1;
+                    me.listarProductor(1,'','personas');
+                    me.nombre='';
+                    me.tipo_id=0;
+                    me.num_documento=0;
+                    me.telefono=0;
+                    me.email='';   
+                    me.estadoCivil_id=0;
+                    me.etnia_id=0;
+                    me.sexo_id=0;
+                    me.fechaNacimiento='';
+                    me.vereda_id=0;
+                    me.vivienda_id=0;
+                    me.tipovivienda_id=0;
+                    me.escolaridad_id=0;
+                    me.carnetSalud=0;
+                    me.discapacitado=0;
+                    me.personasAcargo=0;
+                    me.desplazado=0;
+                    me.asociacion_id=0;
+                    me.programaEstado_id=0;
+                    me.asistencia=0;
+                    me.entidad='';
+                    me.capacitacion=0;
+                    me.temas='';
+                    me.parentesco1='';
+                    me.NombreP1='';
+                    me.ccP1=0;
+                    me.fechaNacimientoP1='';
+                    me.escolaridad_idP1='';
+                    me.parentesco2='';
+                    me.NombreP2='';
+                    me.ccP2=0;
+                    me.fechaNacimientoP2='';
+                    me.escolaridad_idP2='';
+                    me.parentesco3='';
+                    me.NombreP3='';
+                    me.ccP3=0;
+                    me.fechaNacimientoP3='';
+                    me.escolaridad_idP3='';
+                    me.parentesco4='';
+                    me.NombreP4='';
+                    me.ccP4=0;
+                    me.fechaNacimientoP4='';
+                    me.escolaridad_idP4='';
+                    me.parentesco5='';
+                    me.NombreP5='';
+                    me.ccP5=0;
+                    me.fechaNacimientoP5='';
+                    me.escolaridad_idP5='';
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            validarProductor(){
+                this.errorProductor=0;
+                this.errorMostrarMsjProductor =[];
+
+                if (this.tipo_id==0) this.errorMostrarMsjProductor.push("Seleccione un tipo de documento");
+                if (this.estadoCivil_id==0) this.errorMostrarMsjProductor.push("Seleccione su estado civil");
+                if (this.etnia_id==0) this.errorMostrarMsjProductor.push("Seleccione su etnia");
+                if (this.sexo_id==0) this.errorMostrarMsjProductor.push("Seleccione su sexo");
+                if (this.vereda_id==0) this.errorMostrarMsjProductor.push("Seleccione el lugar donde vive");
+                if (this.vivienda_id==0) this.errorMostrarMsjProductor.push("Seleccione su vivienda ");
+                if (this.tipovivienda_id==0) this.errorMostrarMsjProductor.push("Seleccione el tipo de vivienda");
+                if (this.escolaridad_id==0) this.errorMostrarMsjProductor.push("Seleccione su grado de escolaridad");
+                if (this.carnetSalud==0) this.errorMostrarMsjProductor.push("Seleccione opcion carnet salud");
+                if (this.discapacitado==0) this.errorMostrarMsjProductor.push("Seleccione opcion discapacitado");
+                if (this.desplazado==0) this.errorMostrarMsjProductor.push("Seleccione opcion desplazado");
+                if (this.asociacion_id==0) this.errorMostrarMsjProductor.push("Seleccione la asociacion a la que pertenece");
+                if (this.programasEstado==0) this.errorMostrarMsjProductor.push("Seleccione el programa del estado al que se encuentra inscrito");
+                if (this.asistencia==0) this.errorMostrarMsjProductor.push("Seleccione opcion asistencia");
+                if (this.capacitacion==0) this.errorMostrarMsjProductor.push("Seleccione opcion capacitacion");
+
+                if (this.errorMostrarMsjProductor.length) this.errorProductor = 1;
+
+                return this.errorProductor;
+            },
+            mostrarDetalle(){
+                let me=this;
+                me.listado=0;
+
+                me.idproveedor=0;
+                me.tipo_comprobante='BOLETA';
+                me.serie_comprobante='';
+                me.num_comprobante='';
+                me.impuesto=0.18;
+                me.total=0.0;
+                me.idarticulo=0;
+                me.articulo='';
+                me.cantidad=0;
+                me.precio=0;
+                me.arrayDetalle=[];
+                this.selectTipoId();
+                this.selectEstadoCivil();
+                this.selectEtnia();
+                this.selectSexo();
+                this.selectProductor();
+                this.selectFinca(this.productor_id);
+                this.selectParentesco();
+                this.selectEscolaridad();
+                this.selectVivienda();
+                this.selectTipoVivienda();
+                this.selectOpcion();
+                this.selectAsociacion();
+                this.selectProgramaEstado();
+            },
+            ocultarDetalle(){
+                this.listado=1;
+            },
+            verVenta(id){
+                let me=this;
+                me.listado=2;
+                
+                //Obtener los datos del ingreso
+                var arrayProductorT=[];
+                var url= 'venta/obtenerCabecera?id=' + id;
+                
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    arrayProductorT = respuesta.venta;
+
+                    me.productor = arrayProductorT[0]['nombre_persona'];
+                    me.linea=arrayProductorT[0]['nombre_linea'];
+                    me.lugarVenta=arrayProductorT[0]['nombre_lugarVenta'];
+                    me.estado=arrayProductorT[0]['nombre_estadoVenta'];
+                    me.totalVenta=arrayProductorT[0]['totalVenta'];
+                    me.totalKilos=arrayProductorT[0]['totalKilos'];
+                    me.fechaVenta=arrayProductorT[0]['fechaVenta'];
+                    me.totalDonacion=arrayProductorT[0]['totalDonacion'];
+                    me.totalTransporte=arrayProductorT[0]['totalTransporte'];
+                    me.totalAsohof=arrayProductorT[0]['totalAsohof'];
+                    me.totalCuatroXmil=arrayProductorT[0]['totalCuatroXmil'];
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+                //Obtener los datos de los detalles 
+                var urld= 'venta/obtenerDetalles?id=' + id;
+                
+                axios.get(urld).then(function (response) {
+                    var respuesta= response.data;
+                    me.arrayDetalle = respuesta.ventaCategoria;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });               
+            },
+            cerrarModal(){
+                this.modal=0;
+                this.tituloModal='';
+            }, 
+            abrirModal(){               
+                this.arrayCategoriaMoras=[];
+                this.modal = 1;
+                this.tituloModal = 'Seleccione uno o varios tipos';
+            },
+            desactivarVenta(id){
+               swal.fire({
+                title: 'Esta seguro de anular esta venta?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('venta/desactivar',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarProductor(1,'','personas');
+                        swal.fire(
+                        'Anulado!',
+                        'La venta ha sido anulada con éxito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+                }) 
+            },
+             pasarFacturacion(id){
+               swal.fire({
+                title: 'Esta seguro de pasar al estado de Tramite de Facturacion?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('venta/pasarFacturacion',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarProductor(1,'','personas');
+                        swal.fire(
+                        'Tramite Facturacion!',
+                        'La venta ha pasado al siguiente estado con exito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+                }) 
+            },
+              pasarDisponiblePago(id){
+               swal.fire({
+                title: 'Esta seguro de pasar al estado de Disponible para pago?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('venta/pasarDisponiblePago',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarProductor(1,'','personas');
+                        swal.fire(
+                        'Disponible para pago!',
+                        'La venta ha pasado al siguiente estado con exito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+                }) 
+            },
+               pasarPagado(id){
+               swal.fire({
+                title: 'Esta seguro de pasar al estado de pagado?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+                }).then((result) => {
+                if (result.value) {
+                    let me = this;
+
+                    axios.put('venta/pasarPagado',{
+                        'id': id
+                    }).then(function (response) {
+                        me.listarProductor(1,'','personas');
+                        swal.fire(
+                        'Pagado!',
+                        'La venta ha pasado al siguiente estado con exito.',
+                        'success'
+                        )
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    
+                    
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    
+                }
+               }) 
+            },
+            
+            
+        },
+        mounted() {
+            this.listarProductor(1,this.buscar,this.criterio);
+        }
+    }
+</script>
+<style>    
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: absolute !important;
+        background-color: #3c29297a !important;
+    }
+    .div-error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-error{
+        color: red !important;
+        font-weight: bold;
+    }
+    @media (min-width: 600px) {
+        .btnagregar {
+            margin-top: 2rem;
+        }
+    }
+    .modal-dialog{
+    overflow-y: initial !important
+    }
+    .modal-body{
+    height: 250px;
+    overflow-y: auto;
+    }
+
+</style>
