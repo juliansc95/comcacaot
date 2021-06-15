@@ -22,9 +22,6 @@ import * as VueGoogleMaps from 'vue2-google-maps'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('categoria', require('./components/Categoria.vue'));
-Vue.component('articulo', require('./components/Articulo.vue'));
-Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('productor', require('./components/ComponenteSocialProductor.vue'));
 Vue.component('rol', require('./components/Rol.vue'));
 Vue.component('user', require('./components/User.vue'));
@@ -40,34 +37,11 @@ Vue.component('v-select', vSelect);
 Vue.component('v-datepicker', Datepicker);
 Vue.component('venta', require('./components/Venta.vue'));
 Vue.component('lugarventa', require('./components/LugarVenta.vue'));
-Vue.component('encuestafitosanitaria', require('./components/EncuestaFitosanitaria.vue'));
-Vue.component('visita', require('./components/EncuestaAsofrut.vue'));
-Vue.component('cosecha', require('./components/Cosecha.vue'));
-Vue.component('predio', require('./components/PredioCultivo.vue'));
-Vue.component('poda', require('./components/Poda.vue'));
-Vue.component('plaga', require('./components/Plaga.vue'));
-Vue.component('nutricion', require('./components/Nutricion.vue'));
-Vue.component('tutorado', require('./components/Tutorado.vue'));
-Vue.component('riego', require('./components/Riego.vue'));
-Vue.component('practica', require('./components/Practica.vue'));
-Vue.component('vocacion', require('./components/Vocacion.vue'));
-Vue.component('suelo', require('./components/Suelo.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
-Vue.component('gpx', require('./components/GpxUpload.vue'));
-Vue.component('fitosanitario', require('./components/ProductoFitosanitario.vue'));
 
-//Vistas Productor
-Vue.component('fincaproductor', require('./components/FincaProductor.vue'));
-Vue.component('productorpro', require('./components/ProductorPro.vue'));
-Vue.component('cultivoproductor', require('./components/CultivoProductor.vue'));
-Vue.component('ventaproductor', require('./components/VentaProductor.vue'));
 
-//Vistas Tecnico
-Vue.component('ventatecnico', require('./components/VentaTecnico.vue'));
 
-//Vista Contador
-Vue.component('ventacontador', require('./components/VentaContador.vue'));
-Vue.component('gmap',require('./components/gmap.vue'));
+
 const app = new Vue({
     el: '#app',
     data:{
@@ -75,16 +49,3 @@ const app = new Vue({
     }
 });
 
-Vue.use(VueGoogleMaps, {
-    load: {
-      key: 'AIzaSyC0E8xMKzvXrCY0_OyX1ODMEkIs8fSXy6Q',
-      libraries: 'places', // This is required if you use the Autocomplete plugin
-      // OR: libraries: 'places,drawing'
-      // OR: libraries: 'places,drawing,visualization'
-      // (as you require)
-   
-      //// If you want to set the version, you can do so:
-      // v: '3.26',
-    },
-    installComponents: true
-    });
