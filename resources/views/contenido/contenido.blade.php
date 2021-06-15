@@ -60,7 +60,7 @@
             </template>
 
             <template v-if="menu==14">
-               <visita></visita>
+              <h1>Pendiente</h1>
             </template>
 
           
