@@ -257,8 +257,10 @@ CREATE TABLE `componenteeconomicos` (
   `ingresoNeto` int(11) NOT NULL,
   `credito` int(10) unsigned NOT NULL,
   `banco_id` int(10) unsigned DEFAULT NULL,
+  `otro_credito` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ahorro` int(10) unsigned NOT NULL,
   `ahorro_id` int(10) unsigned DEFAULT NULL,
+  `otro_ahorro` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `accionista` int(10) unsigned NOT NULL,
   `numeroAcciones` int(11) DEFAULT NULL,
@@ -267,22 +269,22 @@ CREATE TABLE `componenteeconomicos` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `componenteeconomicos_productor_id_foreign` (`productor_id`),
-  KEY `componenteeconomicos_finca_id_foreign` (`finca_id`),
   KEY `componenteeconomicos_credito_foreign` (`credito`),
   KEY `componenteeconomicos_banco_id_foreign` (`banco_id`),
   KEY `componenteeconomicos_ahorro_foreign` (`ahorro`),
   KEY `componenteeconomicos_ahorro_id_foreign` (`ahorro_id`),
   KEY `componenteeconomicos_accionista_foreign` (`accionista`),
   KEY `componenteeconomicos_interesadocompra_foreign` (`interesadoCompra`),
+  KEY `componenteeconomicos_finca_id_foreign` (`finca_id`),
   CONSTRAINT `componenteeconomicos_accionista_foreign` FOREIGN KEY (`accionista`) REFERENCES `opcions` (`id`),
   CONSTRAINT `componenteeconomicos_ahorro_foreign` FOREIGN KEY (`ahorro`) REFERENCES `opcions` (`id`),
   CONSTRAINT `componenteeconomicos_ahorro_id_foreign` FOREIGN KEY (`ahorro_id`) REFERENCES `bancos` (`id`),
   CONSTRAINT `componenteeconomicos_banco_id_foreign` FOREIGN KEY (`banco_id`) REFERENCES `bancos` (`id`),
   CONSTRAINT `componenteeconomicos_credito_foreign` FOREIGN KEY (`credito`) REFERENCES `opcions` (`id`),
-  CONSTRAINT `componenteeconomicos_finca_id_foreign` FOREIGN KEY (`finca_id`) REFERENCES `fincas` (`id`),
+  CONSTRAINT `componenteeconomicos_finca_id_foreign` FOREIGN KEY (`finca_id`) REFERENCES `fincascoms` (`id`),
   CONSTRAINT `componenteeconomicos_interesadocompra_foreign` FOREIGN KEY (`interesadoCompra`) REFERENCES `opcions` (`id`),
   CONSTRAINT `componenteeconomicos_productor_id_foreign` FOREIGN KEY (`productor_id`) REFERENCES `componentesocialproductors` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +293,7 @@ CREATE TABLE `componenteeconomicos` (
 
 LOCK TABLES `componenteeconomicos` WRITE;
 /*!40000 ALTER TABLE `componenteeconomicos` DISABLE KEYS */;
-INSERT INTO `componenteeconomicos` VALUES (1,36,2,500000,345000,200000,345678,1,1,1,6,'Gastos',1,6,2,'2021-04-12 02:07:33','2021-04-12 02:07:33'),(2,36,2,33333,2222222,412124,214141,1,2,1,4,'Gastos',1,5,1,'2021-04-12 02:39:13','2021-04-12 02:39:13'),(3,36,2,213125,12312412,124124,1241222,1,1,1,5,'Ingresos y gastos',1,7,2,'2021-04-12 02:48:01','2021-04-12 03:22:41');
+INSERT INTO `componenteeconomicos` VALUES (4,36,2,53253,23532,3552352,352352,1,2,NULL,1,2,NULL,'Gastos',2,0,1,'2021-06-27 02:34:35','2021-06-27 02:34:35'),(5,42,4,5431,3124,1245,2412,1,2,'SERVIBANCA',1,7,'SUPER BANCO','Ingresos',1,4,2,'2021-06-27 03:51:45','2021-06-27 03:51:45');
 /*!40000 ALTER TABLE `componenteeconomicos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,6 +311,7 @@ CREATE TABLE `componentesocialproductors` (
   `sexo_id` int(10) unsigned NOT NULL,
   `fechaNacimiento` date NOT NULL,
   `vereda_id` int(10) unsigned NOT NULL,
+  `zona_id` int(10) unsigned NOT NULL DEFAULT 1,
   `vivienda_id` int(10) unsigned NOT NULL,
   `tipovivienda_id` int(10) unsigned NOT NULL,
   `escolaridad_id` int(10) unsigned NOT NULL,
@@ -374,6 +377,7 @@ CREATE TABLE `componentesocialproductors` (
   KEY `componentesocialproductors_escolaridad_idp4_foreign` (`escolaridad_idP4`),
   KEY `componentesocialproductors_parentesco5_foreign` (`parentesco5`),
   KEY `componentesocialproductors_escolaridad_idp5_foreign` (`escolaridad_idP5`),
+  KEY `componentesocialproductors_zona_id_foreign` (`zona_id`),
   CONSTRAINT `componentesocialproductors_asistencia_foreign` FOREIGN KEY (`asistencia`) REFERENCES `opcions` (`id`),
   CONSTRAINT `componentesocialproductors_asociacion_id_foreign` FOREIGN KEY (`asociacion_id`) REFERENCES `asociacions` (`id`),
   CONSTRAINT `componentesocialproductors_capacitacion_foreign` FOREIGN KEY (`capacitacion`) REFERENCES `opcions` (`id`),
@@ -398,7 +402,8 @@ CREATE TABLE `componentesocialproductors` (
   CONSTRAINT `componentesocialproductors_sexo_id_foreign` FOREIGN KEY (`sexo_id`) REFERENCES `sexos` (`id`),
   CONSTRAINT `componentesocialproductors_tipovivienda_id_foreign` FOREIGN KEY (`tipovivienda_id`) REFERENCES `tipoviviendas` (`id`),
   CONSTRAINT `componentesocialproductors_vereda_id_foreign` FOREIGN KEY (`vereda_id`) REFERENCES `veredascoms` (`id`),
-  CONSTRAINT `componentesocialproductors_vivienda_id_foreign` FOREIGN KEY (`vivienda_id`) REFERENCES `viviendas` (`id`)
+  CONSTRAINT `componentesocialproductors_vivienda_id_foreign` FOREIGN KEY (`vivienda_id`) REFERENCES `viviendas` (`id`),
+  CONSTRAINT `componentesocialproductors_zona_id_foreign` FOREIGN KEY (`zona_id`) REFERENCES `zonas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -408,7 +413,7 @@ CREATE TABLE `componentesocialproductors` (
 
 LOCK TABLES `componentesocialproductors` WRITE;
 /*!40000 ALTER TABLE `componentesocialproductors` DISABLE KEYS */;
-INSERT INTO `componentesocialproductors` VALUES (35,1,1,1,'2021-03-31',35,1,1,10,1,1,1,1,15,5,1,'asa',1,'asda',1,NULL,0,'2021-03-31',10,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,NULL,NULL),(36,1,3,2,'2021-04-06',116,1,1,1,1,1,2,1,1,1,1,'SENA',1,'PRUEBAS',2,'prueba',423423,'2021-04-02',1,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(37,1,1,1,'2021-04-05',23,1,1,1,1,1,4,1,1,1,1,'test',1,'test',5,'asda',124212,'2021-04-06',8,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(38,1,1,1,'2021-04-06',56,1,1,9,1,1,2,1,14,1,1,'aa',1,'uao',NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(40,1,1,1,'2021-04-06',137,1,1,1,1,1,3,1,1,1,1,'aa',1,'asd',2,'a',121233,'2021-04-07',2,1,'b',2222222,'2021-04-04',8,4,'c',4444444,'2021-04-05',9,5,'d',555555,'2021-04-19',8,6,'e',66666,'2021-04-05',6,NULL,NULL);
+INSERT INTO `componentesocialproductors` VALUES (35,1,1,1,'2021-03-31',35,1,1,1,10,1,1,1,1,15,5,1,'asa',1,'asda',1,NULL,0,'2021-03-31',10,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,NULL,NULL),(36,1,3,2,'2021-04-06',116,1,1,1,1,1,1,2,1,1,1,1,'SENA',1,'PRUEBAS',2,'prueba',423423,'2021-04-02',1,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(37,1,1,1,'2021-04-05',23,1,1,1,1,1,1,4,1,1,1,1,'test',1,'test',5,'asda',124212,'2021-04-06',8,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(38,1,1,1,'2021-04-06',56,1,1,1,9,1,1,2,1,14,1,1,'aa',1,'uao',NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(40,1,1,1,'2021-04-06',137,1,1,1,1,1,1,3,1,1,1,1,'aa',1,'asd',2,'a',121233,'2021-04-07',2,1,'b',2222222,'2021-04-04',8,4,'c',4444444,'2021-04-05',9,5,'d',555555,'2021-04-19',8,6,'e',66666,'2021-04-05',6,NULL,NULL),(42,1,1,1,'2021-06-02',93,4,1,2,9,1,1,0,1,15,3,1,'sena',1,'prueba',NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,'2021-06-27 03:09:31','2021-06-27 03:09:31');
 /*!40000 ALTER TABLE `componentesocialproductors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -996,6 +1001,7 @@ CREATE TABLE `fincascoms` (
   `departamento_id` int(10) unsigned NOT NULL,
   `municipio_id` int(10) unsigned NOT NULL,
   `vereda_id` int(10) unsigned NOT NULL,
+  `zona_id` int(10) unsigned NOT NULL DEFAULT 1,
   `areaTotal` decimal(11,2) NOT NULL,
   `viasAcceso` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `latitud` decimal(11,6) NOT NULL,
@@ -1010,12 +1016,14 @@ CREATE TABLE `fincascoms` (
   KEY `fincascoms_municipio_id_foreign` (`municipio_id`),
   KEY `fincascoms_vereda_id_foreign` (`vereda_id`),
   KEY `fincascoms_posesion_id_foreign` (`posesion_id`),
+  KEY `fincascoms_zona_id_foreign` (`zona_id`),
   CONSTRAINT `fincascoms_departamento_id_foreign` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
   CONSTRAINT `fincascoms_municipio_id_foreign` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id`),
   CONSTRAINT `fincascoms_posesion_id_foreign` FOREIGN KEY (`posesion_id`) REFERENCES `posesions` (`id`),
   CONSTRAINT `fincascoms_productor_id_foreign` FOREIGN KEY (`productor_id`) REFERENCES `componentesocialproductors` (`id`),
-  CONSTRAINT `fincascoms_vereda_id_foreign` FOREIGN KEY (`vereda_id`) REFERENCES `veredascoms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `fincascoms_vereda_id_foreign` FOREIGN KEY (`vereda_id`) REFERENCES `veredascoms` (`id`),
+  CONSTRAINT `fincascoms_zona_id_foreign` FOREIGN KEY (`zona_id`) REFERENCES `zonas` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1024,7 +1032,7 @@ CREATE TABLE `fincascoms` (
 
 LOCK TABLES `fincascoms` WRITE;
 /*!40000 ALTER TABLE `fincascoms` DISABLE KEYS */;
-INSERT INTO `fincascoms` VALUES (2,'Prueba',36,'2021-04-01','3015562152',22,1,5,11.00,'Carretera',3.140000,-76.340000,100.00,1,'2021-04-11 19:56:57','2021-04-11 21:35:34'),(3,'eduardoCasa',40,'2021-05-04','4323232',22,1,10,33.00,'Mar',3.143100,-76.320000,2111.00,2,'2021-05-24 16:52:43','2021-05-24 16:52:43');
+INSERT INTO `fincascoms` VALUES (2,'Prueba',36,'2021-04-01','3015562152',22,1,5,1,11.00,'Carretera',3.140000,-76.340000,100.00,1,'2021-04-11 19:56:57','2021-04-11 21:35:34'),(3,'eduardoCasa',40,'2021-05-04','4323232',22,1,10,1,33.00,'Mar',3.143100,-76.320000,2111.00,2,'2021-05-24 16:52:43','2021-05-24 16:52:43'),(4,'Finca Juan',42,'2021-06-02','12423324',22,1,105,5,0.00,'Seleccione',3.245600,-76.332300,4300.00,2,'2021-06-27 03:32:53','2021-06-27 03:32:53');
 /*!40000 ALTER TABLE `fincascoms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1321,7 +1329,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1330,7 +1338,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_100000_create_password_resets_table',1),(2,'2020_10_20_163925_create_categorias_table',1),(3,'2020_10_21_194417_create_articulos_table',1),(4,'2020_11_27_132839_create_asofrut_core',1),(5,'2020_12_02_034407_create_roles_table',1),(6,'2020_12_03_000000_create_users_table',1),(8,'2020_12_15_153538_create_encuesta_fitosanitaria',2),(9,'2020_12_19_184847_create_encuesta_asofrut',3),(10,'2020_12_21_031155_create_caracterizacion',4),(12,'2020_12_29_180038_create_gpx_upload',5),(15,'2021_03_04_110723_update_enfermedades',7),(20,'2021_02_10_091513_create_enfermedades',8),(21,'2021_03_22_141056_create_comcacaot_core',9),(22,'2021_04_10_170305_create_fincas_core',10),(24,'2021_04_13_202903_create_ventas_comcacaot',11),(25,'2021_04_14_064330_create_visitas',12);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_100000_create_password_resets_table',1),(2,'2020_10_20_163925_create_categorias_table',1),(3,'2020_10_21_194417_create_articulos_table',1),(4,'2020_11_27_132839_create_asofrut_core',1),(5,'2020_12_02_034407_create_roles_table',1),(6,'2020_12_03_000000_create_users_table',1),(8,'2020_12_15_153538_create_encuesta_fitosanitaria',2),(9,'2020_12_19_184847_create_encuesta_asofrut',3),(10,'2020_12_21_031155_create_caracterizacion',4),(12,'2020_12_29_180038_create_gpx_upload',5),(15,'2021_03_04_110723_update_enfermedades',7),(20,'2021_02_10_091513_create_enfermedades',8),(21,'2021_03_22_141056_create_comcacaot_core',9),(22,'2021_04_10_170305_create_fincas_core',10),(24,'2021_04_13_202903_create_ventas_comcacaot',11),(27,'2021_04_14_064330_create_visitas',12),(28,'2021_06_26_195501_cambios_zona_vereda',13);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1512,7 +1520,7 @@ CREATE TABLE `personas` (
   UNIQUE KEY `personas_nombre_unique` (`nombre`),
   KEY `personas_tipo_id_foreign` (`tipo_id`),
   CONSTRAINT `personas_tipo_id_foreign` FOREIGN KEY (`tipo_id`) REFERENCES `tipoids` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1521,7 +1529,7 @@ CREATE TABLE `personas` (
 
 LOCK TABLES `personas` WRITE;
 /*!40000 ALTER TABLE `personas` DISABLE KEYS */;
-INSERT INTO `personas` VALUES (1,'Admin',1,'1107090570','cll 123','3015562152','admin@sistemas.com',NULL,NULL),(2,'Admin Sistemas',1,'1006017055','cra 26 #17-31','3015562152','admin@sistemas.com','2020-12-07 22:15:15','2020-12-07 22:15:15'),(3,'Extensionista',1,'1006017055','cll 23 #12-50','3103861474','extensionista@asofrut.org','2020-12-07 22:16:25','2020-12-07 22:16:25'),(4,'Comercial',1,'1110678909','cll 123','42412412','comercial@asofrut.org','2020-12-07 22:17:28','2020-12-07 22:17:28'),(5,'Productor',1,'1006017055','cll 120','3305890','productor@asofrut.org','2020-12-07 22:18:51','2020-12-10 09:37:12'),(6,'Pedro Perez',1,'1107090570','cll 10','3306789','pedro@gmail.com','2020-12-10 09:36:39','2020-12-10 09:36:39'),(13,'lola',1,'124124','cll 1233','24235232','lola@gmail.com','2020-12-10 10:35:51','2020-12-10 10:35:51'),(22,'Juan Perez',1,'1107090541','cll 123','3389012','juan@hotmail.com','2020-12-12 00:47:21','2020-12-12 00:47:21'),(23,'Productor Ejemplo',2,'1006017055','cll 123','33090412','ejemplo@gmail.com','2020-12-12 02:29:30','2020-12-12 03:01:15'),(24,'Contador',1,'1107090212','cll 124','3305678','contador@asofrut.org','2020-12-22 17:00:49','2020-12-22 17:00:49'),(35,'asdad',1,'3212421','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-01 01:36:58','2021-04-01 01:36:58'),(36,'Prueba',1,'1241242','4235235','4235235','juan@gmail.com','2021-04-05 14:58:24','2021-04-05 14:58:24'),(37,'aaa',1,'1535325','3523532','3523532','julian@mail.com','2021-04-05 15:56:41','2021-04-05 15:56:41'),(38,'probando',1,'1107950432','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-05 20:00:58','2021-04-05 20:00:58'),(40,'Eduardo Luis',1,'1241241','3155644407','3155644407','Millansantiago15@gmail.com','2021-04-05 20:30:26','2021-04-05 20:30:26');
+INSERT INTO `personas` VALUES (1,'Admin',1,'1107090570','cll 123','3015562152','admin@sistemas.com',NULL,NULL),(2,'Admin Sistemas',1,'1006017055','cra 26 #17-31','3015562152','admin@sistemas.com','2020-12-07 22:15:15','2020-12-07 22:15:15'),(3,'Extensionista',1,'1006017055','cll 23 #12-50','3103861474','extensionista@asofrut.org','2020-12-07 22:16:25','2020-12-07 22:16:25'),(4,'Comercial',1,'1110678909','cll 123','42412412','comercial@asofrut.org','2020-12-07 22:17:28','2020-12-07 22:17:28'),(5,'Productor',1,'1006017055','cll 120','3305890','productor@asofrut.org','2020-12-07 22:18:51','2020-12-10 09:37:12'),(6,'Pedro Perez',1,'1107090570','cll 10','3306789','pedro@gmail.com','2020-12-10 09:36:39','2020-12-10 09:36:39'),(13,'lola',1,'124124','cll 1233','24235232','lola@gmail.com','2020-12-10 10:35:51','2020-12-10 10:35:51'),(22,'Juan Perez',1,'1107090541','cll 123','3389012','juan@hotmail.com','2020-12-12 00:47:21','2020-12-12 00:47:21'),(23,'Productor Ejemplo',2,'1006017055','cll 123','33090412','ejemplo@gmail.com','2020-12-12 02:29:30','2020-12-12 03:01:15'),(24,'Contador',1,'1107090212','cll 124','3305678','contador@asofrut.org','2020-12-22 17:00:49','2020-12-22 17:00:49'),(35,'asdad',1,'3212421','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-01 01:36:58','2021-04-01 01:36:58'),(36,'Prueba',1,'1241242','4235235','4235235','juan@gmail.com','2021-04-05 14:58:24','2021-04-05 14:58:24'),(37,'aaa',1,'1535325','3523532','3523532','julian@mail.com','2021-04-05 15:56:41','2021-04-05 15:56:41'),(38,'probando',1,'1107950432','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-05 20:00:58','2021-04-05 20:00:58'),(40,'Eduardo Luis',1,'1241241','3155644407','3155644407','Millansantiago15@gmail.com','2021-04-05 20:30:26','2021-04-05 20:30:26'),(42,'JUAN CAMILO',1,'1006017055','3105903892','3105903892','juan@correo.com','2021-06-27 03:09:31','2021-06-27 03:09:31');
 /*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2255,7 +2263,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'admin@sistemas.com','$2y$10$sugk64mZOHhSV63KYO8oveXEv1Uuvs9NOSAU0pwh6beuAWZUZBZDW',1,1,'HYMHy2vlcSSuMcM0dgXxZQLrAOMCDBHHytelkGo7VX4Gs8ieSYrgoLIxnvcX',NULL,NULL),(4,'comercial@asofrut.org','$2y$10$Zld41k5Ds01i5uHc3K3VUemdPBTl/OwR5juDzTjtCwQc9p1k2fxWi',1,2,'zWlquzbcbk3WZtJtBkaGB11mFSHIeopKIzxmKP99O0nMqNFk1l912yrOX1so',NULL,NULL),(24,'contador@asofrut.org','$2y$10$PJXkHpLQSnlYZMWuB2sY2OyOWG0uWy.OWA5OPhH8K58r5DkJiGDh.',1,5,'8csyMU6r0i7G3MSYNSqC3I4Pysc5AO0XSvc8Fy8jpEWGzTTJCcFayV1kwkIK',NULL,NULL),(23,'ejemplo@gmail.com','$2y$10$0tPxypQEziI/wDiQ/2w9vOHVFuarKdIaLAAmve9d9JCS5BIPnLBPi',0,4,NULL,NULL,NULL),(3,'extensionista@asofrut.org','$2y$10$hacgqATGvTWe9jqzZEqS4ODtsNQ7v4k3KV1xo5Lb3O5e0snmUBN3G',1,3,'J3ZbHh5U8L9Ndi4ikNz17XltsUpdoPVMz6DU1bHNWuQTn99nKRVXjTjZwPpa',NULL,NULL),(1,'jcarlosad7','$2y$10$Yt1HHnF.zHONEx9ayMimCO0Tu9jUcielbsBFItHXTFL4kDSu4U.0i',0,1,'juzgt12Z2gxHWSdZZ89SZ3P2HkwECzdnfH9lC0gSP9MPFrN8ScVpqMlkpgeU',NULL,NULL),(22,'juan@hotmail.com','$2y$10$QcgJ5LFotbEf9ZmruZ0W5e6fawVQCMBwt88cmj2YtyFKxzGPeAOh2',1,4,NULL,NULL,NULL),(13,'lola@gmail.com','$2y$10$qu43tgSEwkSNTYxQ1bGAx.bM5wPj4mvJzNtVk2MS9gSI3GqxlwV2C',1,4,NULL,NULL,NULL),(6,'pedro@gmail.com','$2y$10$NvyQXLPUJMCx5/nmWBUSXOm3RTOdo5fQHXlCS7K44Mf1n/QxMDXCW',1,4,NULL,NULL,NULL),(5,'productor@asofrut.org','$2y$10$AyYmNXtl7kPjGYyW9wnoGeftKD/JaNbO6rUuF8FFTLihTclZuTVF.',1,4,'qnP05WdcSOqTMr2Gk85I95u71egWDUIA2d0FSFe0iuGPok2ze3D4pbX2Yuvh',NULL,NULL);
+INSERT INTO `users` VALUES (2,'admin@sistemas.com','$2y$10$sugk64mZOHhSV63KYO8oveXEv1Uuvs9NOSAU0pwh6beuAWZUZBZDW',1,1,'TcuxDKdSgiJZN7WyJ4iJnTNsMDjvQmY81rNeRCmCSH4PdLfhuhL1RR3RM77n',NULL,NULL),(4,'comercial@asofrut.org','$2y$10$Zld41k5Ds01i5uHc3K3VUemdPBTl/OwR5juDzTjtCwQc9p1k2fxWi',1,2,'zWlquzbcbk3WZtJtBkaGB11mFSHIeopKIzxmKP99O0nMqNFk1l912yrOX1so',NULL,NULL),(24,'contador@asofrut.org','$2y$10$PJXkHpLQSnlYZMWuB2sY2OyOWG0uWy.OWA5OPhH8K58r5DkJiGDh.',1,5,'8csyMU6r0i7G3MSYNSqC3I4Pysc5AO0XSvc8Fy8jpEWGzTTJCcFayV1kwkIK',NULL,NULL),(23,'ejemplo@gmail.com','$2y$10$0tPxypQEziI/wDiQ/2w9vOHVFuarKdIaLAAmve9d9JCS5BIPnLBPi',0,4,NULL,NULL,NULL),(3,'extensionista@asofrut.org','$2y$10$hacgqATGvTWe9jqzZEqS4ODtsNQ7v4k3KV1xo5Lb3O5e0snmUBN3G',1,3,'J3ZbHh5U8L9Ndi4ikNz17XltsUpdoPVMz6DU1bHNWuQTn99nKRVXjTjZwPpa',NULL,NULL),(1,'jcarlosad7','$2y$10$Yt1HHnF.zHONEx9ayMimCO0Tu9jUcielbsBFItHXTFL4kDSu4U.0i',0,1,'juzgt12Z2gxHWSdZZ89SZ3P2HkwECzdnfH9lC0gSP9MPFrN8ScVpqMlkpgeU',NULL,NULL),(22,'juan@hotmail.com','$2y$10$QcgJ5LFotbEf9ZmruZ0W5e6fawVQCMBwt88cmj2YtyFKxzGPeAOh2',1,4,NULL,NULL,NULL),(13,'lola@gmail.com','$2y$10$qu43tgSEwkSNTYxQ1bGAx.bM5wPj4mvJzNtVk2MS9gSI3GqxlwV2C',1,4,NULL,NULL,NULL),(6,'pedro@gmail.com','$2y$10$NvyQXLPUJMCx5/nmWBUSXOm3RTOdo5fQHXlCS7K44Mf1n/QxMDXCW',1,4,NULL,NULL,NULL),(5,'productor@asofrut.org','$2y$10$AyYmNXtl7kPjGYyW9wnoGeftKD/JaNbO6rUuF8FFTLihTclZuTVF.',1,4,'qnP05WdcSOqTMr2Gk85I95u71egWDUIA2d0FSFe0iuGPok2ze3D4pbX2Yuvh',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2628,4 +2636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-15 17:38:14
+-- Dump completed on 2021-06-26 23:16:42
