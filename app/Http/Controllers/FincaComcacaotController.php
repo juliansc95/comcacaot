@@ -20,12 +20,15 @@ class FincaComcacaotController extends Controller
             ->join('departamentos','fincascoms.departamento_id','=','departamentos.id')
             ->join('municipios','fincascoms.municipio_id','=','municipios.id')
             ->join('veredascoms','fincascoms.vereda_id','=','veredascoms.id')
+            ->join('zonas','fincascoms.zona_id','=','zonas.id')
             ->join('posesions','fincascoms.posesion_id','=','posesions.id')
             ->select('fincascoms.id','fincascoms.nombre','fincascoms.productor_id','fincascoms.fechaRegistro','fincascoms.telefono',
-            'fincascoms.departamento_id','fincascoms.municipio_id','fincascoms.vereda_id','fincascoms.areaTotal','fincascoms.viasAcceso',
+            'fincascoms.departamento_id','fincascoms.municipio_id','fincascoms.vereda_id','fincascoms.zona_id',
+            'fincascoms.areaTotal','fincascoms.viasAcceso',
             'fincascoms.latitud','fincascoms.longitud','fincascoms.altitud','fincascoms.posesion_id',
             'personas.nombre as nombre_persona','departamentos.nombre as nombre_departamento',
             'municipios.nombre as nombre_municipio','veredascoms.nombre as nombre_vereda',
+            'zonas.nombre as nombre_zona',
             'posesions.nombre as nombre_posesion')
             ->orderBy('fincascoms.id','desc')->paginate(3);
         }
@@ -35,12 +38,13 @@ class FincaComcacaotController extends Controller
             ->join('departamentos','fincascoms.departamento_id','=','departamentos.id')
             ->join('municipios','fincascoms.municipio_id','=','municipios.id')
             ->join('veredascoms','fincascoms.vereda_id','=','veredascoms.id')
+            ->join('zonas','fincascoms.zona_id','=','zonas.id')
             ->join('posesions','fincascoms.posesion_id','=','posesions.id')
             ->select('fincascoms.id','fincascoms.nombre','fincascoms.productor_id','fincascoms.fechaRegistro','fincascoms.telefono',
-            'fincascoms.departamento_id','fincascoms.municipio_id','fincascoms.vereda_id','fincascoms.areaTotal','fincascoms.viasAcceso',
+            'fincascoms.departamento_id','fincascoms.municipio_id','fincascoms.vereda_id','fincascoms.zona_id','fincascoms.areaTotal','fincascoms.viasAcceso',
             'fincascoms.latitud','fincascoms.longitud','fincascoms.altitud','fincascoms.posesion_id',
             'personas.nombre as nombre_persona','departamentos.nombre as nombre_departamento',
-            'municipios.nombre as nombre_municipio','veredascoms.nombre as nombre_vereda',
+            'municipios.nombre as nombre_municipio','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona',
             'posesions.nombre as nombre_posesion')
             ->where('fincascoms.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('fincascoms.id', 'desc')->paginate(3);          
@@ -71,6 +75,7 @@ class FincaComcacaotController extends Controller
         $finca->departamento_id = $request->departamento_id;
         $finca->municipio_id = $request->municipio_id;
         $finca->vereda_id = $request->vereda_id; 
+        $finca->zona_id = $request->zona_id; 
         $finca->areaTotal = $request->areaTotal;
         $finca->viasAcceso = $request->viasAcceso;
         $finca->latitud = $request->latitud;
@@ -96,6 +101,7 @@ class FincaComcacaotController extends Controller
         $finca->departamento_id = $request->departamento_id;
         $finca->municipio_id = $request->municipio_id;
         $finca->vereda_id = $request->vereda_id; 
+        $finca->zona_id = $request->zona_id; 
         $finca->areaTotal = $request->areaTotal;
         $finca->viasAcceso = $request->viasAcceso;
         $finca->latitud = $request->latitud;

@@ -8,7 +8,7 @@ class ComponenteSocialProductor extends Model
 {
     protected $table = 'componentesocialproductors';
     protected $fillable = ['estadoCivil_id',
-    'etnia_id','sexo_id','fechaNacimiento','vereda_id','vivienda_id',
+    'etnia_id','sexo_id','fechaNacimiento','vereda_id','zona_id','vivienda_id',
     'tipovivienda_id','escolaridad_id','carnetSalud','discapacitado','personasAcargo',
     'desplazado','asociacion_id','programaEstado_id','asistencia','entidad','capacitacion',
     'temas','parentesco1','NombreP1','ccP1','fechaNacimientoP1','escolaridad_idP1',
@@ -37,6 +37,9 @@ class ComponenteSocialProductor extends Model
     }
     public function vereda(){
         return $this->belongsTo('App\VeredaCom', 'vereda_id', 'id');
+    }
+    public function zona(){
+        return $this->belongsTo('App\Zona', 'zona_id', 'id');
     }
     public function vivienda(){
         return $this->belongsTo('App\Vivienda', 'vivienda_id', 'id');

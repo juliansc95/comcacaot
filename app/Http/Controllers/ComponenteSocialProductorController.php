@@ -23,6 +23,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('etnias','componentesocialproductors.etnia_id','=','etnias.id')
             ->join('sexos','componentesocialproductors.sexo_id','=','sexos.id')
             ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+            ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
             ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
@@ -39,6 +40,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.sexo_id','sexos.nombre as nombre_sexo',
             'componentesocialproductors.fechaNacimiento',
             'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda',
+            'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
             'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
@@ -61,6 +63,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('etnias','componentesocialproductors.etnia_id','=','etnias.id')
             ->join('sexos','componentesocialproductors.sexo_id','=','sexos.id')
             ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+            ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
             ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
@@ -77,6 +80,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.sexo_id','sexos.nombre as nombre_sexo',
             'componentesocialproductors.fechaNacimiento',
             'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda',
+            'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
             'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
@@ -119,6 +123,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('etnias','componentesocialproductors.etnia_id','=','etnias.id')
             ->join('sexos','componentesocialproductors.sexo_id','=','sexos.id')
             ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+            ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
             ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
@@ -145,6 +150,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.sexo_id','sexos.nombre as nombre_sexo',
             'componentesocialproductors.fechaNacimiento',
             'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda',
+            'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
             'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
@@ -192,6 +198,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('etnias','componentesocialproductors.etnia_id','=','etnias.id')
             ->join('sexos','componentesocialproductors.sexo_id','=','sexos.id')
             ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+            ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
             ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
@@ -218,6 +225,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.sexo_id','sexos.nombre as nombre_sexo',
             'componentesocialproductors.fechaNacimiento',
             'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda',
+            'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
             'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
@@ -301,6 +309,7 @@ class ComponenteSocialProductorController extends Controller
             $productor->sexo_id = $request->sexo_id;
             $productor->fechaNacimiento = $nacimiento;
             $productor->vereda_id = $request->vereda_id;
+            $productor->zona_id = $request->zona_id;
             $productor->vivienda_id = $request->vivienda_id;
             $productor->tipovivienda_id = $request->tipovivienda_id;
             $productor->escolaridad_id = $request->escolaridad_id;
@@ -380,6 +389,7 @@ class ComponenteSocialProductorController extends Controller
         $productor->sexo_id = $request->sexo_id;
         $productor->fechaNacimiento = $nacimiento;
         $productor->vereda_id = $request->vereda_id;
+        $productor->zona_id = $request->zona_id;
         $productor->vivienda_id = $request->vivienda_id;
         $productor->tipovivienda_id = $request->tipovivienda_id;
         $productor->escolaridad_id = $request->escolaridad_id;

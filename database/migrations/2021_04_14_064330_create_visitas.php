@@ -66,7 +66,8 @@ class CreateVisitas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visitas');
         Schema::dropIfExists('visita_Compromisos');
+        Schema::dropIfExists('visitas');
+        
     }
 }

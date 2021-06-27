@@ -25,8 +25,8 @@ class ComponenteEconomicoController extends Controller
             ->join('opcions AS op4','componenteeconomicos.interesadoCompra','=','op4.id')
             ->select('componenteeconomicos.id','componenteeconomicos.productor_id','componenteeconomicos.finca_id',
             'componenteeconomicos.ingresoMensual','componenteeconomicos.gastoMensual','componenteeconomicos.otrosIngresos',
-            'componenteeconomicos.ingresoNeto','componenteeconomicos.credito','componenteeconomicos.banco_id',
-            'componenteeconomicos.ahorro','componenteeconomicos.ahorro_id','componenteeconomicos.registro',
+            'componenteeconomicos.ingresoNeto','componenteeconomicos.credito','componenteeconomicos.otro_credito','componenteeconomicos.banco_id',
+            'componenteeconomicos.ahorro','componenteeconomicos.ahorro_id','componenteeconomicos.otro_ahorro','componenteeconomicos.registro',
             'componenteeconomicos.accionista','componenteeconomicos.numeroAcciones','componenteeconomicos.interesadoCompra',
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'op1.nombre as nombre_credito','b1.nombre as nombre_banco',
@@ -47,8 +47,8 @@ class ComponenteEconomicoController extends Controller
             ->join('opcions AS op4','componenteeconomicos.interesadoCompra','=','op4.id')
             ->select('componenteeconomicos.id','componenteeconomicos.productor_id','componenteeconomicos.finca_id',
             'componenteeconomicos.ingresoMensual','componenteeconomicos.gastoMensual','componenteeconomicos.otrosIngresos',
-            'componenteeconomicos.ingresoNeto','componenteeconomicos.credito','componenteeconomicos.banco_id',
-            'componenteeconomicos.ahorro','componenteeconomicos.ahorro_id','componenteeconomicos.registro',
+            'componenteeconomicos.ingresoNeto','componenteeconomicos.credito','componenteeconomicos.banco_id','componenteeconomicos.otro_credito',
+            'componenteeconomicos.ahorro','componenteeconomicos.ahorro_id','componenteeconomicos.otro_ahorro','componenteeconomicos.registro',
             'componenteeconomicos.accionista','componenteeconomicos.numeroAcciones','componenteeconomicos.interesadoCompra',
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'op1.nombre as nombre_credito','b1.nombre as nombre_banco',
@@ -85,8 +85,10 @@ class ComponenteEconomicoController extends Controller
         $componente->ingresoNeto = $request->ingresoNeto;
         $componente->credito = $request->credito;
         $componente->banco_id = $request->banco_id;
+        $componente->otro_credito = $request->otro_credito;
         $componente->ahorro = $request->ahorro;
         $componente->ahorro_id = $request->ahorro_id;
+        $componente->otro_ahorro = $request->otro_ahorro;
         $componente->registro = $request->registro;
         $componente->accionista = $request->accionista;
         $componente->numeroAcciones = $request->numeroAcciones;
@@ -109,9 +111,11 @@ class ComponenteEconomicoController extends Controller
         $componente->otrosIngresos = $request->otrosIngresos; 
         $componente->ingresoNeto = $request->ingresoNeto;
         $componente->credito = $request->credito;
+        $componente->otro_credito = $request->otro_credito;
         $componente->banco_id = $request->banco_id;
         $componente->ahorro = $request->ahorro;
         $componente->ahorro_id = $request->ahorro_id;
+        $componente->otro_ahorro = $request->otro_ahorro;
         $componente->registro = $request->registro;
         $componente->accionista = $request->accionista;
         $componente->numeroAcciones = $request->numeroAcciones;

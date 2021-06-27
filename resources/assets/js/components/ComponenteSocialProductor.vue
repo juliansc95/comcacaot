@@ -154,17 +154,22 @@
                                        <v-datepicker  v-model="fechaNacimiento"></v-datepicker>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                           <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Lugar donde vive</label>
-                                     <v-select
-                                        :on-search="selectVereda"
-                                        label="nombre"
-                                        :options="arrayVereda"
-                                        placeholder="Buscar Vereda..."
-                                        :onChange="getDatosVereda"                                        
-                                    >
-                                    </v-select>
+                                    <label>Zona </label>
+                                    <select class="form-control" v-model="zona_id" @click="selectVereda(zona_id)" @change="selectVereda(zona_id)">
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="arrayZona in arrayZona" :key="arrayZona.id" :value="arrayZona.id" v-text="arrayZona.nombre" ></option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Vereda</label>
+                                    <select class="form-control" v-model="vereda_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="vereda in arrayVereda" :key="vereda.id" :value="vereda.id" v-text="vereda.nombre" ></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -592,6 +597,8 @@
                 etnia_id:0,
                 sexo_id:0,
                 fechaNacimiento:'',
+                zona_id:0,
+                zona:'', 
                 vereda_id:0,
                 vivienda_id:0,
                 tipovivienda_id:0,
@@ -638,6 +645,7 @@
                 arraySexo:[],
                 arrayProductor : [],
                 arrayVereda:[],
+                arrayZona:[],
                 arrayParentesco:[],
                 arrayEscolaridad:[],
                 arrayLugarVenta: [],
@@ -854,20 +862,27 @@
                     console.log(error);
                 });
             },
-            selectVereda(search,loading){
-                let me=this;
-                loading(true)
-
-                var url= 'vereda/selectVereda2?filtro='+search;
+            selectZona(){
+                let me =this;
+                var url ='zona/selectZona';
                 axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayVereda=respuesta.veredas;
-                    loading(false)
+                    var respuesta = response.data;
+                    me.arrayZona= respuesta.zonas;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+           selectVereda(id){
+                let me =this;
+                var url ='vereda/selectVeredaZona/'+id;
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayVereda= respuesta.veredas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
             },
             getDatosVereda(val1){
                 let me = this;
@@ -1058,6 +1073,7 @@
                     'sexo_id':this.sexo_id,
                     'fechaNacimiento':this.fechaNacimiento,
                     'vereda_id':this.vereda_id,
+                    'zona_id':this.zona_id,
                     'vivienda_id':this.vivienda_id,
                     'tipovivienda_id':this.tipovivienda_id,
                     'escolaridad_id':this.escolaridad_id,
@@ -1109,6 +1125,7 @@
                     me.sexo_id=0;
                     me.fechaNacimiento='';
                     me.vereda_id=0;
+                    me.zona_id=0;
                     me.vivienda_id=0;
                     me.tipovivienda_id=0;
                     me.escolaridad_id=0;
@@ -1201,9 +1218,24 @@
                 this.selectOpcion();
                 this.selectAsociacion();
                 this.selectProgramaEstado();
+                this.selectZona();
+                this.selectVereda(this.zona_id);
             },
             ocultarDetalle(){
                 this.listado=1;
+                this.selectTipoId();
+                this.selectEstadoCivil();
+                this.selectEtnia();
+                this.selectSexo();
+                this.selectParentesco();
+                this.selectEscolaridad();
+                this.selectVivienda();
+                this.selectTipoVivienda();
+                this.selectOpcion();
+                this.selectAsociacion();
+                this.selectProgramaEstado();
+                this.selectZona();
+                this.selectVereda(this.zona_id);
             },
             verVenta(id){
                 let me=this;

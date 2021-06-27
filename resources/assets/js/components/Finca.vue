@@ -133,12 +133,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Zona</label>
+                                    <div class="col-md-9">
+                                      <select class="form-control" v-model="zona_id" @click="selectVereda(zona_id)" @change="selectVereda(zona_id)">
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="arrayZona in arrayZona" :key="arrayZona.id" :value="arrayZona.id" v-text="arrayZona.nombre" ></option>
+                                    </select> 
+                                    </div>
+                                </div>         
+                                <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Vereda</label>
                                     <div class="col-md-9">
-                                      <select class="form-control" v-model="vereda_id">
+                                       <select class="form-control" v-model="vereda_id">
                                             <option value="0" disabled>Seleccione</option>
                                             <option v-for="vereda in arrayVereda" :key="vereda.id" :value="vereda.id" v-text="vereda.nombre" ></option>
-                                      </select>  
+                                    </select>
                                     </div>
                                 </div>                 
                                 <div class="form-group row">
@@ -220,6 +229,7 @@
                 telefono:0,
                 departamento_id :0,
                 municipio_id:0,
+                zona_id:0,  
                 vereda_id:0,  
                 areaTotal :0,
                 viasAcceso :'Seleccione',
@@ -248,6 +258,7 @@
                 arrayPosesion: [],
                 arrayDepartamento: [],
                 arrayMunicipio: [],
+                arrayZona:[],
                 arrayVereda: [],        
             }
         },
@@ -332,16 +343,27 @@
                     console.log(error);
                 });
             },
-            selectVereda(){
+            selectZona(){
                 let me =this;
-                var url ='vereda/selectVereda';
+                var url ='zona/selectZona';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayZona= respuesta.zonas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+           selectVereda(id){
+                let me =this;
+                var url ='vereda/selectVeredaZona/'+id;
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayVereda= respuesta.veredas;
                 })
                 .catch(function (error) {
                     console.log(error);
-                });
+                })
             },
             cambiarPagina(page,buscar,criterio){
                 let me = this;
@@ -362,6 +384,7 @@
                 'telefono':this.telefono,
                 'departamento_id':this.departamento_id,
                 'municipio_id':this.municipio_id,
+                'zona_id':this.zona_id,
                 'vereda_id':this.vereda_id,
                 'areaTotal':this.areaTotal,
                 'viasAcceso':this.viasAcceso,
@@ -392,6 +415,7 @@
                 'telefono':this.telefono,
                 'departamento_id':this.departamento_id,
                 'municipio_id':this.municipio_id,
+                'zona_id':this.zona_id,
                 'vereda_id':this.vereda_id,
                 'areaTotal':this.areaTotal,
                 'viasAcceso':this.viasAcceso,
@@ -429,6 +453,7 @@
                 this.fechaRegistro='',
                 this.departamento_id=0,
                 this.municipio_id=0,
+                this.zona_id=0,
                 this.vereda_id=0,
                 this.areaTotal=0,
                 this.viasAcceso='Seleccione',
@@ -453,6 +478,7 @@
                         this.telefono=0;
                         this.departamento_id=0;
                         this.municipio_id=0;
+                        this.zona_id=0;
                         this.vereda_id=0;
                         this.viasAcceso='Seleccione';    
                         this.areaTotal=0;
@@ -475,6 +501,7 @@
                         this.telefono = data['telefono'];
                         this.departamento_id=data['departamento_id'];
                         this.municipio_id=data['municipio_id'];
+                        this.zona_id=data['zona_id'];
                         this.vereda_id=data['vereda_id'];
                         this.viasAcceso=data['viasAcceso'];    
                         this.areaTotal=data['areaTotal'];
@@ -489,7 +516,8 @@
             }
             this.selectDepartamento();
             this.selectMunicipio();
-            this.selectVereda();
+            this.selectZona();
+            this.selectVereda(this.zona_id);
             this.selectProductor();
             this.selectPosesion();
              

@@ -143,7 +143,13 @@
                                             <option v-for="banco in arrayBanco" :key="banco.id" :value="banco.id" v-text="banco.nombre" ></option>
                                         </select> 
                                     </div>
-                                </div> 
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Otro Entidad Credito</label>
+                                    <div class="col-md-9">
+                                        <input type="text" v-model="otro_credito"  class="form-control" placeholder="">
+                                    </div>
+                                </div>  
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Tiene cuenta de ahorro</label>
                                     <div class="col-md-9">
@@ -162,6 +168,12 @@
                                         </select> 
                                     </div>
                                 </div> 
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Otro Entidad Ahorros</label>
+                                    <div class="col-md-9">
+                                        <input type="text" v-model="otro_ahorro"  class="form-control" placeholder="">
+                                    </div>
+                                </div>  
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Maneja registros</label>
                                     <div class="col-md-9">
@@ -234,9 +246,11 @@ import Datepicker from 'vuejs-datepicker';
                 otrosIngresos :0,
                 ingresoNeto :0,
                 credito :0,
+                otro_credito:'',
                 banco_id :0,
                 ahorro:0,
                 ahorro_id:0,
+                otro_ahorro:'',
                 registro:'Seleccione',
                 accionista :0,
                 numeroAcciones:0,
@@ -367,8 +381,10 @@ import Datepicker from 'vuejs-datepicker';
                 'ingresoNeto':this.ingresoNeto,
                 'credito':this.credito,
                 'banco_id':this.banco_id,
+                'otro_credito':this.otro_credito,
                 'ahorro':this.ahorro,
                 'ahorro_id':this.ahorro_id,
+                'otro_ahorro':this.otro_ahorro,
                 'registro':this.registro,
                 'accionista':this.accionista,
                 'numeroAcciones':this.numeroAcciones,
@@ -397,8 +413,10 @@ import Datepicker from 'vuejs-datepicker';
                 'ingresoNeto':this.ingresoNeto,
                 'credito':this.credito,
                 'banco_id':this.banco_id,
+                'otro_credito':this.otro_credito,
                 'ahorro':this.ahorro,
                 'ahorro_id':this.ahorro_id,
+                'otro_ahorro':this.otro_ahorro,
                 'registro':this.registro,
                 'accionista':this.accionista,
                 'numeroAcciones':this.numeroAcciones,
@@ -435,8 +453,10 @@ import Datepicker from 'vuejs-datepicker';
                 this.ingresoNeto=0;
                 this.credito=0;
                 this.banco_id=0;
+                this.otro_credito='';
                 this.ahorro=0;
                 this.ahorro_id=0;
+                this.otro_ahorro='';
                 this.registro='Seleccione';
                 this.accionista=0;
                 this.numeroAcciones=0;
@@ -460,8 +480,10 @@ import Datepicker from 'vuejs-datepicker';
                         this.ingresoNeto=0;
                         this.credito=0;
                         this.banco_id=0;
+                        this.otro_credito='';
                         this.ahorro=0;
                         this.ahorro_id=0;
+                        this.otro_ahorro='';
                         this.registro ='Seleccione';
                         this.accionista=0;
                         this.numeroAcciones=0;
@@ -483,8 +505,10 @@ import Datepicker from 'vuejs-datepicker';
                         this.ingresoNeto=data['ingresoNeto'];
                         this.credito=data['credito'];
                         this.banco_id=data['banco_id'];
+                        this.otro_credito=data['otro_credito'];
                         this.ahorro=data['ahorro'];
                         this.ahorro_id=data['ahorro_id'];
+                        this.otro_ahorro=data['otro_ahorro'];
                         this.registro=data['registro'];
                         this.accionista=data['accionista'];
                         this.numeroAcciones= data['numeroAcciones'];

@@ -9,7 +9,7 @@ class ComponenteEconomico extends Model
     protected $table = 'componenteeconomicos';
     protected $fillable = ['productor_id',
     'finca_id','ingresoMensual','gastoMensual','otrosIngresos','ingresoNeto',
-    'credito','banco_id','ahorro','ahorro_id','registro','accionista',
+    'credito','banco_id','otro_credito','ahorro','ahorro_id','otro_ahorro','registro','accionista',
     'numeroAcciones','interesadoCompra'
 ]; 
 public function productor(){

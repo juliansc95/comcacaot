@@ -9,7 +9,7 @@ class FincaComcacaot extends Model
     protected $table = 'fincascoms';
     protected $fillable = ['nombre',
     'productor_id','fechaRegistro','telefono','departamento_id','municipio_id',
-    'vereda_id','areaTotal','viasAcceso','latitud','longitud','altitud','posesion_id'
+    'vereda_id','zona_id','areaTotal','viasAcceso','latitud','longitud','altitud','posesion_id'
     ]; 
 
     public function productor(){
@@ -25,6 +25,9 @@ class FincaComcacaot extends Model
     }
     public function vereda(){
         return $this->belongsTo('App\VeredaCom', 'vereda_id', 'id');
+    }
+    public function zona(){
+        return $this->belongsTo('App\Zona', 'zona_id', 'id');
     }
     public function posesion(){
         return $this->belongsTo('App\Posesion', 'posesion_id', 'id');
