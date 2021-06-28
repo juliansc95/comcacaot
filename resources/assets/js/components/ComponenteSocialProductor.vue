@@ -1065,7 +1065,7 @@
                     'nombre':this.nombre,
                     'tipo_id':this.tipo_id,
                     'num_documento' :this.num_documento,
-                    'direccion' :this.telefono,
+                    'direccion' :this.direccion,
                     'telefono' :this.telefono,
                     'email' :this.email,   
                     'estadoCivil_id':this.estadoCivil_id,

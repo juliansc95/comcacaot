@@ -62,6 +62,9 @@
                             <li @click="menu=12" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-user-following"></i> Roles</a>
                             </li>
+                            <li @click="menu=15" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-user-following"></i> Copia de Seguridad</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reporte de Ventas</title>
+    <title>Reporte Productores por zona</title>
     <style>
         body {
             margin: 0;
@@ -82,39 +82,29 @@
 </head>
 <body>
     <div>
-        <h3>Reporte de Ventas <span class="derecha">{{$ahora}}</span></h3>
+        <h3>Reporte Productores Por Zona <span class="derecha">{{$ahora}}</span></h3>
     </div>
     <div>
         <table class="table table-bordered table-striped table-sm">
             <thead>
                 <tr>
                     <th>Productor</th>
-                    <th>Linea</th>
-                    <th>Fecha</th>
-                    <th>Lugar de Venta</th>
-                    <th>Peso Total(Kg)</th>
-                    <th>Descuento Donacion</th>
-                    <th>Descuento Transporte</th>
-                    <th>Descuento Asohofrucol</th>
-                    <th>Descuento 4x1000</th>
-                    <th>Total Neto</th>
-                    <th>Estado</th>
+                    <th>Numero Documento</th>
+                    <th>Telefono</th>
+                    <th>Correo electronico</th>
+                    <th>Zona</th>
+                    <th>Vereda</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($ventas as $v)
+                @foreach ($personas as $p)
                 <tr>
-                    <td>{{$v->nombre_persona}}</td>
-                    <td>{{$v->nombre_linea}}</td>
-                    <td>{{ \Carbon\Carbon::parse($v->fechaVenta)->format('d/m/Y')}}</td>
-                    <td>{{$v->nombre_lugarVenta}}</td>
-                    <td>{{$v->totalKilos}}</td>
-                    <td>{{$v->totalDonacion}}</td>
-                    <td>{{$v->totalTransporte}}</td>
-                    <td>{{$v->totalAsohof}}</td>
-                    <td>{{$v->totalCuatroXmil}}</td>
-                    <td>{{$v->totalVenta}}</td>
-                    <td>{{$v->nombre_estadoVenta}}</td>
+                    <td>{{$p->nombre}}</td>
+                    <td>{{$p->num_documento}}</td>
+                    <td>{{$p->telefono}}</td>
+                    <td>{{$p->email}}</td>
+                    <td>{{$p->nombre_zona}}</td>
+                    <td>{{$p->nombre_vereda}}</td>
                 </tr>
                 @endforeach                                
             </tbody>

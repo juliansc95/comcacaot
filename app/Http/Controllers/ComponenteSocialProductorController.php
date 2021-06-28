@@ -281,6 +281,21 @@ class ComponenteSocialProductorController extends Controller
         ];
     }
 
+    public function listarPdf(){
+        $ahora= Carbon::now('America/Bogota');
+        $personas= ComponenteSocialProductor::join('personas','componentesocialproductors.id','=','personas.id')
+        ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
+        ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+        ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento','personas.telefono','personas.email',
+        'personas.direccion','componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
+        'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda')
+        ->orderBy('componentesocialproductors.zona_id', 'desc')->get();
+        $cont=ComponenteSocialProductor::count();
+        $pdf = \PDF::loadView('pdf.zonas',['personas'=>$personas,'cont'=>$cont,'ahora'=>$ahora])->setPaper('a4', 'landscape');
+        return $pdf->download('zonas.pdf');
+    }
+
+
     public function store(Request $request)
     {
         if(!$request->ajax()) return redirect('/');

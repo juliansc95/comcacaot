@@ -210,11 +210,14 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/productor','ComponenteSocialProductorController@index');
      Route::post('/productor/registrar','ComponenteSocialProductorController@store');
      Route::put('/productor/actualizar','ComponenteSocialProductorController@update');
-     
+     Route::get('/productor/zonas','ComponenteSocialProductorController@listarPdf')->name('zonas_pdf');
+
+
      Route::get('/economico','ComponenteEconomicoController@index');
      Route::post('/economico/registrar','ComponenteEconomicoController@store');
      Route::put('/economico/actualizar','ComponenteEconomicoController@update');
      
+
      //Rutas roles
      Route::get('/rol','RolController@index');
      Route::get('/rol/selectRol','RolController@selectRol');

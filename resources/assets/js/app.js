@@ -38,7 +38,7 @@ Vue.component('v-datepicker', Datepicker);
 Vue.component('venta', require('./components/Venta.vue'));
 Vue.component('lugarventa', require('./components/LugarVenta.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
-
+Vue.component('backup', require('./components/Backup.vue'));
 
 
 

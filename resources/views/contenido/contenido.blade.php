@@ -62,6 +62,9 @@
             <template v-if="menu==14">
               <h1>Pendiente</h1>
             </template>
+            <template v-if="menu==15">
+              <backup></backup>
+            </template>
 
           
             @elseif(Auth::user()->idrol == 2)
