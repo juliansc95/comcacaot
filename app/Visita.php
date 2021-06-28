@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Visita extends Model
 {
-    protected $table = 'ventacoms';
+    protected $table = 'visitas';
     protected $fillable = ['productor_id','finca_id',
     'areaProduccion','siembraNueva','edadCultivo','arbolesSembrados','produccionMensual',
     'vendidoFresco','porVenderFresco','vendidoSeco','porVenderSeco','lugarVenta_id',

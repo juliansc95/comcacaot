@@ -27,8 +27,8 @@ class VentaComController extends Controller
             ->select('ventacoms.id','ventacoms.productor_id','ventacoms.lugarVenta_id','ventacoms.vereda_id',
             'ventacoms.zona_id','ventacoms.fechaVenta','ventacoms.totalKilos','ventacoms.totalKilosNetos',
             'ventacoms.totalIncentivoXkg','ventacoms.totalIncentivo','ventacoms.totalNeto','ventacoms.estado_id',
-            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoVentas.nombre as nombre_estadoVenta',
-            'lugarVentas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
+            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoventas.nombre as nombre_estadoVenta',
+            'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
              ->orderBy('ventacoms.estado_id', 'asc')->paginate(10);
         }
@@ -42,8 +42,8 @@ class VentaComController extends Controller
             ->select('ventacoms.id','ventacoms.productor_id','ventacoms.lugarVenta_id','ventacoms.vereda_id',
             'ventacoms.zona_id','ventacoms.fechaVenta','ventacoms.totalKilos','ventacoms.totalKilosNetos',
             'ventacoms.totalIncentivoXkg','ventacoms.totalIncentivo','ventacoms.totalNeto','ventacoms.estado_id',
-            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoVentas.nombre as nombre_estadoVenta',
-            'lugarVentas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
+            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoventas.nombre as nombre_estadoVenta',
+            'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
         ->where($criterio.'.nombre', 'like', '%'. $buscar . '%')
         ->orderBy('ventacoms.estado_id', 'asc')->paginate(10);
@@ -58,8 +58,8 @@ class VentaComController extends Controller
             ->select('ventacoms.id','ventacoms.productor_id','ventacoms.lugarVenta_id','ventacoms.vereda_id',
             'ventacoms.zona_id','ventacoms.fechaVenta','ventacoms.totalKilos','ventacoms.totalKilosNetos',
             'ventacoms.totalIncentivoXkg','ventacoms.totalIncentivo','ventacoms.totalNeto','ventacoms.estado_id',
-            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoVentas.nombre as nombre_estadoVenta',
-            'lugarVentas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
+            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoventas.nombre as nombre_estadoVenta',
+            'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
             ->where('ventacoms.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('ventacoms.estado_id', 'asc')->paginate(10);
@@ -141,8 +141,8 @@ class VentaComController extends Controller
             ->select('ventacoms.id','ventacoms.productor_id','ventacoms.lugarVenta_id','ventacoms.vereda_id',
             'ventacoms.zona_id','ventacoms.fechaVenta','ventacoms.totalKilos','ventacoms.totalKilosNetos',
             'ventacoms.totalIncentivoXkg','ventacoms.totalIncentivo','ventacoms.totalNeto','ventacoms.estado_id',
-            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoVentas.nombre as nombre_estadoVenta',
-            'lugarVentas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
+            'ventacoms.observaciones','personas.nombre as nombre_persona','estadoventas.nombre as nombre_estadoVenta',
+            'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
             ->where('ventacoms.id','=',$id)    
             ->orderBy('ventacoms.id', 'desc')->take(1)->get();
@@ -153,10 +153,10 @@ class VentaComController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $id = $request->id;
-        $ventaCategoria = VentaCategoriaCom::join('categoriaMoras','ventas_categoriacoms.categoria_id','=','categoriaMoras.id')
+        $ventaCategoria = VentaCategoriaCom::join('categoriamoras','ventas_categoriacoms.categoria_id','=','categoriamoras.id')
         ->select('ventas_categoriacoms.peso','ventas_categoriacoms.humedad','ventas_categoriacoms.fermentacion',
         'ventas_categoriacoms.descuentoHumedadKg','ventas_categoriacoms.valorUnitario','ventas_categoriacoms.subtotal',
-        'categoriaMoras.nombre as nombre_categoria')
+        'categoriamoras.nombre as nombre_categoria')
         ->where('ventas_categoriacoms.ventas_id','=',$id)
         ->orderBy('ventas_categoriacoms.id', 'desc')->get();
         

@@ -10,10 +10,10 @@ class DashboardController extends Controller
     {
         $anio=date('Y');
        
-        $ventas=DB::table('ventas as v')
+        $ventas=DB::table('ventacoms as v')
         ->select(DB::raw('DATE(v.fechaVenta) as mes'),
         DB::raw('DAY(v.fechaVenta) as anio'),
-        DB::raw('SUM(v.totalVenta) as total'))
+        DB::raw('SUM(v.totalNeto) as total'))
         ->whereYear('v.fechaVenta',$anio)
         ->groupBy(DB::raw('DATE(v.fechaVenta)'),DB::raw('DAY(v.fechaVenta)'))
         ->get(); 

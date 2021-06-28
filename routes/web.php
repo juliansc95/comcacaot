@@ -70,6 +70,10 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/unidadDosis/selectDosis','EquipoAplicacionController@selectDosis');
      Route::get('/producto/selectProducto2','EquipoAplicacionController@selectProducto2');
 
+    //Ruta Backup
+    Route::get('/backup', 'BackupController@backupDatabase');
+    
+    
      //Rutas Encuesta fitosanitaria
      Route::get('/fitosanitaria', 'EncuestaFitosanitariaController@index');
      Route::post('/fitosanitaria/registrar', 'EncuestaFitosanitariaController@store');

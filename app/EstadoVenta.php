@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstadoVenta extends Model
 {
-    protected $table = 'estadoVentas';
+    protected $table = 'estadoventas';
     protected $fillable = ['nombre'];
 }

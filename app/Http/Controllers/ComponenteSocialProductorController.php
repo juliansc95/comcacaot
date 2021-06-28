@@ -26,7 +26,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
-            ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
+            ->join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
             ->join('opcions AS op1','componentesocialproductors.carnetSalud','=','op1.id')
             ->join('opcions AS op2','componentesocialproductors.discapacitado','=','op2.id')
             ->join('opcions AS op3','componentesocialproductors.desplazado','=','op3.id')
@@ -43,13 +43,13 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
-            'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
+            'componentesocialproductors.escolaridad_id','gradoescolaridads.nombre as nombre_escolaridad',
             'componentesocialproductors.carnetSalud','op1.nombre as opcion_salud',
             'componentesocialproductors.discapacitado','op2.nombre as opcion_discapacitado',
             'componentesocialproductors.personasAcargo',
             'componentesocialproductors.desplazado','op3.nombre as opcion_desplazado',
             'componentesocialproductors.asociacion_id','asociacions.nombre as nombre_asociacion',
-            'componentesocialproductors.programaEstado_id','programaEstados.nombre as nombre_programa',
+            'componentesocialproductors.programaEstado_id','programaestados.nombre as nombre_programa',
             'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
             'componentesocialproductors.entidad',
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
@@ -66,7 +66,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
-            ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
+            ->join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
             ->join('opcions AS op1','componentesocialproductors.carnetSalud','=','op1.id')
             ->join('opcions AS op2','componentesocialproductors.discapacitado','=','op2.id')
             ->join('opcions AS op3','componentesocialproductors.desplazado','=','op3.id')
@@ -83,13 +83,13 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
-            'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
+            'componentesocialproductors.escolaridad_id','gradoescolaridads.nombre as nombre_escolaridad',
             'componentesocialproductors.carnetSalud','op1.nombre as opcion_salud',
             'componentesocialproductors.discapacitado','op2.nombre as opcion_discapacitado',
             'componentesocialproductors.personasAcargo',
             'componentesocialproductors.desplazado','op3.nombre as opcion_desplazado',
             'componentesocialproductors.asociacion_id','asociacions.nombre as nombre_asociacion',
-            'componentesocialproductors.programaEstado_id','programaEstados.nombre as nombre_programa',
+            'componentesocialproductors.programaEstado_id','programaestados.nombre as nombre_programa',
             'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
             'componentesocialproductors.entidad',
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
@@ -126,7 +126,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
-            ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
+            ->join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
             ->join('opcions AS op1','componentesocialproductors.carnetSalud','=','op1.id')
             ->join('opcions AS op2','componentesocialproductors.discapacitado','=','op2.id')
             ->join('opcions AS op3','componentesocialproductors.desplazado','=','op3.id')
@@ -135,15 +135,15 @@ class ComponenteSocialProductorController extends Controller
             ->join('asociacions','componentesocialproductors.asociacion_id','=','asociacions.id')
             ->join('programaestados','componentesocialproductors.programaEstado_id','=','programaestados.id')
             ->join('parentescos AS p1','componentesocialproductors.parentesco1','=','p1.id')
-            ->join('gradoEscolaridads AS escolaridadP1','componentesocialproductors.escolaridad_idP1','=','escolaridadP1.id')
+            ->join('gradoescolaridads AS escolaridadP1','componentesocialproductors.escolaridad_idP1','=','escolaridadP1.id')
             ->join('parentescos AS p2','componentesocialproductors.parentesco2','=','p2.id')
-            ->join('gradoEscolaridads AS escolaridadP2','componentesocialproductors.escolaridad_idP2','=','escolaridadP2.id')
+            ->join('gradoescolaridads AS escolaridadP2','componentesocialproductors.escolaridad_idP2','=','escolaridadP2.id')
             ->join('parentescos AS p3','componentesocialproductors.parentesco3','=','p3.id')
-            ->join('gradoEscolaridads AS escolaridadP3','componentesocialproductors.escolaridad_idP3','=','escolaridadP3.id')
+            ->join('gradoescolaridads AS escolaridadP3','componentesocialproductors.escolaridad_idP3','=','escolaridadP3.id')
             ->join('parentescos AS p4','componentesocialproductors.parentesco4','=','p4.id')
-            ->join('gradoEscolaridads AS escolaridadP4','componentesocialproductors.escolaridad_idP4','=','escolaridadP4.id')
+            ->join('gradoescolaridads AS escolaridadP4','componentesocialproductors.escolaridad_idP4','=','escolaridadP4.id')
             ->join('parentescos AS p5','componentesocialproductors.parentesco5','=','p5.id')
-            ->join('gradoEscolaridads AS escolaridadP5','componentesocialproductors.escolaridad_idP5','=','escolaridadP5.id')
+            ->join('gradoescolaridads AS escolaridadP5','componentesocialproductors.escolaridad_idP5','=','escolaridadP5.id')
             ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento','personas.telefono','personas.email',
             'componentesocialproductors.estadoCivil_id','estadocivils.nombre as estadocivil_nombre',
             'componentesocialproductors.etnia_id','etnias.nombre as nombre_etnia',
@@ -153,13 +153,13 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
-            'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
+            'componentesocialproductors.escolaridad_id','gradoescolaridads.nombre as nombre_escolaridad',
             'componentesocialproductors.carnetSalud','op1.nombre as opcion_salud',
             'componentesocialproductors.discapacitado','op2.nombre as opcion_discapacitado',
             'componentesocialproductors.personasAcargo',
             'componentesocialproductors.desplazado','op3.nombre as opcion_desplazado',
             'componentesocialproductors.asociacion_id','asociacions.nombre as nombre_asociacion',
-            'componentesocialproductors.programaEstado_id','programaEstados.nombre as nombre_programa',
+            'componentesocialproductors.programaEstado_id','programaestados.nombre as nombre_programa',
             'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
             'componentesocialproductors.entidad',
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
@@ -201,7 +201,7 @@ class ComponenteSocialProductorController extends Controller
             ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
             ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
             ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
-            ->join('gradoEscolaridads','componentesocialproductors.escolaridad_id','=','gradoEscolaridads.id')
+            ->join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
             ->join('opcions AS op1','componentesocialproductors.carnetSalud','=','op1.id')
             ->join('opcions AS op2','componentesocialproductors.discapacitado','=','op2.id')
             ->join('opcions AS op3','componentesocialproductors.desplazado','=','op3.id')
@@ -210,15 +210,15 @@ class ComponenteSocialProductorController extends Controller
             ->join('asociacions','componentesocialproductors.asociacion_id','=','asociacions.id')
             ->join('programaestados','componentesocialproductors.programaEstado_id','=','programaestados.id')
             ->join('parentescos AS p1','componentesocialproductors.parentesco1','=','p1.id')
-            ->join('gradoEscolaridads AS escolaridadP1','componentesocialproductors.escolaridad_idP1','=','escolaridadP1.id')
+            ->join('gradoescolaridads AS escolaridadP1','componentesocialproductors.escolaridad_idP1','=','escolaridadP1.id')
             ->join('parentescos AS p2','componentesocialproductors.parentesco2','=','p2.id')
-            ->join('gradoEscolaridads AS escolaridadP2','componentesocialproductors.escolaridad_idP2','=','escolaridadP2.id')
+            ->join('gradoescolaridads AS escolaridadP2','componentesocialproductors.escolaridad_idP2','=','escolaridadP2.id')
             ->join('parentescos AS p3','componentesocialproductors.parentesco3','=','p3.id')
-            ->join('gradoEscolaridads AS escolaridadP3','componentesocialproductors.escolaridad_idP3','=','escolaridadP3.id')
+            ->join('gradoescolaridads AS escolaridadP3','componentesocialproductors.escolaridad_idP3','=','escolaridadP3.id')
             ->join('parentescos AS p4','componentesocialproductors.parentesco4','=','p4.id')
-            ->join('gradoEscolaridads AS escolaridadP4','componentesocialproductors.escolaridad_idP4','=','escolaridadP4.id')
+            ->join('gradoescolaridads AS escolaridadP4','componentesocialproductors.escolaridad_idP4','=','escolaridadP4.id')
             ->join('parentescos AS p5','componentesocialproductors.parentesco5','=','p5.id')
-            ->join('gradoEscolaridads AS escolaridadP5','componentesocialproductors.escolaridad_idP5','=','escolaridadP5.id')
+            ->join('gradoescolaridads AS escolaridadP5','componentesocialproductors.escolaridad_idP5','=','escolaridadP5.id')
             ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento','personas.telefono','personas.email',
             'componentesocialproductors.estadoCivil_id','estadocivils.nombre as estadocivil_nombre',
             'componentesocialproductors.etnia_id','etnias.nombre as nombre_etnia',
@@ -228,13 +228,13 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
             'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
             'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
-            'componentesocialproductors.escolaridad_id','gradoEscolaridads.nombre as nombre_escolaridad',
+            'componentesocialproductors.escolaridad_id','gradoescolaridads.nombre as nombre_escolaridad',
             'componentesocialproductors.carnetSalud','op1.nombre as opcion_salud',
             'componentesocialproductors.discapacitado','op2.nombre as opcion_discapacitado',
             'componentesocialproductors.personasAcargo',
             'componentesocialproductors.desplazado','op3.nombre as opcion_desplazado',
             'componentesocialproductors.asociacion_id','asociacions.nombre as nombre_asociacion',
-            'componentesocialproductors.programaEstado_id','programaEstados.nombre as nombre_programa',
+            'componentesocialproductors.programaEstado_id','programaestados.nombre as nombre_programa',
             'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
             'componentesocialproductors.entidad',
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
