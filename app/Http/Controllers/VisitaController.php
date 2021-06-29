@@ -11,7 +11,7 @@ class VisitaController extends Controller
 {
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
         $visita = new Visita();
@@ -33,10 +33,12 @@ class VisitaController extends Controller
         $visita->observaciones = $request->observaciones;
         $visita->nivelSatisfaccionAsistencia = $request->asistencia;
         $visita->nivelSatisfaccionEmpresa = $request->empresa;
-        //$visita->predecesor_id = $request->predecesor_id;
+        if($request->predecesor_id){
+            $visita->predecesor_id = $request->predecesor_id;
+        }
         $visita->save();
 
-        
+
         $visitaCompromiso = new visitaCompromiso();
         $visitaCompromiso->visita_id = $visita->id;
         $visitaCompromiso->compromiso = $request->NombreP1;
@@ -46,9 +48,21 @@ class VisitaController extends Controller
         DB::commit();
             return[
                 'id'=>$visita->id
-            ];    
+            ];
         }catch(Exception $e){
             DB::rollback();
         }
     }
+
+    public function show($id)
+    {
+        $visita = Visita::find($id);
+        $visitaComp = VisitaCompromiso::where('visita_id', '=',$id)->get();
+        if (!isset($visita)) {
+            return [];
+        }
+        return ["visita"  => $visita->first(), "compromiso" => $visitaComp ];
+    }
+
+
 }

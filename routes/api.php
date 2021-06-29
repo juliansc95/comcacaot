@@ -17,6 +17,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@loginApi']);
+    Route::post('register', 'Auth\LoginController@register');
+    Route::post('logout', 'Auth\LoginController@logout');
+    Route::post('me', 'Auth\LoginController@me');
+
+    //Route::post('refresh', 'Auth2\AuthController@refresh');
+});
+
+
+
 Route::get('/tipoId/selectTipoId','TipoIdController@selectTipoId');
 Route::get('/sexo/selectSexo','SexoController@selectSexo');
 Route::get('/escolaridad/selectEscolaridad','GradoEscolaridadController@selectGradoEscolaridad');
@@ -66,9 +83,9 @@ Route::get('/venta/obtenerDetalles', 'VentaComController@obtenerVentaCategoria')
 //Rutas Categorias
 Route::get('/categoriaMora','CategoriaMoraController@index');
 Route::post('/categoriaMora/registrar','CategoriaMoraController@store');
-Route::put('/categoriaMora/actualizar','CategoriaMoraController@update');    
+Route::put('/categoriaMora/actualizar','CategoriaMoraController@update');
 Route::get('/categoriaMora/buscarCategoria','CategoriaMoraController@buscarCategoria');
-Route::get('/categoriaMora/listarCategoria','CategoriaMoraController@listarCategoria');  
+Route::get('/categoriaMora/listarCategoria','CategoriaMoraController@listarCategoria');
 
 //Rutas Fincas
 Route::get('/finca','FincaComcacaotController@index');
@@ -99,7 +116,7 @@ Route::put('/cosechacultivo/actualizar','CosechaCultivoController@update');
  Route::get('/productor','ComponenteSocialProductorController@index');
  Route::post('/productor/registrar','ComponenteSocialProductorController@store');
  Route::put('/productor/actualizar','ComponenteSocialProductorController@update');
- 
+
  Route::get('/economico','ComponenteEconomicoController@index');
  Route::post('/economico/registrar','ComponenteEconomicoController@store');
  Route::put('/economico/actualizar','ComponenteEconomicoController@update');
@@ -111,3 +128,4 @@ Route::put('/cultivo/actualizar','CultivoController@update');
 
  //Ruta Linea Base
  Route::post('/visita/registrar', 'VisitaController@store');
+ Route::get("visita/{id}","VisitaController@show");
