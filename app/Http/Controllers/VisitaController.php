@@ -51,4 +51,6 @@ class VisitaController extends Controller
             DB::rollback();
         }
     }
+
+
 }

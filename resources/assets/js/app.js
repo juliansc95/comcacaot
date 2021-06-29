@@ -39,7 +39,7 @@ Vue.component('venta', require('./components/Venta.vue'));
 Vue.component('lugarventa', require('./components/LugarVenta.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('backup', require('./components/Backup.vue'));
-
+Vue.component('seguimiento', require('./components/Seguimiento.vue'));
 
 
 const app = new Vue({

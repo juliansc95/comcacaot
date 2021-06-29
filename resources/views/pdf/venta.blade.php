@@ -67,7 +67,7 @@
         margin-bottom: 15px;
         }
 
-        #fac, #fv, #fa{
+        #fac, #fv, #fa, #fi{
         color: #FFFFFF;
         font-size: 15px;
         }
@@ -79,7 +79,7 @@
         border-bottom: 1px solid #FFFFFF;  
         }
 
-        #facvendedor{
+        #facvendedor, #facinfo{
         width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
@@ -92,6 +92,13 @@
         text-align: center;
         border-bottom: 1px solid #FFFFFF;  
         }
+        #facinfo thead{
+        padding: 20px;
+        background: #2183E3;
+        text-align: center;
+        border-bottom: 1px solid #FFFFFF;  
+        }
+
 
         #facarticulo{
         width: 100%;
@@ -119,8 +126,7 @@
             </div>
             <div id="datos">
                 <p id="encabezado">
-                    <b>Asofrut</b><br>Colombia, Cauca, Toribío, B/ El centro, Cra 2 esquina<br>Telefono:+ 057 322 648 61 36<br>Email:servicioalcliente@asofrut.org<br>
-                    areacomercial@asofrut.org
+                    <b>Comcacaot SAS</b><br>Colombia, Nariño, Tumaco<br>
                 </p>
             </div>
         </header>
@@ -162,6 +168,25 @@
                 </table>
             </div>
         </section>
+        <section>
+            <div>
+                <table id="facinfo">
+                    <thead>                        
+                        <tr id="fi">
+                            <th>Informacion Venta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Punto de Compra:</b> {{$v->nombre_lugarVenta}}<br>
+                            <b>Zona:</b> {{$v->nombre_zona}}<br>
+                            <b>Vereda:</b> {{$v->nombre_vereda}}<br>
+                           </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
         @endforeach
         <br>
         <section>
@@ -169,9 +194,12 @@
                 <table id="facarticulo">
                     <thead>
                         <tr id="fa">
-                            <th>Categoria</th>
-                            <th>Valor Unitario</th>
+                            <th>Tipo Cacao</th>
                             <th>Peso(Kg)</th>
+                            <th>Humedad(%)</th>
+                            <th>Fermentacion(%)</th>
+                            <th>Descuento por humedad(Kg)</th>
+                            <th>Valor Unitario</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -179,8 +207,11 @@
                     @foreach($ventaCategoria as $ventaC)
                         <tr>
                             <td>{{$ventaC->nombre_categoria}}</td>
-                            <td>{{$ventaC->valorUnitario}}</td>
                             <td>{{$ventaC->peso}}</td>
+                            <td>{{$ventaC->humedad}}</td>
+                            <td>{{$ventaC->fermentacion}}</td>
+                            <td>{{$ventaC->descuentoHumedadKg}}</td>
+                            <td>{{$ventaC->valorUnitario}}</td>
                             <td>{{$ventaC->subtotal}}</td>
                         </tr>
                     @endforeach
@@ -198,38 +229,38 @@
                         <tr>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th>Peso Total(Kg)</th>
                             <td>{{$v->totalKilos}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>Descuento Donacion </th>
-                            <td>{{$v->totalDonacion}}</td>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Peso Total Neto(Kg) </th>
+                            <td>{{$v->totalKilosNetos}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>Descuento Transporte </th>
-                            <td>{{$v->totalTransporte}}</td>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Total Incentivo($) </th>
+                            <td>{{$v->totalIncentivoXkg}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>Descuento Asohofrucol</th>
-                            <td>{{$v->totalAsohof}}</td>
-                        </tr>
-                        <tr>
                             <th></th>
                             <th></th>
-                            <th>Descuento 4x1000</th>
-                            <td>{{$v->totalCuatroXmil}}</td>
-                        </tr>
-                        <tr>
                             <th></th>
-                            <th></th>
-                            <th>Total Neto</th>
-                            <td>{{$v->totalVenta}}</td>
+                            <th>Total Neto($)</th>
+                            <td>{{$v->totalNeto}}</td>
                         </tr>
                         @endforeach
                     </tfoot>

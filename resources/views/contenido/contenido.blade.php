@@ -60,7 +60,7 @@
             </template>
 
             <template v-if="menu==14">
-              <h1>Pendiente</h1>
+              <seguimiento></seguimiento>
             </template>
             <template v-if="menu==15">
               <backup></backup>

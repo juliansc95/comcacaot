@@ -8,7 +8,7 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Ventas
+                        <i class="fa fa-align-justify"></i> Visita Linea Base
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -25,8 +25,8 @@
                                       <option value="fechaVenta">Fecha-Hora</option>
                                       <option value="totalKilos">Peso total</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarVenta(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarVenta(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarProductor(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarProductor(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -36,35 +36,32 @@
                                     <tr>
                                         <th>Opciones</th>
                                         <th>Productor</th>
-                                        <th>Fecha</th>
-                                        <th>Punto Compra</th>
+                                        <th>Tipo documento</th>
+                                        <th>Numero documento</th>
+                                        <th>Fecha Nacimiento</th>
+                                        <th>Sexo</th>
+                                        <th>Grado escolaridad</th>
+                                        <th>Telefono</th>
+                                        <th>Correo electronico</th>
                                         <th>Vereda</th>
-                                        <th>Zona</th>
-                                        <th>Peso Total(Kg)</th>
-                                        <th>Total($)</th>
-                                        <th>Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="venta in arrayVenta" :key="venta.id">
+                                    <tr v-for="productor in arrayProductor" :key="productor.id">
                                         <td>
-                                            <button type="button" @click="verVenta(venta.id)" class="btn btn-success btn-sm">
+                                            <button type="button" @click="verVenta(productor.id)" class="btn btn-success btn-sm">
                                             <i class="icon-eye"></i>
                                             </button> &nbsp;
-                                            <template v-if="venta.estado_id=='1'">
-                                                <button type="button" class="btn btn-danger btn-sm" @click="desactivarVenta(venta.id)">
-                                                    <i class="icon-trash"></i>
-                                                </button>
-                                            </template>
                                         </td>
-                                        <td v-text="venta.nombre_persona"></td>
-                                        <td v-text="venta.fechaVenta"></td>
-                                        <td v-text="venta.nombre_lugarVenta"></td>
-                                        <td v-text="venta.nombre_vereda"></td>
-                                        <td v-text="venta.nombre_zona"></td>
-                                        <td v-text="venta.totalKilos"></td>
-                                        <td v-text="venta.totalNeto"></td>
-                                        <td v-text="venta.nombre_estadoVenta"></td>
+                                        <td v-text="productor.nombre"></td>
+                                        <td></td>
+                                        <td v-text="productor.num_documento"></td>
+                                        <td v-text="productor.fechaNacimiento"></td>
+                                        <td v-text="productor.nombre_sexo"></td>
+                                        <td v-text="productor.nombre_escolaridad"></td>
+                                        <td v-text="productor.telefono"></td>
+                                        <td v-text="productor.email"></td>
+                                        <td v-text="productor.nombre_vereda"></td>
                                     </tr>                                
                                 </tbody>
                             </table>
@@ -88,175 +85,211 @@
                     <!-- Detalle-->
                     <template v-else-if="listado==0">
                     <div class="card-body">
-                        <div class="form-group row border">
-                            <div class="col-md-3">
+                        <div class="form-group row">
+                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Productor(*)</label>
-                                    <v-select
-                                        :on-search="selectProductor"
-                                        label="nombre"
-                                        :options="arrayProductor"
-                                        placeholder="Buscar Productor..."
-                                        :onChange="getDatosProductor"                                        
-                                    >
-                                    </v-select>
+                                    <label for="">Productor</label>
+                                      <select class="form-control" v-model="productor_id" @click="selectFinca(productor_id)" @change="selectFinca(productor_id)">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="productor in arrayProductor" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
+                                      </select>  
+                                </div>
+                                </div>
+                            <div class="col-md-3">
+                                 <div class="form-group">
+                                    <label for="">Finca</label>
+                                      <select class="form-control" v-model="finca_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="finca in arrayFinca" :key="finca.id" :value="finca.id" v-text="finca.nombre" ></option>
+                                      </select>  
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Punto de compra(*)</label>
+                                    <label for="">Area Produccion(Hectareas)</label>
+                                      <input type="number" v-model="areaProduccion"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Siembra Nueva(Hectareas)</label>
+                                       <input type="number" v-model="siembra"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Edad del cultivo</label>
+                                       <input type="number" v-model="edad"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Numero de arboles sembrados</label>
+                                       <input type="number" v-model="numeroArboles"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Produccion Mensual(Kg)</label>
+                                       <input type="number" v-model="produccion"  class="form-control" placeholder="">
+                                </div>
+                            </div>                          
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">A quien vende(*)</label>
                                     <v-select
                                         :on-search="selectLugarVenta"
                                         label="nombre"
                                         :options="arrayLugarVenta"
-                                        placeholder="Buscar punto de compra..."
+                                        placeholder="Buscar..."
                                         :onChange="getDatosLugarVenta"                                        
                                     >
                                     </v-select>
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div class="form-group row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Zona </label>
-                                    <select class="form-control" v-model="zona_id" @click="selectVereda(zona_id)" @change="selectVereda(zona_id)">
-                                        <option value="0" disabled>Seleccione</option>
-                                        <option v-for="arrayZona in arrayZona" :key="arrayZona.id" :value="arrayZona.id" v-text="arrayZona.nombre" ></option>
-                                    </select> 
+                                    <label for="">Vendido Fresco(Kg)</label>
+                                       <input type="number" v-model="vendidoFresco"  class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Vereda</label>
-                                    <select class="form-control" v-model="vereda_id">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="vereda in arrayVereda" :key="vereda.id" :value="vereda.id" v-text="vereda.nombre" ></option>
-                                    </select>
+                                    <label for="">Por vender Fresco(Kg)</label>
+                                       <input type="number" v-model="porVenderFresco"  class="form-control" placeholder="">
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div v-show="errorVenta" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMostrarMsjVenta" :key="error" v-text="error">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Vendido Seco(Kg)</label>
+                                       <input type="number" v-model="vendidoSeco"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Por vender Seco(Kg)</label>
+                                       <input type="number" v-model="porVenderSeco"  class="form-control" placeholder="">
+                                </div>
+                            </div>                          
+                        </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row border">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tipo Cacao <span style="color:red;" v-show="categoria_id==0">(*Seleccione)</span></label>
-                                    <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarCategoria()" placeholder="Ingrese tipo cacao">
-                                        <button @click="abrirModal()" class="btn btn-primary">...</button>
-                                        <input type="text" readonly class="form-control" v-model="categoria">
-                                    </div>                                    
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Valor Unitario <span style="color:red;" v-show="valorUnitario==0"></span></label>
-                                    <input type="number" value="0" step="any" class="form-control" disabled v-model="valorUnitario">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Peso(Kg) <span style="color:red;" v-show="peso==0">(*Ingrese)</span></label>
-                                    <input type="number" value="0" step="any" class="form-control" v-model="peso">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <button @click="agregarDetalle()" class="btn btn-success form-control btnagregar"><i class="icon-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row border">
+                         <div class="form-group">
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th>Opciones</th>
-                                            <th>Categoria</th>
-                                            <th>Peso(Kg)</th>
-                                            <th>% Humedad</th>
-                                            <th>% Fermentacion</th>
-                                            <th>Descuento por humedad(Kg)</th>
-                                            <th>Valor Unitario</th>
-                                            <th>Subtotal</th>
+                                            <th>No</th>
+                                            <th>Compromiso</th>
+                                            <th>Porcentaje Ejecucion</th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="arrayDetalle.length">
-                                        <tr v-for="(detalle,index) in arrayDetalle" :key="detalle.id">
-                                            <td>
-                                                <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
-                                                    <i class="icon-close"></i>
-                                                </button>
-                                            </td>
-                                            <td  v-text="detalle.categoria">
-                                            </td>
-                                            <td>
-                                            <input v-model="detalle.peso" type="number" class="form-control">
-                                            </td>
-                                            <td>
-                                            <input v-model="detalle.humedad" type="number" value="0" class="form-control">
-                                            </td>
-                                            <td>
-                                            <input v-model="detalle.fermentacion"  type="number" value="0" class="form-control">
-                                            </td>
-                                            <td>
-                                            {{(detalle.descuentoHumedadKg=detalle.peso*((detalle.humedad-8)/100)).toFixed(2)}}
-                                            </td>
-                                            <td v-text="detalle.valorUnitario">
-                                            </td>
-                                            <td>
-                                                $ {{(detalle.subtotal=detalle.valorUnitario*(detalle.peso-detalle.descuentoHumedadKg)).toFixed(0)}}
-                                            </td>    
-                                        </tr>
-                                         <tr style="background-color: #CEECF5;">
-                                            <td colspan="7" align="right"><strong>Peso Total(Kg):</strong></td>
-                                            <td> {{(totalKilos=calcularTotalKilos)}}</td>
-                                        </tr>
-                                        <tr style="background-color: #CEECF5;">
-                                            <td colspan="7" align="right"><strong>Peso Total Neto(Kg):</strong></td>
-                                            <td> {{(totalKilosNetos=calcularTotalDescuento.toFixed(2))}}</td>
-                                        </tr>
-                                         <tr style="background-color: #ff4d4d;">
-                                            <td colspan="7" align="right"><strong>Incentivo por transporte y volumen por kg:</strong></td>
-                                            <td>
-                                                 <input v-model="totalIncentivoXkg"  type="number" class="form-control">
-                                            </td>
-                                        </tr>
-                                         <tr style="background-color: #ff4d4d;">
-                                            <td colspan="7" align="right"><strong>Total incentivo:</strong></td>
-                                            <td>
-                                                $ {{(totalIncentivo=totalKilosNetos*totalIncentivoXkg).toFixed(0)}}
-                                            </td>
-                                        </tr>
-                                        <tr style="background-color: #CEECF5;">
-                                            <td colspan="7" align="right"><strong>Total Neto:</strong></td>
-                                            <td>$ {{(totalNeto=calcularTotal+totalIncentivo).toFixed(0)}}</td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody v-else>
+                                    <tbody>
                                         <tr>
-                                            <td colspan="8">
-                                                NO hay categorias agregadas
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP1"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP1"  class="form-control" placeholder="">
+                                            </td>   
+                                        </tr>
+                                    </tbody>  
+                                     <tbody>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP2"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP2"  class="form-control" placeholder="">
                                             </td>
                                         </tr>
-                                    </tbody>                                    
+                                    </tbody> 
+                                    <tbody>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP3"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP3"  class="form-control" placeholder="">
+                                            </td> 
+                                        </tr>
+                                    </tbody> 
+                                    <tbody>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP4"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP4"  class="form-control" placeholder="">
+                                            </td>
+                                        </tr>
+                                    </tbody>   
+                                    <tbody>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP5"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP5"  class="form-control" placeholder="">
+                                            </td>
+                                        </tr>
+                                    </tbody>                             
                                 </table>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Observaciones</label>
-                            <textarea class="form-control" v-model="observaciones" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div> 
+                        <div class="form-group row">
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Objetivos</label>
+                                       <input type="text" v-model="objetivos"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Estado actual finca</label>
+                                       <input type="text" v-model="estadoFinca"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Recomendaciones tecnico ambientales</label>
+                                       <input type="text" v-model="recomendaciones"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="form-group row">
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Observaciones</label>
+                                       <input type="text" v-model="observaciones"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Nivel Satisfaccion Asistencia(%)</label>
+                                       <input type="number" v-model="asistencia"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Nivel Satisfaccion Empresa(%)</label>
+                                       <input type="number" v-model="empresa"  class="form-control" placeholder="">
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                                <button type="button" class="btn btn-primary" @click="registrarVenta()">Registrar Venta</button>
+                                <button type="button" class="btn btn-primary" @click="registrarVisita()">Registrar</button>
                             </div>
                         </div>
                     </div>
@@ -274,20 +307,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Punto de Compra</label>
+                                    <label>Lugar de Venta</label>
                                     <p v-text="lugarVenta"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Zona</label>
-                                    <p v-text="zona"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Vereda</label>
-                                    <p v-text="vereda"></p>
                                 </div>
                             </div>
                            
@@ -305,9 +326,6 @@
                                         <tr>
                                             <th>Tipo Cacao</th>
                                             <th>Peso(Kg)</th>
-                                            <th>% Humedad</th>
-                                            <th>% Fermentacion</th>
-                                            <th>Descuento por humedad(Kg)</th>
                                             <th>Valor Unitario</th>
                                             <th>Subtotal</th>
                                         </tr>
@@ -318,36 +336,22 @@
                                             </td>
                                             <td v-text="detalle.peso">
                                             </td>
-                                            <td v-text="detalle.humedad">
-                                            </td>
-                                            <td v-text="detalle.fermentacion">
-                                            </td>
-                                            <td v-text="detalle.descuentoHumedadKg">
-                                            </td>
                                             <td v-text="detalle.valorUnitario">
                                             </td>
                                             <td v-text="detalle.subtotal">
                                             </td>
                                         </tr>
                                        <tr style="background-color: #CEECF5;">
-                                            <td colspan="6" align="right"><strong>Peso Total(Kg):</strong></td>
+                                            <td colspan="3" align="right"><strong>Peso Total(Kg):</strong></td>
                                             <td v-text="totalKilos"></td>
                                         </tr>
-                                        <tr style="background-color: #CEECF5;">
-                                            <td colspan="6" align="right"><strong>Peso Total Neto(Kg):</strong></td>
-                                            <td v-text="totalKilosNetos"></td>
-                                        </tr>
                                          <tr style="background-color: #ff4d4d;">
-                                            <td colspan="6" align="right"><strong>Incentivo por transporte y volumen por kg($):</strong></td>
-                                            <td v-text="totalIncentivoXkg"></td>
-                                        </tr>
-                                         <tr style="background-color: #ff4d4d;">
-                                            <td colspan="6" align="right"><strong>Total incentivo($):</strong></td>
-                                            <td v-text="totalIncentivo"></td>
+                                            <td colspan="3" align="right"><strong>Descuento por humedad:</strong></td>
+                                            <td></td>
                                         </tr>
                                         <tr style="background-color: #CEECF5;">
-                                            <td colspan="6" align="right"><strong>Total Neto($):</strong></td>
-                                            <td v-text="totalNeto"></td>
+                                            <td colspan="3" align="right"><strong>Total Neto:</strong></td>
+                                            <td v-text="totalVenta"></td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -433,39 +437,50 @@
 
 <script>
     import vSelect from 'vue-select';
+    import Datepicker from 'vuejs-datepicker';
     export default {
         data (){
             return {
-                venta_id: 0,
+                persona_id:0, 
                 productor_id:0,
-                productor:'',
+                finca_id:0,
+                areaProduccion:0,
+                siembra:0,
+                edad:0,
+                numeroArboles:0,
+                produccion:0,
                 lugarVenta_id:0,
-                lugarVenta:'',
-                vereda_id:0,
-                vereda:'',
-                zona_id:0,
-                zona:'',                
-                totalKilos:0.0,
-                totalKilosNetos:0.0,
-                totalIncentivoXkg:0.0,
-                totalIncentivo:0.0,
-                totalNeto:0.0,
+                vendidoFresco:0,
+                porVenderFresco:0,
+                vendidoSeco:0,
+                porVenderSeco:0,
+                objetivos:'',
+                estadoFinca:'',
+                recomendaciones:'',
                 observaciones:'',
-                totalImpuesto: 0.0,
-                totalParcial: 0.0,
+                asistencia:0,
+                empresa:0,
+                NombreP1:'',
+                ccP1:0,
+                NombreP2:'',
+                ccP2:0,
+                NombreP3:'',
+                ccP3:0,
+                NombreP4:'',
+                ccP4:0,
+                NombreP5:'',
+                ccP5:0,
 
-                arrayVenta : [],
-                arrayProductor: [],
-                arrayLugarVenta: [],
-                arrayVereda: [],
-                arrayZona:[],
+                arrayProductor : [],
+                arrayFinca : [],
+                arrayLugarVenta: [],                
                 arrayDetalle : [],
                 listado:1,
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorVenta : 0,
-                errorMostrarMsjVenta : [],
+                errorProductor : 0,
+                errorMostrarMsjProductor : [],
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -484,11 +499,16 @@
                 categoria:'',
                 codigo:0,
                 peso:0,
-                humedad:0.0,
-                fermentacion:0.0,
-                descuentoHumedadKg:0.0,
                 valorUnitario: 0,
+                ValorDonacion: 0,
+                valorTransporte:0,
+                valorAsohof:0,
+                valorCuatroPorMil:0,
                 totalSinDescuento:0,
+                totalDonacion:0,
+                totalTransporte:0,
+                totalAsohof:0,
+                totalCuatroXmil:0,
                 subtotal:0,
                 estado:'',
                 fechaVenta:'',
@@ -524,119 +544,41 @@
                 }
                 return pagesArray;
             },
-            calcularTotal: function(){
-                var resultado=0.0;
-                for(var i=0;i<this.arrayDetalle.length;i++){
-                    resultado=resultado+(this.arrayDetalle[i].subtotal)
-                }
-                               
-                return resultado;
-            },
-             calcularTotalKilos: function(){
-                var resultado=0.0;
-                for(var i=0;i<this.arrayDetalle.length;i++){
-                    resultado =Number(resultado)+Number(this.arrayDetalle[i].peso)
-                }
-                               
-                return resultado;
-                
-            },
-             calcularTotalDescuento: function(){
-                var resultado=0.0;
-                for(var i=0;i<this.arrayDetalle.length;i++){
-                    resultado =Number(resultado)+Number(this.arrayDetalle[i].peso)-Number(this.arrayDetalle[i].peso)*Number((this.arrayDetalle[i].humedad-8)/100)
-                }               
-                return resultado;
-            },
-            calcularTotalDonacion: function(){
-                var resultado=0.0;
-                 for(var i=0;i<this.arrayDetalle.length;i++){
-                resultado =Number(resultado)+(Number(this.arrayCategoriaMoras[0].ValorDonacion)*Number(this.arrayDetalle[i].peso));                              
-                 }
-                return resultado;               
-            },
-            calcularTotalTransporte: function(){
-                var resultado=0.0;
-                 for(var i=0;i<this.arrayDetalle.length;i++){
-                resultado =Number(resultado)+(Number(this.arrayCategoriaMoras[0].valorTransporte)*Number(this.arrayDetalle[i].peso));                              
-                 }
-                return resultado;               
-            },
-            calcularTotalAsohof: function(){
-                var resultado=0.0;
-                 for(var i=0;i<this.arrayDetalle.length;i++){
-                resultado =Number(resultado)+(Number(this.arrayDetalle[i].valorUnitario)*Number(this.arrayDetalle[i].peso)*Number(this.arrayCategoriaMoras[0].valorAsohof));                              
-                 }
-                return resultado;               
-            },
-            calcularTotalCuatroXmil: function(){
-                var resultado=0.0;
-                 for(var i=0;i<this.arrayDetalle.length;i++){
-                resultado =Number(resultado)+(Number(this.arrayDetalle[i].valorUnitario)*Number(this.arrayDetalle[i].peso)*Number(this.arrayCategoriaMoras[0].valorCuatroPorMil));                              
-                 }
-                return resultado;               
-            },
-           
         },
         methods : {
-            listarVenta (page,buscar,criterio){
+            listarProductor (page,buscar,criterio){
                 let me=this;
-                var url= 'venta?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var url= 'productor?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    me.arrayVenta = respuesta.ventas.data;
+                    me.arrayProductor = respuesta.personas.data;
                     me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             },
-            selectProductor(search,loading){
-                let me=this;
-                loading(true)
-
-                var url= 'productor/selectProductor2?filtro='+search;
-                axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayProductor=respuesta.personas;
-                    loading(false)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            getDatosProductor(val1){
-                let me = this;
-                me.loading = true;
-                me.productor_id = val1.id;
-            },
-            selectZona(){
+            selectProductor(){
                 let me =this;
-                var url ='zona/selectZona';
+                var url ='productor/selectProductor';
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
-                    me.arrayZona= respuesta.zonas;
+                    me.arrayProductor2= respuesta.personas;
                 })
                 .catch(function (error) {
                     console.log(error);
-                });
+                })
             },
-           selectVereda(id){
+             selectFinca(id){
                 let me =this;
-                var url ='vereda/selectVeredaZona/'+id;
+                var url ='finca/selectFinca/'+id;
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
-                    me.arrayVereda= respuesta.veredas;
+                    me.arrayFinca= respuesta.fincas;
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-            },
-            getDatosVereda(val1){
-                let me = this;
-                me.loading = true;
-                me.vereda_id = val1.id;
             },
             selectLugarVenta(search,loading){
                 let me=this;
@@ -653,45 +595,13 @@
                     console.log(error);
                 });
             },
-
             getDatosLugarVenta(val1){
                 let me = this;
                 me.loading = true;
                 me.lugarVenta_id = val1.id;
             },
-            buscarCategoria(){
-                let me=this;
-                var url= 'categoriaMora/buscarCategoria?filtro=' + me.codigo;
-
-                axios.get(url).then(function (response) {
-                   var respuesta= response.data;
-                    me.arrayCategoriaMoras = respuesta.categoriaMoras;
-                   
-                    if (me.arrayCategoriaMoras.length>0){
-                        me.categoria=me.arrayCategoriaMoras[0]['nombre'];
-                        me.categoria_id=me.arrayCategoriaMoras[0]['id'];
-                        me.valorUnitario=me.arrayCategoriaMoras[0]['valorUnitario'];
-                        me.ValorDonacion=me.arrayCategoriaMoras[0]['ValorDonacion'];
-                        me.valorTransporte=me.arrayCategoriaMoras[0]['valorTransporte'];
-                        me.valorAsohof=me.arrayCategoriaMoras[0]['valorAsohof'];
-                        me.valorCuatroPorMil=me.arrayCategoriaMoras[0]['valorCuatroPorMil'];
-                    }
-                    else{
-                        me.categoria='No existe categoria';
-                        me.categoria_id=0;
-                        me.valorUnitario=0;
-                        me.ValorDonacion=0;
-                        me.valorTransporte=0;
-                        me.valorAsohof=0;
-                        me.valorCuatroPorMil=0;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
             pdfVenta(id){
-                window.open('http://localhost/comcacaot/public/venta/pdf/'+id);
+                window.open('http://gestion.asofrut.org/venta/pdf/'+id);
             },
             cargarPdf(){
                 window.open('http://gestion.asofrut.org/venta/listarPdf');
@@ -704,7 +614,7 @@
                 //Actualiza la página actual
                 me.pagination.current_page = page;
                 //Envia la petición para visualizar la data de esa página
-                me.listarVenta(page,buscar,criterio);
+                me.listarProductor(page,buscar,criterio);
             },
             encuentra(id){
                 var sw=0;
@@ -745,8 +655,6 @@
                         me.categoria_id=0;
                         me.categoria="";
                         me.peso=0;
-                        me.humedad=0;
-                        me.descuentoHumedadKg=0;
                         me.valorUnitario=0;
                         me.subtotal=0;
                         
@@ -773,9 +681,7 @@
                             valorUnitario:data['valorUnitario'],
                             subtotal:data['subtotal'],
                             peso: 1,
-                            humedad:0,
-                            descuentoHumedadKg:0
-                       }); 
+                        }); 
                     }
             },
             listarCategoria (buscar,criterio){
@@ -789,66 +695,97 @@
                     console.log(error);
                 });
             },
-            registrarVenta(){
-                if (this.validarVenta()){
+            registrarVisita(){
+                if (this.validarVisita()){
                     return;
                 }
                 
                 let me = this;
-                axios.post('venta/registrar',{
-                    'productor_id': this.productor_id,
-                    'lugarVenta_id' : this.lugarVenta_id,
-                    'vereda_id':this.vereda_id,  
-                    'zona_id': this.zona_id,                  
-                    'totalKilos' : this.totalKilos,
-                    'totalKilosNetos':this.totalKilosNetos,
-                    'totalIncentivoXkg':this.totalIncentivoXkg,
-                    'totalIncentivo':this.totalIncentivo,
-                    'totalNeto':this.totalNeto,
-                    'observaciones':this.observaciones,
-                    'data': this.arrayDetalle
-
+                axios.post('visita/registrar',{
+                'productor_id':this.productor_id,   
+                'finca_id':this.finca_id,
+                'areaProduccion':this.areaProduccion,
+                'siembra':this.siembra,
+                'edad':this.edad,
+                'numeroArboles':this.numeroArboles,
+                'produccion':this.produccion,
+                'lugarVenta_id':this.lugarVenta_id,
+                'vendidoFresco':this.vendidoFresco,
+                'porVenderFresco':this.porVenderFresco,
+                'vendidoSeco':this.vendidoSeco,
+                'porVenderSeco':this.porVenderSeco,
+                'objetivos':this.objetivos,
+                'estadoFinca':this.estadoFinca,
+                'recomendaciones':this.recomendaciones,
+                'observaciones':this.observaciones,
+                'asistencia':this.asistencia,
+                'empresa':this.empresa,
+                'NombreP1':this.NombreP1,
+                'ccP1':this.ccP1
                 }).then(function (response) {
                     me.listado=1;
-                    me.listarVenta(1,'','personas');
-                    me.productor_id=0;
-                    me.lugarVenta_id=0;
+                    me.listarProductor(1,'','personas');
+                    me.nombre='';
+                    me.tipo_id=0;
+                    me.num_documento=0;
+                    me.telefono=0;
+                    me.email='';   
+                    me.estadoCivil_id=0;
+                    me.etnia_id=0;
+                    me.sexo_id=0;
+                    me.fechaNacimiento='';
                     me.vereda_id=0;
-                    me.zona_id=0;
-                    me.fechaVenta=0;
-                    me.totalKilos=0;
-                    me.totalKilosNetos=0;
-                    me.totalIncentivoXkg=0;
-                    me.totalNeto=0;
-                    me.observaciones='';
-
-                    me.categoria_id=0;
-                    me.categoria='';
-                    me.peso=0;
-                    me.humedad=0;
-                    me.fermentacion=0;
-                    me.descuentoHumedadKg=0;
-                    me.valorUnitario=0;
-                    me.subtotal=0;
-                    me.codigo='';
-                    me.arrayDetalle=[];
-                    window.open('http://localhost/comcacaot/public/venta/pdf/'+response.data.id);
-
+                    me.vivienda_id=0;
+                    me.tipovivienda_id=0;
+                    me.escolaridad_id=0;
+                    me.carnetSalud=0;
+                    me.discapacitado=0;
+                    me.personasAcargo=0;
+                    me.desplazado=0;
+                    me.asociacion_id=0;
+                    me.programaEstado_id=0;
+                    me.asistencia=0;
+                    me.entidad='';
+                    me.capacitacion=0;
+                    me.temas='';
+                    me.parentesco1='';
+                    me.NombreP1='';
+                    me.ccP1=0;
+                    me.fechaNacimientoP1='';
+                    me.escolaridad_idP1='';
+                    me.parentesco2='';
+                    me.NombreP2='';
+                    me.ccP2=0;
+                    me.fechaNacimientoP2='';
+                    me.escolaridad_idP2='';
+                    me.parentesco3='';
+                    me.NombreP3='';
+                    me.ccP3=0;
+                    me.fechaNacimientoP3='';
+                    me.escolaridad_idP3='';
+                    me.parentesco4='';
+                    me.NombreP4='';
+                    me.ccP4=0;
+                    me.fechaNacimientoP4='';
+                    me.escolaridad_idP4='';
+                    me.parentesco5='';
+                    me.NombreP5='';
+                    me.ccP5=0;
+                    me.fechaNacimientoP5='';
+                    me.escolaridad_idP5='';
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
-            validarVenta(){
-                this.errorVenta=0;
-                this.errorMostrarMsjVenta =[];
+            validarVisita(){
+                this.errorProductor=0;
+                this.errorMostrarMsjProductor =[];
 
-                if (this.productor_id==0) this.errorMostrarMsjVenta.push("Seleccione un Productor");
-                if (this.lugarVenta_id==0) this.errorMostrarMsjVenta.push("Seleccione un punto de compra");
-                if (this.arrayDetalle.length<=0) this.errorMostrarMsjVenta.push("Ingrese tipo de cacao");
+                if (this.productor_id==0) this.errorMostrarMsjProductor.push("Seleccione un Productor");
+                if (this.finca_id==0) this.errorMostrarMsjProductor.push("Seleccione una finca");
+                if (this.errorMostrarMsjProductor.length) this.errorProductor = 1;
 
-                if (this.errorMostrarMsjVenta.length) this.errorVenta = 1;
-
-                return this.errorVenta;
+                return this.errorProductor;
             },
             mostrarDetalle(){
                 let me=this;
@@ -865,38 +802,36 @@
                 me.cantidad=0;
                 me.precio=0;
                 me.arrayDetalle=[];
-                this.selectZona();
-                this.selectVereda(this.zona_id);
+                this.selectProductor();
+                this.selectFinca(this.productor_id);
             },
             ocultarDetalle(){
                 this.listado=1;
-                this.selectZona();
-                this.selectVereda(this.zona_id);
             },
             verVenta(id){
                 let me=this;
                 me.listado=2;
                 
                 //Obtener los datos del ingreso
-                var arrayVentaT=[];
+                var arrayProductorT=[];
                 var url= 'venta/obtenerCabecera?id=' + id;
                 
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    arrayVentaT = respuesta.venta;
+                    arrayProductorT = respuesta.venta;
 
-                    me.productor = arrayVentaT[0]['nombre_persona'];
-                    me.lugarVenta=arrayVentaT[0]['nombre_lugarVenta'];
-                    me.vereda=arrayVentaT[0]['nombre_vereda'];
-                    me.zona=arrayVentaT[0]['nombre_zona'];
-                    me.fechaVenta=arrayVentaT[0]['fechaVenta'];
-                    me.totalKilos=arrayVentaT[0]['totalKilos'];
-                    me.totalKilosNetos=arrayVentaT[0]['totalKilosNetos'];
-                    me.totalIncentivoXkg=arrayVentaT[0]['totalIncentivoXkg'];
-                    me.totalIncentivo=arrayVentaT[0]['totalIncentivo'];
-                    me.totalNeto=arrayVentaT[0]['totalNeto'];
-                    me.estado=arrayVentaT[0]['nombre_estadoVenta'];
-                    
+                    me.productor = arrayProductorT[0]['nombre_persona'];
+                    me.linea=arrayProductorT[0]['nombre_linea'];
+                    me.lugarVenta=arrayProductorT[0]['nombre_lugarVenta'];
+                    me.estado=arrayProductorT[0]['nombre_estadoVenta'];
+                    me.totalVenta=arrayProductorT[0]['totalVenta'];
+                    me.totalKilos=arrayProductorT[0]['totalKilos'];
+                    me.fechaVenta=arrayProductorT[0]['fechaVenta'];
+                    me.totalDonacion=arrayProductorT[0]['totalDonacion'];
+                    me.totalTransporte=arrayProductorT[0]['totalTransporte'];
+                    me.totalAsohof=arrayProductorT[0]['totalAsohof'];
+                    me.totalCuatroXmil=arrayProductorT[0]['totalCuatroXmil'];
+
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -942,7 +877,7 @@
                     axios.put('venta/desactivar',{
                         'id': id
                     }).then(function (response) {
-                        me.listarVenta(1,'','personas');
+                        me.listarProductor(1,'','personas');
                         swal.fire(
                         'Anulado!',
                         'La venta ha sido anulada con éxito.',
@@ -981,7 +916,7 @@
                     axios.put('venta/pasarFacturacion',{
                         'id': id
                     }).then(function (response) {
-                        me.listarVenta(1,'','personas');
+                        me.listarProductor(1,'','personas');
                         swal.fire(
                         'Tramite Facturacion!',
                         'La venta ha pasado al siguiente estado con exito.',
@@ -1020,7 +955,7 @@
                     axios.put('venta/pasarDisponiblePago',{
                         'id': id
                     }).then(function (response) {
-                        me.listarVenta(1,'','personas');
+                        me.listarProductor(1,'','personas');
                         swal.fire(
                         'Disponible para pago!',
                         'La venta ha pasado al siguiente estado con exito.',
@@ -1059,7 +994,7 @@
                     axios.put('venta/pasarPagado',{
                         'id': id
                     }).then(function (response) {
-                        me.listarVenta(1,'','personas');
+                        me.listarProductor(1,'','personas');
                         swal.fire(
                         'Pagado!',
                         'La venta ha pasado al siguiente estado con exito.',
@@ -1076,11 +1011,13 @@
                 ) {
                     
                 }
-                }) 
+               }) 
             },
+            
+            
         },
         mounted() {
-            this.listarVenta(1,this.buscar,this.criterio);
+            this.listarProductor(1,this.buscar,this.criterio);
         }
     }
 </script>
