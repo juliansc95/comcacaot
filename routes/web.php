@@ -73,56 +73,17 @@ Route::group(['middleware'=>['auth']],function(){
     //Ruta Backup
     Route::get('/backup', 'BackupController@backupDatabase');
     
-    
+    //Ruta Linea Base
+    Route::post('/visita/registrar', 'VisitaController@store');
+
      //Rutas Encuesta fitosanitaria
      Route::get('/fitosanitaria', 'EncuestaFitosanitariaController@index');
      Route::post('/fitosanitaria/registrar', 'EncuestaFitosanitariaController@store');
      Route::get('/fitosanitaria/id', 'EncuestaFitosanitariaController@MostrarId');
 
 
-     //Rutas Encuesta asofrut
-     Route::get('/visita', 'EncuestaAsofrutController@index');
-     Route::post('/visita/registrar', 'EncuestaAsofrutController@store');
 
-     //Caracterizacion predio cultivo
-     Route::get('/predio', 'PredioCultivoController@index');
-     Route::post('/predio/registrar', 'PredioCultivoController@store');
-
-    //Caracterizacion podas
-    Route::get('/poda', 'PodaController@index');
-     Route::post('/poda/registrar', 'PodaController@store');
-    
-    //Caracterizacion plagas
-    Route::get('/plaga', 'PlagaController@index');
-    Route::post('/plaga/registrar', 'PlagaController@store');
-
-    //Caracterizacion nutricion
-    Route::get('/nutricion', 'NutricionController@index');
-    Route::post('/nutricion/registrar', 'NutricionController@store');
-
-    //Caracterizacion tutorado
-    Route::get('/tutorado', 'TutoradoController@index');
-    Route::post('/tutorado/registrar', 'TutoradoController@store');
-
-    //Caracterizacion riego
-    Route::get('/riego', 'RiegoController@index');
-    Route::post('/riego/registrar', 'RiegoController@store');
-
-    //Caracterizacion practica
-     Route::get('/practica', 'PracticaController@index');
-     Route::post('/practica/registrar', 'PracticaController@store');
-
-     //Caracterizacion vocacion
-     Route::get('/vocacion', 'VocacionController@index');
-     Route::post('/vocacion/registrar', 'VocacionController@store');
-
-     //Caracterizacion suelo
-     Route::get('/suelo', 'SueloController@index');
-     Route::post('/suelo/registrar', 'SueloController@store');
-
-    //Caracterizacion cosechas
-    Route::get('/cosecha', 'CosechaController@index');
-    Route::post('/cosecha/registrar', 'CosechaController@store');
+  
 
     Route::post('/formSubmit','GpxUploadController@formSubmit');
 

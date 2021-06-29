@@ -109,3 +109,5 @@ Route::post('/cultivo/registrar','CultivoController@store');
 Route::put('/cultivo/actualizar','CultivoController@update');
 
 
+ //Ruta Linea Base
+ Route::post('/visita/registrar', 'VisitaController@store');

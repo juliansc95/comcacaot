@@ -54,7 +54,7 @@
                                             </button> &nbsp;
                                         </td>
                                         <td v-text="productor.nombre"></td>
-                                        <td v-text="arrayTipoId[productor.tipo_id-1].nombre"></td>
+                                        <td></td>
                                         <td v-text="productor.num_documento"></td>
                                         <td v-text="productor.fechaNacimiento"></td>
                                         <td v-text="productor.nombre_sexo"></td>
@@ -91,7 +91,7 @@
                                     <label for="">Productor</label>
                                       <select class="form-control" v-model="productor_id" @click="selectFinca(productor_id)" @change="selectFinca(productor_id)">
                                             <option value="0" disabled>Seleccione</option>
-                                            <option v-for="productor in arrayProductor2" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
+                                            <option v-for="productor in arrayProductor" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
                                       </select>  
                                 </div>
                                 </div>
@@ -107,7 +107,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Area Produccion(Hectareas)</label>
-                                      <input type="number" v-model="num_documento"  class="form-control" placeholder="">
+                                      <input type="number" v-model="areaProduccion"  class="form-control" placeholder="">
                                 </div>
                             </div>
                              <div class="col-md-3">
@@ -161,19 +161,19 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Por vender Fresco(Kg)</label>
-                                       <input type="number" v-model="VenderFresco"  class="form-control" placeholder="">
+                                       <input type="number" v-model="porVenderFresco"  class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Vendido Seco(Kg)</label>
-                                       <input type="number" v-model="VendidoSeco"  class="form-control" placeholder="">
+                                       <input type="number" v-model="vendidoSeco"  class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Por vender Seco(Kg)</label>
-                                       <input type="number" v-model="VenderSeco"  class="form-control" placeholder="">
+                                       <input type="number" v-model="porVenderSeco"  class="form-control" placeholder="">
                                 </div>
                             </div>                          
                         </div>
@@ -247,35 +247,49 @@
                             </div>
                         </div> 
                         <div class="form-group row">
-                             <div class="col-md-3">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Objetivos</label>
                                        <input type="text" v-model="objetivos"  class="form-control" placeholder="">
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Estado actual finca</label>
                                        <input type="text" v-model="estadoFinca"  class="form-control" placeholder="">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Recomendaciones tecnico ambientales</label>
                                        <input type="text" v-model="recomendaciones"  class="form-control" placeholder="">
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                            </div>
+                            <div class="form-group row">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Observaciones</label>
                                        <input type="text" v-model="observaciones"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Nivel Satisfaccion Asistencia(%)</label>
+                                       <input type="number" v-model="asistencia"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Nivel Satisfaccion Empresa(%)</label>
+                                       <input type="number" v-model="empresa"  class="form-control" placeholder="">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                                <button type="button" class="btn btn-primary" @click="registrarProductor()">Registrar</button>
+                                <button type="button" class="btn btn-primary" @click="registrarVisita()">Registrar</button>
                             </div>
                         </div>
                     </div>
@@ -429,74 +443,37 @@
             return {
                 persona_id:0, 
                 productor_id:0,
-                nombre:'',
-                tipo_id:0,
-                num_documento : '',
-                direccion : '',
-                telefono : '',
-                email : '',   
-                estadoCivil_id:0,
-                etnia_id:0,
-                sexo_id:0,
-                fechaNacimiento:'',
-                vereda_id:0,
-                vivienda_id:0,
-                tipovivienda_id:0,
-                escolaridad_id:0,
-                carnetSalud:0,
-                discapacitado:0,
-                personasAcargo:0,
-                desplazado:0,
-                asociacion_id:0,
-                programaEstado_id:0,
+                finca_id:0,
+                areaProduccion:0,
+                siembra:0,
+                edad:0,
+                numeroArboles:0,
+                produccion:0,
+                lugarVenta_id:0,
+                vendidoFresco:0,
+                porVenderFresco:0,
+                vendidoSeco:0,
+                porVenderSeco:0,
+                objetivos:'',
+                estadoFinca:'',
+                recomendaciones:'',
+                observaciones:'',
                 asistencia:0,
-                entidad:'',
-                capacitacion:0,
-                temas:'',
-                parentesco1:'',
+                empresa:0,
                 NombreP1:'',
                 ccP1:0,
-                fechaNacimientoP1:'',
-                escolaridad_idP1:'',
-                parentesco2:'',
                 NombreP2:'',
                 ccP2:0,
-                fechaNacimientoP2:'',
-                escolaridad_idP2:'',
-                parentesco3:'',
                 NombreP3:'',
                 ccP3:0,
-                fechaNacimientoP3:'',
-                escolaridad_idP3:'',
-                parentesco4:'',
                 NombreP4:'',
                 ccP4:0,
-                fechaNacimientoP4:'',
-                escolaridad_idP4:'',
-                parentesco5:'',
                 NombreP5:'',
                 ccP5:0,
-                fechaNacimientoP5:'',
-                escolaridad_idP5:'',
 
-                arrayTipoId:[],
-                arrayEstadoCivil:[],
-                arrayEtnia:[],
-                arraySexo:[],
                 arrayProductor : [],
-                arrayProductor2 : [],
                 arrayFinca : [],
-                arrayVereda:[],
-                arrayParentesco:[],
-                arrayEscolaridad:[],
-                arrayLugarVenta: [],
-                arrayLinea:[],
-                arrayVivienda:[],
-                arrayTipoVivienda:[],
-                arrayOpcion:[],
-                arrayAsociacion:[],
-                arrayProgramaEstado:[],
-                
+                arrayLugarVenta: [],                
                 arrayDetalle : [],
                 listado:1,
                 modal : 0,
@@ -570,68 +547,12 @@
         },
         methods : {
             listarProductor (page,buscar,criterio){
-                this.selectTipoId();
                 let me=this;
                 var url= 'productor?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayProductor = respuesta.personas.data;
                     me.pagination= respuesta.pagination;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-             selectTipoId(){
-                let me =this;
-                var url ='tipoId/selectTipoId';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayTipoId= respuesta.tipoIds;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-             selectEstadoCivil(){
-                let me =this;
-                var url ='estadoCivil/selectEstadoCivil';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayEstadoCivil= respuesta.estadoCivil;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            selectEtnia(){
-                let me =this;
-                var url ='etnia/selectEtnia';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayEtnia= respuesta.etnias;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-             selectSexo(){
-                let me =this;
-                var url ='sexo/selectSexo';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arraySexo= respuesta.sexos;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-             selectParentesco(){
-                let me =this;
-                var url ='parentesco/selectParentesco';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayParentesco= respuesta.parentescos;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -659,127 +580,6 @@
                     console.log(error);
                 })
             },
-             selectLugarVenta(search,loading){
-                let me=this;
-                loading(true)
-
-                var url= 'lugarVenta/selectLugarVenta2?filtro='+search;
-                axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayLugarVenta=respuesta.lugarVentas;
-                    loading(false)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-             selectEscolaridad(){
-                let me =this;
-                var url ='escolaridad/selectEscolaridad';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayEscolaridad= respuesta.grados;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            selectVivienda(){
-                let me =this;
-                var url ='vivienda/selectVivienda';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayVivienda= respuesta.viviendas;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            selectTipoVivienda(){
-                let me =this;
-                var url ='tipoVivienda/selectTipoVivienda';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayTipoVivienda= respuesta.tipoViviendas;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            selectOpcion(){
-                let me =this;
-                var url ='opcion/selectOpcion';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayOpcion= respuesta.opciones;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-             selectAsociacion(){
-                let me =this;
-                var url ='asociacion/selectAsociacion';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayAsociacion= respuesta.asociaciones;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            selectProgramaEstado(){
-                let me =this;
-                var url ='estado/selectProgramaEstado';
-                axios.get(url).then(function (response) {
-                    var respuesta = response.data;
-                    me.arrayProgramaEstado= respuesta.programasEstado;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            selectVereda(search,loading){
-                let me=this;
-                loading(true)
-
-                var url= 'vereda/selectVereda2?filtro='+search;
-                axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayVereda=respuesta.veredas;
-                    loading(false)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            getDatosVereda(val1){
-                let me = this;
-                me.loading = true;
-                me.vereda_id = val1.id;
-            },
-            selectLinea(search,loading){
-                let me=this;
-                loading(true)
-
-                var url= 'linea/selectLinea2?filtro='+search;
-                axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayLinea=respuesta.lineas;
-                    loading(false)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            getDatosLinea(val1){
-                let me = this;
-                me.loading = true;
-                me.linea_id = val1.id;
-            },
             selectLugarVenta(search,loading){
                 let me=this;
                 loading(true)
@@ -799,37 +599,6 @@
                 let me = this;
                 me.loading = true;
                 me.lugarVenta_id = val1.id;
-            },
-            buscarCategoria(){
-                let me=this;
-                var url= 'categoriaMora/buscarCategoria?filtro=' + me.codigo;
-
-                axios.get(url).then(function (response) {
-                   var respuesta= response.data;
-                    me.arrayCategoriaMoras = respuesta.categoriaMoras;
-                   
-                    if (me.arrayCategoriaMoras.length>0){
-                        me.categoria=me.arrayCategoriaMoras[0]['nombre'];
-                        me.categoria_id=me.arrayCategoriaMoras[0]['id'];
-                        me.valorUnitario=me.arrayCategoriaMoras[0]['valorUnitario'];
-                        me.ValorDonacion=me.arrayCategoriaMoras[0]['ValorDonacion'];
-                        me.valorTransporte=me.arrayCategoriaMoras[0]['valorTransporte'];
-                        me.valorAsohof=me.arrayCategoriaMoras[0]['valorAsohof'];
-                        me.valorCuatroPorMil=me.arrayCategoriaMoras[0]['valorCuatroPorMil'];
-                    }
-                    else{
-                        me.categoria='No existe categoria';
-                        me.categoria_id=0;
-                        me.valorUnitario=0;
-                        me.ValorDonacion=0;
-                        me.valorTransporte=0;
-                        me.valorAsohof=0;
-                        me.valorCuatroPorMil=0;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
             },
             pdfVenta(id){
                 window.open('http://gestion.asofrut.org/venta/pdf/'+id);
@@ -926,62 +695,33 @@
                     console.log(error);
                 });
             },
-            registrarProductor(){
-                if (this.validarProductor()){
+            registrarVisita(){
+                if (this.validarVisita()){
                     return;
                 }
                 
                 let me = this;
-                axios.post('productor/registrar',{
-                    'nombre':this.nombre,
-                    'tipo_id':this.tipo_id,
-                    'num_documento' :this.num_documento,
-                    'direccion' :this.telefono,
-                    'telefono' :this.telefono,
-                    'email' :this.email,   
-                    'estadoCivil_id':this.estadoCivil_id,
-                    'etnia_id':this.etnia_id,
-                    'sexo_id':this.sexo_id,
-                    'fechaNacimiento':this.fechaNacimiento,
-                    'vereda_id':this.vereda_id,
-                    'vivienda_id':this.vivienda_id,
-                    'tipovivienda_id':this.tipovivienda_id,
-                    'escolaridad_id':this.escolaridad_id,
-                    'carnetSalud':this.carnetSalud,
-                    'discapacitado':this.discapacitado,
-                    'personasAcargo':this.personasAcargo,
-                    'desplazado':this.desplazado,
-                    'asociacion_id':this.asociacion_id,
-                    'programaEstado_id':this.programaEstado_id,
-                    'asistencia':this.asistencia,
-                    'entidad':this.entidad,
-                    'capacitacion':this.capacitacion,
-                    'temas':this.temas,
-                    'parentesco1':this.parentesco1,
-                    'NombreP1':this.NombreP1,
-                    'ccP1':this.ccP1,
-                    'fechaNacimientoP1':this.fechaNacimientoP1,
-                    'escolaridad_idP1':this.escolaridad_idP1,
-                    'parentesco2':this.parentesco2,
-                    'NombreP2':this.NombreP2,
-                    'ccP2':this.ccP2,
-                    'fechaNacimientoP2':this.fechaNacimientoP2,
-                    'escolaridad_idP2':this.escolaridad_idP2,
-                    'parentesco3':this.parentesco3,
-                    'NombreP3':this.NombreP3,
-                    'ccP3':this.ccP3,
-                    'fechaNacimientoP3':this.fechaNacimientoP3,
-                    'escolaridad_idP3':this.escolaridad_idP3,
-                    'parentesco4':this.parentesco4,
-                    'NombreP4':this.NombreP4,
-                    'ccP4':this.ccP4,
-                    'fechaNacimientoP4':this.fechaNacimientoP4,
-                    'escolaridad_idP4':this.escolaridad_idP4,
-                    'parentesco5':this.parentesco5,
-                    'NombreP5':this.NombreP5,
-                    'ccP5':this.ccP5,
-                    'fechaNacimientoP5':this.fechaNacimientoP5,
-                    'escolaridad_idP5':this.escolaridad_idP5
+                axios.post('visita/registrar',{
+                'productor_id':this.productor_id,   
+                'finca_id':this.finca_id,
+                'areaProduccion':this.areaProduccion,
+                'siembra':this.siembra,
+                'edad':this.edad,
+                'numeroArboles':this.numeroArboles,
+                'produccion':this.produccion,
+                'lugarVenta_id':this.lugarVenta_id,
+                'vendidoFresco':this.vendidoFresco,
+                'porVenderFresco':this.porVenderFresco,
+                'vendidoSeco':this.vendidoSeco,
+                'porVenderSeco':this.porVenderSeco,
+                'objetivos':this.objetivos,
+                'estadoFinca':this.estadoFinca,
+                'recomendaciones':this.recomendaciones,
+                'observaciones':this.observaciones,
+                'asistencia':this.asistencia,
+                'empresa':this.empresa,
+                'NombreP1':this.NombreP1,
+                'ccP1':this.ccP1
                 }).then(function (response) {
                     me.listado=1;
                     me.listarProductor(1,'','personas');
@@ -1037,26 +777,12 @@
                     console.log(error);
                 });
             },
-            validarProductor(){
+            validarVisita(){
                 this.errorProductor=0;
                 this.errorMostrarMsjProductor =[];
 
-                if (this.tipo_id==0) this.errorMostrarMsjProductor.push("Seleccione un tipo de documento");
-                if (this.estadoCivil_id==0) this.errorMostrarMsjProductor.push("Seleccione su estado civil");
-                if (this.etnia_id==0) this.errorMostrarMsjProductor.push("Seleccione su etnia");
-                if (this.sexo_id==0) this.errorMostrarMsjProductor.push("Seleccione su sexo");
-                if (this.vereda_id==0) this.errorMostrarMsjProductor.push("Seleccione el lugar donde vive");
-                if (this.vivienda_id==0) this.errorMostrarMsjProductor.push("Seleccione su vivienda ");
-                if (this.tipovivienda_id==0) this.errorMostrarMsjProductor.push("Seleccione el tipo de vivienda");
-                if (this.escolaridad_id==0) this.errorMostrarMsjProductor.push("Seleccione su grado de escolaridad");
-                if (this.carnetSalud==0) this.errorMostrarMsjProductor.push("Seleccione opcion carnet salud");
-                if (this.discapacitado==0) this.errorMostrarMsjProductor.push("Seleccione opcion discapacitado");
-                if (this.desplazado==0) this.errorMostrarMsjProductor.push("Seleccione opcion desplazado");
-                if (this.asociacion_id==0) this.errorMostrarMsjProductor.push("Seleccione la asociacion a la que pertenece");
-                if (this.programasEstado==0) this.errorMostrarMsjProductor.push("Seleccione el programa del estado al que se encuentra inscrito");
-                if (this.asistencia==0) this.errorMostrarMsjProductor.push("Seleccione opcion asistencia");
-                if (this.capacitacion==0) this.errorMostrarMsjProductor.push("Seleccione opcion capacitacion");
-
+                if (this.productor_id==0) this.errorMostrarMsjProductor.push("Seleccione un Productor");
+                if (this.finca_id==0) this.errorMostrarMsjProductor.push("Seleccione una finca");
                 if (this.errorMostrarMsjProductor.length) this.errorProductor = 1;
 
                 return this.errorProductor;
@@ -1076,19 +802,8 @@
                 me.cantidad=0;
                 me.precio=0;
                 me.arrayDetalle=[];
-                this.selectTipoId();
-                this.selectEstadoCivil();
-                this.selectEtnia();
-                this.selectSexo();
                 this.selectProductor();
                 this.selectFinca(this.productor_id);
-                this.selectParentesco();
-                this.selectEscolaridad();
-                this.selectVivienda();
-                this.selectTipoVivienda();
-                this.selectOpcion();
-                this.selectAsociacion();
-                this.selectProgramaEstado();
             },
             ocultarDetalle(){
                 this.listado=1;
