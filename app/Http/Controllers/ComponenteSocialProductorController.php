@@ -53,7 +53,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
             'componentesocialproductors.entidad',
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
-            'componentesocialproductors.temas',
+            'componentesocialproductors.temas'
             )
             ->orderBy('componentesocialproductors.id','desc')->paginate(3);
         }
@@ -93,10 +93,10 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
             'componentesocialproductors.entidad',
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
-            'componentesocialproductors.temas',
+            'componentesocialproductors.temas'
             )
             ->where('personas.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('personas.id', 'desc')->paginate(3);          
+            ->orderBy('personas.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -187,7 +187,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.parentesco5','p5.nombre as nombre_parentesco5',
             'componentesocialproductors.NombreP5','componentesocialproductors.ccP5',
             'componentesocialproductors.fechaNacimientoP5',
-            'componentesocialproductors.escolaridad_idP5','escolaridadP5.nombre as nombre_escolaridadP5',
+            'componentesocialproductors.escolaridad_idP5','escolaridadP5.nombre as nombre_escolaridadP5'
 
             )
             ->orderBy('componentesocialproductors.id','asc')->paginate(3);
@@ -262,11 +262,11 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.parentesco5','p5.nombre as nombre_parentesco5',
             'componentesocialproductors.NombreP5','componentesocialproductors.ccP5',
             'componentesocialproductors.fechaNacimientoP5',
-            'componentesocialproductors.escolaridad_idP5','escolaridadP5.nombre as nombre_escolaridadP5',
+            'componentesocialproductors.escolaridad_idP5','escolaridadP5.nombre as nombre_escolaridadP5'
 
             )
             ->where('personas.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('personas.id', 'desc')->paginate(3);          
+            ->orderBy('personas.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -310,14 +310,14 @@ class ComponenteSocialProductorController extends Controller
             $persona->email = $request->email;
             $persona->save();
 
-          
+
             $nacimiento= Carbon::parse($request->fechaNacimiento)->toDateString();
             $nacimientoP1= Carbon::parse($request->fechaNacimientoP1)->toDateString();
             $nacimientoP2= Carbon::parse($request->fechaNacimientoP2)->toDateString();
             $nacimientoP3= Carbon::parse($request->fechaNacimientoP3)->toDateString();
             $nacimientoP4= Carbon::parse($request->fechaNacimientoP4)->toDateString();
             $nacimientoP5= Carbon::parse($request->fechaNacimientoP5)->toDateString();
-           
+
             $productor = new ComponenteSocialProductor();
             $productor->estadoCivil_id = $request->estadoCivil_id;
             $productor->etnia_id = $request->etnia_id;
@@ -367,7 +367,7 @@ class ComponenteSocialProductorController extends Controller
             $productor->ccP5 = $request->ccP5;
             $productor->fechaNacimientoP5 = $nacimientoP5;
             $productor->escolaridad_idP5 = $request->escolaridad_idP5;
-            $productor->id = $persona->id; 
+            $productor->id = $persona->id;
             $productor->save();
             DB::commit();
         }catch(Exception $e){
@@ -382,14 +382,14 @@ class ComponenteSocialProductorController extends Controller
         DB::beginTransaction();
         $productor =ComponenteSocialProductor::findOrFail($request->id);
         $persona =Persona::findorFail($productor->id);
-        
+
         $persona->nombre = $request->nombre;
         $persona->tipo_id = $request->tipo_id;
         $persona->num_documento = $request->num_documento;
         $persona->direccion = $request->direccion;
         $persona->telefono = $request->telefono;
         $persona->email = $request->email;
-        $persona->save(); 
+        $persona->save();
 
         $nacimiento= Carbon::parse($request->fechaNacimiento)->toDateString();
         $nacimientoP1= Carbon::parse($request->fechaNacimientoP1)->toDateString();
@@ -397,7 +397,7 @@ class ComponenteSocialProductorController extends Controller
         $nacimientoP3= Carbon::parse($request->fechaNacimientoP3)->toDateString();
         $nacimientoP4= Carbon::parse($request->fechaNacimientoP4)->toDateString();
         $nacimientoP5= Carbon::parse($request->fechaNacimientoP5)->toDateString();
-       
+
         $productor = new ComponenteSocialProductor();
         $productor->estadoCivil_id = $request->estadoCivil_id;
         $productor->etnia_id = $request->etnia_id;
@@ -452,7 +452,7 @@ class ComponenteSocialProductorController extends Controller
         }
         catch(Exception $e){
             DB::rollback();
-        }  
+        }
     }
 
     public function selectProductor(Request $request){
@@ -460,7 +460,7 @@ class ComponenteSocialProductorController extends Controller
         $personas= ComponenteSocialProductor::join('personas','componentesocialproductors.id','=','personas.id')
         ->select('componentesocialproductors.id','personas.nombre')->orderBy('componentesocialproductors.id','asc')->get();
         return['personas'=>$personas];
-    }  
+    }
 
     public function selectProductor2(Request $request){
         if(!$request->ajax()) return redirect('/');
@@ -471,5 +471,5 @@ class ComponenteSocialProductorController extends Controller
         ->select('componentesocialproductors.id','personas.nombre','personas.num_documento')
         ->orderBy('personas.nombre', 'asc')->get();
         return['personas'=>$personas];
-    }  
+    }
 }
