@@ -64184,6 +64184,143 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -64198,7 +64335,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             charVenta: null,
             ventas: [],
             varTotalVenta: [],
-            varMesVenta: []
+            varMesVenta: [],
+
+            varEstado: null,
+            charEstado: null,
+            estadoCivils: [],
+            varTotalEstados: [],
+            varEstados: [],
+
+            varEtnia: null,
+            charEtnia: null,
+            etnias: [],
+            varTotalEtnias: [],
+            varEtnias: [],
+
+            varSexo: null,
+            charSexo: null,
+            sexos: [],
+            varTotalSexos: [],
+            varSexos: [],
+
+            varEdad: null,
+            charEdad: null,
+            edades: [],
+            varTotalEdades: [],
+            varEdades: [],
+
+            varDiscapacitado: null,
+            charDiscapacitado: null,
+            discapacitados: [],
+            varTotalDiscapacitados: [],
+            varDiscapacitados: [],
+
+            varPersonaAcargo: null,
+            charPersonaAcargo: null,
+            personasAcargo: [],
+            varTotalPersonasAcargo: [],
+            varPersonasAcargo: [],
+
+            varDesplazado: null,
+            charDesplazado: null,
+            desplazados: [],
+            varTotalDesplazados: [],
+            varDesplazados: []
         };
     },
 
@@ -64223,6 +64402,90 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.ventas = respuesta.ventas;
                 //cargamos los datos del chart
                 me.loadVentas();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getEstadoCivil: function getEstadoCivil() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.estadoCivils = respuesta.estadoCivil;
+                //cargamos los datos del chart
+                me.loadEstados();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getEtnias: function getEtnias() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.etnias = respuesta.etnias;
+                //cargamos los datos del chart
+                me.loadEtnias();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getSexos: function getSexos() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.sexos = respuesta.sexos;
+                //cargamos los datos del chart
+                me.loadSexos();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getEdades: function getEdades() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.edades = respuesta.edades;
+                //cargamos los datos del chart
+                me.loadEdades();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getDiscapacitados: function getDiscapacitados() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.discapacitados = respuesta.discapacitados;
+                //cargamos los datos del chart
+                me.loadDiscapacitados();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getPersonasAcargo: function getPersonasAcargo() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.personasAcargo = respuesta.personasacargo;
+                //cargamos los datos del chart
+                me.loadPersonasAcargo();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getDesplazados: function getDesplazados() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.desplazados = respuesta.desplazados;
+                //cargamos los datos del chart
+                me.loadDesplazados();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -64288,11 +64551,179 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             });
+        },
+        loadEstados: function loadEstados() {
+            var me = this;
+            me.estadoCivils.map(function (x) {
+                me.varEstados.push(x.estadocivil_nombre);
+                me.varTotalEstados.push(x.total);
+            });
+            me.varEstado = document.getElementById('estadoCivil').getContext('2d');
+
+            me.charEstado = new Chart(me.varEstado, {
+                type: 'pie',
+                data: {
+                    labels: me.varEstados,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalEstados,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadEtnias: function loadEtnias() {
+            var me = this;
+            me.etnias.map(function (x) {
+                me.varEtnias.push(x.nombre_etnia);
+                me.varTotalEtnias.push(x.total);
+            });
+            me.varEtnia = document.getElementById('etnia').getContext('2d');
+
+            me.charEtnia = new Chart(me.varEtnia, {
+                type: 'pie',
+                data: {
+                    labels: me.varEtnias,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalEtnias,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadSexos: function loadSexos() {
+            var me = this;
+            me.sexos.map(function (x) {
+                me.varSexos.push(x.nombre_sexo);
+                me.varTotalSexos.push(x.total);
+            });
+            me.varSexo = document.getElementById('sexo').getContext('2d');
+
+            me.charSexo = new Chart(me.varSexo, {
+                type: 'pie',
+                data: {
+                    labels: me.varSexos,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalSexos,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadEdades: function loadEdades() {
+            var me = this;
+            me.edades.map(function (x) {
+                me.varEdades.push(x.rango);
+                me.varTotalEdades.push(x.total);
+            });
+            me.varEdad = document.getElementById('edad').getContext('2d');
+
+            me.charEdad = new Chart(me.varEdad, {
+                type: 'pie',
+                data: {
+                    labels: me.varEdades,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalEdades,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadDiscapacitados: function loadDiscapacitados() {
+            var me = this;
+            me.discapacitados.map(function (x) {
+                me.varDiscapacitados.push(x.opcion_discapacitado);
+                me.varTotalDiscapacitados.push(x.total);
+            });
+            me.varDiscapacitado = document.getElementById('discapacitado').getContext('2d');
+
+            me.charDiscapacitado = new Chart(me.varDiscapacitado, {
+                type: 'pie',
+                data: {
+                    labels: me.varDiscapacitados,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalDiscapacitados,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadPersonasAcargo: function loadPersonasAcargo() {
+            var me = this;
+            me.personasAcargo.map(function (x) {
+                me.varPersonasAcargo.push(x.personasAcargo);
+                me.varTotalPersonasAcargo.push(x.total);
+            });
+            me.varPersonaAcargo = document.getElementById('personaAcargo').getContext('2d');
+
+            me.charPersonaAcargo = new Chart(me.varPersonaAcargo, {
+                type: 'pie',
+                data: {
+                    labels: me.varPersonasAcargo,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalPersonasAcargo,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadDesplazados: function loadDesplazados() {
+            var me = this;
+            me.desplazados.map(function (x) {
+                me.varDesplazados.push(x.opcion_desplazado);
+                me.varTotalDesplazados.push(x.total);
+            });
+            me.varDesplazado = document.getElementById('desplazado').getContext('2d');
+
+            me.charDesplazado = new Chart(me.varDesplazado, {
+                type: 'pie',
+                data: {
+                    labels: me.varDesplazados,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalDesplazados,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
         }
     },
     mounted: function mounted() {
         this.getVentas();
         this.getIngresos();
+        this.getEstadoCivil();
+        this.getEtnias();
+        this.getSexos();
+        this.getEdades();
+        this.getDiscapacitados();
+        this.getPersonasAcargo();
+        this.getDesplazados();
     }
 });
 
@@ -64324,7 +64755,9 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("div", { staticClass: "car-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
                 _c("div", { staticClass: "card card-chart" }, [
                   _c("div", { staticClass: "card-header" }, [
                     _c("h4", [_vm._v("Usuarios")])
@@ -64340,9 +64773,13 @@ var staticRenderFns = [
                     _c("p", [_vm._v("Usuarios registrados por dia")])
                   ])
                 ])
-              ]),
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "col-md-10" }, [
                 _c("div", { staticClass: "card card-chart" }, [
                   _c("div", { staticClass: "card-header" }, [
                     _c("h4", [_vm._v("Ventas")])
@@ -64356,6 +64793,184 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c("div", { staticClass: "card-footer" }, [
                     _c("p", [_vm._v("Ventas de los últimos dias.")])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Estado Civil")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "estadoCivil" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v("Distribucion de estado civil de los productores")
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Etnias")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "etnia" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v("Distribucion de etnias de los productores")
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Sexos")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "sexo" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v("Distribucion por sexo de los productores")
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Edades")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "edad" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion por rango de edad de los productores"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Discapacitados")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "discapacitado" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo si el productor tiene discapacidad o no"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Personas a cargo de los productores")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "personaAcargo" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo al numero de personas a cargo de cada productor"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [
+                      _vm._v("Productores en condiciones de desplazamiento ")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "desplazado" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo al numero de productores en condicion de desplazamiento y no desplazamiento"
+                      )
+                    ])
                   ])
                 ])
               ])

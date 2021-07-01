@@ -102,17 +102,20 @@
 
         #facarticulo{
         width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
+        border-collapse: separate;
+        border-spacing: 5px;
         margin-bottom: 15px;
+        empty-cells: hide;
         }
 
         #facarticulo thead{
+        border-collapse: collapse;    
         padding: 20px;
         background: #2183E3;
         text-align: center;
         border-bottom: 1px solid #FFFFFF;  
         }
+        
 
         #gracias{
         text-align: center; 
@@ -191,7 +194,7 @@
         <br>
         <section>
             <div>
-                <table id="facarticulo">
+                <table border="1" id="facarticulo">
                     <thead>
                         <tr id="fa">
                             <th>Tipo Cacao</th>
@@ -205,7 +208,7 @@
                     </thead>
                     <tbody>
                     @foreach($ventaCategoria as $ventaC)
-                        <tr>
+                        <tr id="cats">
                             <td>{{$ventaC->nombre_categoria}}</td>
                             <td>{{$ventaC->peso}}</td>
                             <td>{{$ventaC->humedad}}</td>
@@ -221,17 +224,11 @@
                     <tfoot>                  
                     @foreach($venta as $v)
                         <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
                             <td></td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <th>Peso Total(Kg)</th>
                             <td>{{$v->totalKilos}}</td>
                         </tr>
