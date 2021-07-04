@@ -51,7 +51,7 @@ class ManejoAmbientalController extends Controller
             'op2.nombre as opcion_erosion', 'op3.nombre as opcion_proteccion',
             'op4.nombre as opcion_agroquimico', 'op5.nombre as opcion_fauna')
             ->where('manejoambientals.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('manejoambientals.id', 'desc')->paginate(3);          
+            ->orderBy('manejoambientals.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -67,15 +67,15 @@ class ManejoAmbientalController extends Controller
     }
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
         $ambiental = new ManejoAmbiental();
-        $ambiental->productor_id = $request->productor_id; 
+        $ambiental->productor_id = $request->productor_id;
         $ambiental->finca_id = $request->finca_id;
         $ambiental->distanciaFuentes = $request->distanciaFuentes;
         $ambiental->residuo_id = $request->residuo_id;
-        $ambiental->erosion = $request->erosion; 
+        $ambiental->erosion = $request->erosion;
         $ambiental->proteccion = $request->proteccion;
         $ambiental->agroquimico = $request->agroquimico;
         $ambiental->fauna = $request->fauna;
@@ -90,11 +90,11 @@ class ManejoAmbientalController extends Controller
     {
         if(!$request->ajax()) return redirect('/');
         $ambiental =ManejoAmbiental::findOrFail($request->id);
-        $ambiental->productor_id = $request->productor_id; 
+        $ambiental->productor_id = $request->productor_id;
         $ambiental->finca_id = $request->finca_id;
         $ambiental->distanciaFuentes = $request->distanciaFuentes;
         $ambiental->residuo_id = $request->residuo_id;
-        $ambiental->erosion = $request->erosion; 
+        $ambiental->erosion = $request->erosion;
         $ambiental->proteccion = $request->proteccion;
         $ambiental->agroquimico = $request->agroquimico;
         $ambiental->fauna = $request->fauna;

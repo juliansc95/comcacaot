@@ -33,8 +33,10 @@ class VisitaController extends Controller
         $visita->observaciones = $request->observaciones;
         $visita->nivelSatisfaccionAsistencia = $request->asistencia;
         $visita->nivelSatisfaccionEmpresa = $request->empresa;
-        if($request->predecesor_id){
+        if(isset($request->predecesor_id)){
             $visita->predecesor_id = $request->predecesor_id;
+        } else {
+            $visita->predecesor_id = 0 ;
         }
         $visita->save();
 
@@ -43,6 +45,11 @@ class VisitaController extends Controller
         $visitaCompromiso->visita_id = $visita->id;
         $visitaCompromiso->compromiso = $request->NombreP1;
         $visitaCompromiso->cumplimiento = $request->ccP1;
+        if(isset($request->predecesor_id)){
+            $visitaCompromiso->predecesor_id = $request->predecesor_id;
+        } else {
+            $visitaCompromiso->predecesor_id = 0 ;
+        }
         $visitaCompromiso->save();
 
         DB::commit();
@@ -62,6 +69,13 @@ class VisitaController extends Controller
             return [];
         }
         return ["visita"  => $visita->first(), "compromiso" => $visitaComp ];
+    }
+
+    public function visitaApi()
+    {
+        $visita = Visita::with("compromiso")->get();
+
+        return $visita;
     }
 
 

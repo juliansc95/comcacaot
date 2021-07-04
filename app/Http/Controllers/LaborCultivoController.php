@@ -63,7 +63,7 @@ class LaborCultivoController extends Controller
             'op1.nombre as nombre_controlEnfermedad','tp1.nombre as nombre_tipoControlEnfermedad',
             'op2.nombre as nombre_controlPlaga','tp2.nombre as nombre_tipoControlPlaga')
             ->where('laborcultivos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('laborcultivos.id', 'desc')->paginate(3);          
+            ->orderBy('laborcultivos.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -79,17 +79,17 @@ class LaborCultivoController extends Controller
     }
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
 
         $labor = new LaborCultivo();
         $labor->productor_id = $request->productor_id;
-        $labor->finca_id = $request->finca_id; 
+        $labor->finca_id = $request->finca_id;
         $labor->control = $request->control;
         $labor->metodo = $request->metodo;
         $labor->observacionMetodo = $request->observacionMetodo;
-        $labor->poda_id = $request->poda_id; 
+        $labor->poda_id = $request->poda_id;
         $labor->observacionPoda = $request->observacionPoda;
         $labor->drenaje = $request->drenaje;
         $labor->estado_id = $request->estado_id;
@@ -113,14 +113,14 @@ class LaborCultivoController extends Controller
     public function update(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
-        
+
         $labor =LaborCultivo::findOrFail($request->id);
         $labor->productor_id = $request->productor_id;
-        $labor->finca_id = $request->finca_id; 
+        $labor->finca_id = $request->finca_id;
         $labor->control = $request->control;
         $labor->metodo = $request->metodo;
         $labor->observacionMetodo = $request->observacionMetodo;
-        $labor->poda_id = $request->poda_id; 
+        $labor->poda_id = $request->poda_id;
         $labor->observacionPoda = $request->observacionPoda;
         $labor->drenaje = $request->drenaje;
         $labor->estado_id = $request->estado_id;

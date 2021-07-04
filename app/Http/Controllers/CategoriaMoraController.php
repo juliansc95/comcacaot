@@ -23,7 +23,7 @@ class CategoriaMoraController extends Controller
             $categoriaMoras= CategoriaMora::select('id','nombre','valorUnitario','ValorDonacion','valorTransporte',
             'valorAsohof','valorCuatroPorMil')
             ->where('categoriaMoras.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('categoriaMoras.id', 'desc')->paginate(3);          
+            ->orderBy('categoriaMoras.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -38,7 +38,7 @@ class CategoriaMoraController extends Controller
         ];
     }
 
-    public function buscarCategoria(Request $request){ 
+    public function buscarCategoria(Request $request){
         if(!$request->ajax()) return redirect('/');
         $filtro = $request->filtro;
         $categoriaMoras= CategoriaMora::where('id','=',$filtro)
@@ -46,7 +46,7 @@ class CategoriaMoraController extends Controller
         'valorAsohof','valorCuatroPorMil')
         ->orderBy('nombre','asc')
         ->take(1)->get();
-        
+
 
         return[ 'categoriaMoras' => $categoriaMoras];
     }
@@ -57,7 +57,7 @@ class CategoriaMoraController extends Controller
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-        
+
         if ($buscar==''){
             $categoriaMoras= CategoriaMora::select('id','nombre','valorUnitario','ValorDonacion','valorTransporte',
             'valorAsohof','valorCuatroPorMil')
@@ -69,17 +69,17 @@ class CategoriaMoraController extends Controller
             ->where('categoriaMoras.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('categoriaMoras.id', 'desc')->paginate(10);
         }
-        
+
 
         return ['categoriaMoras' => $categoriaMoras];
     }
 
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
 
         try{
-        DB::beginTransaction();    
+        DB::beginTransaction();
         $categoriaMora = new CategoriaMora();
         $categoriaMora->nombre = $request->nombre;
         $categoriaMora->valorUnitario = $request->valorUnitario;
@@ -89,19 +89,19 @@ class CategoriaMoraController extends Controller
         $categoriaMora->valorCuatroPorMil = $request->valorCuatroPorMil;
         $categoriaMora->save();
 
-        DB::commit();    
+        DB::commit();
         } catch(Exception $e){
             DB::rollBack();
         }
     }
 
     public function update(Request $request)
-    {      
+    {
         if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
 
-        $categoriaMora= CategoriaMora::findOrFail($request->id);    
+        $categoriaMora= CategoriaMora::findOrFail($request->id);
         $categoriaMora->nombre = $request->nombre;
         $categoriaMora->valorUnitario = $request->valorUnitario;
         $categoriaMora->valorDonacion = $request->valorDonacion;
@@ -109,7 +109,7 @@ class CategoriaMoraController extends Controller
         $categoriaMora->valorAsohof = $request->valorAsohof;
         $categoriaMora->valorCuatroPorMil = $request->valorCuatroPorMil;
         $categoriaMora->save();
-        DB::commit();    
+        DB::commit();
         }catch(Exception $e){
             DB::rollback();
         }

@@ -23,4 +23,7 @@ class Visita extends Model
     public function lugarVenta(){
         return $this->belongsTo('App\LugarVenta','lugarVenta_id','id');
     }
+    public function compromiso(){
+        return $this->belongsTo('App\VisitaCompromiso','visita_id','id');
+    }
 }

@@ -43,7 +43,7 @@ class CosechaCultivoController extends Controller
             'opcions.nombre as opcion_benefico','fermentacions.nombre as nombre_fermentacion',
             'lugarventas.nombre as nombre_lugarVenta')
             ->where('cosechacultivos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('cosechacultivos.id', 'desc')->paginate(3);          
+            ->orderBy('cosechacultivos.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -59,15 +59,15 @@ class CosechaCultivoController extends Controller
     }
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
         $cosecha = new CosechaCultivo();
-        $cosecha->productor_id = $request->productor_id; 
+        $cosecha->productor_id = $request->productor_id;
         $cosecha->finca_id = $request->finca_id;
         $cosecha->frecuencia = $request->frecuencia;
         $cosecha->frescoTotal = $request->frescoTotal;
-        $cosecha->secoTotal = $request->secoTotal; 
+        $cosecha->secoTotal = $request->secoTotal;
         $cosecha->beneficio = $request->beneficio;
         $cosecha->fermentacion_id = $request->fermentacion_id;
         $cosecha->frescoTotalMes = $request->frescoTotalMes;
@@ -84,11 +84,11 @@ class CosechaCultivoController extends Controller
     {
         if(!$request->ajax()) return redirect('/');
         $cosecha =CosechaCultivo::findOrFail($request->id);
-        $cosecha->productor_id = $request->productor_id; 
+        $cosecha->productor_id = $request->productor_id;
         $cosecha->finca_id = $request->finca_id;
         $cosecha->frecuencia = $request->frecuencia;
         $cosecha->frescoTotal = $request->frescoTotal;
-        $cosecha->secoTotal = $request->secoTotal; 
+        $cosecha->secoTotal = $request->secoTotal;
         $cosecha->beneficio = $request->beneficio;
         $cosecha->fermentacion_id = $request->fermentacion_id;
         $cosecha->frescoTotalMes = $request->frescoTotalMes;

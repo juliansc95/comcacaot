@@ -31,7 +31,7 @@ class ComponenteEconomicoController extends Controller
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'op1.nombre as nombre_credito','b1.nombre as nombre_banco',
             'op2.nombre as nombre_ahorro','b2.nombre as nombre_banco_ahorro',
-            'op3.nombre as opcion_accionista','op4.nombre as opcion_interesados',
+            'op3.nombre as opcion_accionista','op4.nombre as opcion_interesados'
            )
             ->orderBy('componenteeconomicos.id','desc')->paginate(3);
         }
@@ -53,10 +53,10 @@ class ComponenteEconomicoController extends Controller
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'op1.nombre as nombre_credito','b1.nombre as nombre_banco',
             'op2.nombre as nombre_ahorro','b2.nombre as nombre_banco_ahorro',
-            'op3.nombre as opcion_accionista','op4.nombre as opcion_interesados',
+            'op3.nombre as opcion_accionista','op4.nombre as opcion_interesados'
            )
             ->where('componenteeconomicos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('componenteeconomicos.id', 'desc')->paginate(3);          
+            ->orderBy('componenteeconomicos.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -72,16 +72,16 @@ class ComponenteEconomicoController extends Controller
     }
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
-       
+
         $componente = new ComponenteEconomico();
         $componente->productor_id = $request->productor_id;
         $componente->finca_id = $request->finca_id;
         $componente->ingresoMensual = $request->ingresoMensual;
         $componente->gastoMensual = $request->gastoMensual;
-        $componente->otrosIngresos = $request->otrosIngresos; 
+        $componente->otrosIngresos = $request->otrosIngresos;
         $componente->ingresoNeto = $request->ingresoNeto;
         $componente->credito = $request->credito;
         $componente->banco_id = $request->banco_id;
@@ -108,7 +108,7 @@ class ComponenteEconomicoController extends Controller
         $componente->finca_id = $request->finca_id;
         $componente->ingresoMensual = $request->ingresoMensual;
         $componente->gastoMensual = $request->gastoMensual;
-        $componente->otrosIngresos = $request->otrosIngresos; 
+        $componente->otrosIngresos = $request->otrosIngresos;
         $componente->ingresoNeto = $request->ingresoNeto;
         $componente->credito = $request->credito;
         $componente->otro_credito = $request->otro_credito;

@@ -27,12 +27,17 @@ Route::group([
     Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@loginApi']);
     Route::post('register', 'Auth\LoginController@register');
     Route::post('logout', 'Auth\LoginController@logout');
-    Route::post('me', 'Auth\LoginController@me');
+    Route::post('home', 'Auth\LoginController@me');
 
     //Route::post('refresh', 'Auth2\AuthController@refresh');
 });
 
-
+Route::get('/app/version', function () {
+    return [
+        "version" => '1.1',
+        "url" =>  "https://comcacaot.com/src/comcacaot.apk"
+    ];
+});
 
 Route::get('/tipoId/selectTipoId','TipoIdController@selectTipoId');
 Route::get('/sexo/selectSexo','SexoController@selectSexo');
@@ -88,7 +93,7 @@ Route::get('/categoriaMora/buscarCategoria','CategoriaMoraController@buscarCateg
 Route::get('/categoriaMora/listarCategoria','CategoriaMoraController@listarCategoria');
 
 //Rutas Fincas
-Route::get('/finca','FincaComcacaotController@index');
+Route::get('/finca','FincaComcacaotController@selectFincaApi');
 Route::post('/finca/registrar','FincaComcacaotController@store');
 Route::put('/finca/actualizar','FincaComcacaotController@update');
 
@@ -129,3 +134,6 @@ Route::put('/cultivo/actualizar','CultivoController@update');
  //Ruta Linea Base
  Route::post('/visita/registrar', 'VisitaController@store');
  Route::get("visita/{id}","VisitaController@show");
+ Route::get("visitaApi","VisitaController@visitaApi");
+
+ Route::get("app/select","SelectController@appSelects");

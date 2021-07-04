@@ -45,7 +45,7 @@ class AreaCultivoController extends Controller
             'opcions.nombre as opcion_injertado','estadocultivos.nombre as nombre_estado',
             'mantenimientoplantacions.nombre as nombre_mantenimiento')
             ->where('areacultivos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('areacultivos.id', 'desc')->paginate(3);          
+            ->orderBy('areacultivos.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -61,17 +61,17 @@ class AreaCultivoController extends Controller
     }
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
 
         $cultivo = new AreaCultivo();
         $cultivo->productor_id = $request->productor_id;
-        $cultivo->finca_id = $request->finca_id; 
+        $cultivo->finca_id = $request->finca_id;
         $cultivo->areaTotalCultivo = $request->areaTotalCultivo;
         $cultivo->edadCultivo = $request->edadCultivo;
         $cultivo->criollo = $request->criollo;
-        $cultivo->CCN51 = $request->CCN51; 
+        $cultivo->CCN51 = $request->CCN51;
         $cultivo->ICS95 = $request->ICS95;
         $cultivo->otros = $request->otros;
         $cultivo->injertado = $request->injertado;
@@ -92,14 +92,14 @@ class AreaCultivoController extends Controller
     public function update(Request $request)
     {
         if(!$request->ajax()) return redirect('/');
-        
+
         $cultivo =AreaCultivo::findOrFail($request->id);
         $cultivo->productor_id = $request->productor_id;
-        $cultivo->finca_id = $request->finca_id; 
+        $cultivo->finca_id = $request->finca_id;
         $cultivo->areaTotalCultivo = $request->areaTotalCultivo;
         $cultivo->edadCultivo = $request->edadCultivo;
         $cultivo->criollo = $request->criollo;
-        $cultivo->CCN51 = $request->CCN51; 
+        $cultivo->CCN51 = $request->CCN51;
         $cultivo->ICS95 = $request->ICS95;
         $cultivo->otros = $request->otros;
         $cultivo->injertado = $request->injertado;

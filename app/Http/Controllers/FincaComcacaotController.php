@@ -47,7 +47,7 @@ class FincaComcacaotController extends Controller
             'municipios.nombre as nombre_municipio','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona',
             'posesions.nombre as nombre_posesion')
             ->where('fincascoms.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('fincascoms.id', 'desc')->paginate(3);          
+            ->orderBy('fincascoms.id', 'desc')->paginate(3);
         }
         return [
             'pagination' => [
@@ -63,19 +63,19 @@ class FincaComcacaotController extends Controller
     }
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
         $registro= Carbon::parse($request->fechaRegistro)->toDateString();
         $finca = new FincaComcacaot();
         $finca->nombre = $request->nombre;
         $finca->productor_id = $request->productor_id;
-        $finca->fechaRegistro = $registro;    
+        $finca->fechaRegistro = $registro;
         $finca->telefono = $request->telefono;
         $finca->departamento_id = $request->departamento_id;
         $finca->municipio_id = $request->municipio_id;
-        $finca->vereda_id = $request->vereda_id; 
-        $finca->zona_id = $request->zona_id; 
+        $finca->vereda_id = $request->vereda_id;
+        $finca->zona_id = $request->zona_id;
         $finca->areaTotal = $request->areaTotal;
         $finca->viasAcceso = $request->viasAcceso;
         $finca->latitud = $request->latitud;
@@ -96,12 +96,12 @@ class FincaComcacaotController extends Controller
         $finca =FincaComcacaot::findOrFail($request->id);
         $finca->nombre = $request->nombre;
         $finca->productor_id = $request->productor_id;
-        $finca->fechaRegistro = $registro;    
+        $finca->fechaRegistro = $registro;
         $finca->telefono = $request->telefono;
         $finca->departamento_id = $request->departamento_id;
         $finca->municipio_id = $request->municipio_id;
-        $finca->vereda_id = $request->vereda_id; 
-        $finca->zona_id = $request->zona_id; 
+        $finca->vereda_id = $request->vereda_id;
+        $finca->zona_id = $request->zona_id;
         $finca->areaTotal = $request->areaTotal;
         $finca->viasAcceso = $request->viasAcceso;
         $finca->latitud = $request->latitud;
@@ -117,6 +117,13 @@ class FincaComcacaotController extends Controller
         ->where('productor_id','=',$id)
         ->orderBy('id','asc')->get();
         return['fincas'=>$fincas];
-    }  
+    }
+    public function selectFincaApi(Request $request){
+        //if(!$request->ajax()) return redirect('/');
+        $id=$request->id;
+        $fincas= FincaComcacaot::select('id','nombre','productor_id')
+            ->orderBy('id','asc')->get();
+        return $fincas;
+    }
 
 }
