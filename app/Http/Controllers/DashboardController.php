@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\ComponenteSocialProductor;
+use App\ComponenteEconomico;
+use App\AreaCultivo;
+use App\LaborCultivo;
+use App\CosechaCultivo;
 
 class DashboardController extends Controller
 {
@@ -51,6 +55,11 @@ class DashboardController extends Controller
         ->groupBy('rango')
         ->get();
 
+        $escolaridades=ComponenteSocialProductor::join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
+        ->select( 'gradoescolaridads.nombre as nombre_escolaridad',DB::raw('COUNT(*) as total'))       
+        ->groupBy('gradoescolaridads.nombre')
+        ->get();
+
 
         $discapacitados=ComponenteSocialProductor::join('opcions','componentesocialproductors.discapacitado','=','opcions.id')
         ->select( 'opcions.nombre as opcion_discapacitado',DB::raw('COUNT(*) as total'))       
@@ -66,10 +75,51 @@ class DashboardController extends Controller
         ->groupBy('opcions.nombre')
         ->get();
 
+        $creditos=ComponenteEconomico::join('bancos','componenteeconomicos.banco_id','=','bancos.id')
+        ->select( 'bancos.nombre as nombre_banco',DB::raw('COUNT(*) as total'))       
+        ->groupBy('bancos.nombre')
+        ->get();
+
+        $variedades=AreaCultivo::select(DB::raw( 'SUM(criollo) AS criollo'),DB::raw('SUM(CCN51) AS CCN51'),
+        DB::raw('SUM(ICS95) AS ICS95'),DB::raw('SUM(otros) AS otros'))       
+        ->get();
+
+        $variedadesinjertado=AreaCultivo::select(DB::raw( 'SUM(variedadcriollo) AS criollo'),DB::raw('SUM(variedadCCN51) AS CCN51'),
+        DB::raw('SUM(variedadICS95) AS ICS95'),DB::raw('SUM(variedadotros) AS otros'))       
+        ->get();
+
+        $control=LaborCultivo::join('opcions','laborcultivos.control','=','opcions.id')
+        ->select( 'opcions.nombre as opcion_control',DB::raw('COUNT(*) as total'))       
+        ->groupBy('opcions.nombre')
+        ->get();
+
+        $metodo=LaborCultivo::select( 'laborcultivos.metodo',DB::raw('COUNT(*) as total'))       
+        ->groupBy('laborcultivos.metodo')
+        ->get();
+
+        $drenaje=LaborCultivo::select( 'laborcultivos.drenaje',DB::raw('COUNT(*) as total'))       
+        ->groupBy('laborcultivos.drenaje')
+        ->get();
+
+        $cosecha=CosechaCultivo::select(DB::raw( 'SUM(frescoTotalMes) AS fresco'),DB::raw('SUM(secoTotalMes) AS seco'))       
+        ->get();
+
+        $economico=ComponenteEconomico::select( 'componenteeconomicos.ingresoMensual','componenteeconomicos.gastoMensual',
+        'componenteeconomicos.otrosIngresos','componenteeconomicos.ingresoNeto')       
+        ->get();
+
+       
+
+
+
+
         return ['ventas'=>$ventas,'anio'=>$anio,'usuarios'=>$usuarios,
         'estadoCivil'=>$estadoCivil,'etnias'=>$etnias,'sexos'=>$sexos,
-        'edades'=>$edades,'discapacitados'=>$discapacitados,
-        'personasacargo'=>$personasacargo,'desplazados'=>$desplazados];         
+        'edades'=>$edades,'escolaridades'=>$escolaridades,'discapacitados'=>$discapacitados,
+        'personasacargo'=>$personasacargo,'desplazados'=>$desplazados, 'creditos'=>$creditos,
+        'variedades'=> $variedades,'variedadesinjertado'=>$variedadesinjertado,
+        'control'=>$control,'metodo'=>$metodo,'drenaje'=>$drenaje,'cosecha'=>$cosecha,
+        'economico'=>$economico];  
 
     }
 }

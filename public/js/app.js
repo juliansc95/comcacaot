@@ -64132,6 +64132,179 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64324,7 +64497,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
+        var _ref;
+
+        return _ref = {
             varIngreso: null,
             charIngreso: null,
             ingresos: [],
@@ -64361,6 +64536,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             varTotalEdades: [],
             varEdades: [],
 
+            varEscolaridad: null,
+            charEscolaridad: null,
+            escolaridades: [],
+            varTotalEscolaridades: [],
+            varEsolaridades: [],
+
             varDiscapacitado: null,
             charDiscapacitado: null,
             discapacitados: [],
@@ -64377,8 +64558,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             charDesplazado: null,
             desplazados: [],
             varTotalDesplazados: [],
-            varDesplazados: []
-        };
+            varDesplazados: [],
+
+            varCredito: null,
+            charCredito: null,
+            creditos: [],
+            varTotalCreditos: [],
+            varCreditos: [],
+
+            varVariedadCultivo: null,
+            charVariedadCultivo: null,
+            variedades: [],
+            varTotalVariedad: [],
+            varVariedades: ["Criollo", "CCN51", "ICS95", "Otros"],
+
+            varInjertoCultivo: null,
+            charInjertoCultivo: null,
+            injertos: [],
+            varTotalInjerto: []
+        }, _defineProperty(_ref, "varVariedades", ["Criollo", "CCN51", "ICS95", "Otros"]), _defineProperty(_ref, "varControl", null), _defineProperty(_ref, "charControl", null), _defineProperty(_ref, "controles", []), _defineProperty(_ref, "varTotalControles", []), _defineProperty(_ref, "varControles", []), _defineProperty(_ref, "varMetodo", null), _defineProperty(_ref, "charMetodo", null), _defineProperty(_ref, "metodos", []), _defineProperty(_ref, "varTotalMetodos", []), _defineProperty(_ref, "varMetodos", []), _defineProperty(_ref, "varDrenaje", null), _defineProperty(_ref, "charDrenaje", null), _defineProperty(_ref, "drenajes", []), _defineProperty(_ref, "varTotalDrenajes", []), _defineProperty(_ref, "varDrenajes", []), _defineProperty(_ref, "varCosecha", null), _defineProperty(_ref, "charCosecha", null), _defineProperty(_ref, "cosechas", []), _defineProperty(_ref, "varTotalCosechas", []), _defineProperty(_ref, "varCosechas", ["Fresco", "Seco"]), _defineProperty(_ref, "varEconomico", null), _defineProperty(_ref, "charEconomico", null), _defineProperty(_ref, "prueba", null), _defineProperty(_ref, "economicos", []), _defineProperty(_ref, "varTotalMensuales", []), _defineProperty(_ref, "varTotalGastos", []), _defineProperty(_ref, "varTotalOtros", []), _defineProperty(_ref, "varTotalNeto", []), _defineProperty(_ref, "varMensuales", ["Total"]), _ref;
     },
 
     methods: {
@@ -64454,6 +64652,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
+        getEscolaridades: function getEscolaridades() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.escolaridades = respuesta.escolaridades;
+                //cargamos los datos del chart
+                me.loadEscolaridades();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         getDiscapacitados: function getDiscapacitados() {
             var me = this;
             var url = 'dashboard';
@@ -64486,6 +64696,102 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.desplazados = respuesta.desplazados;
                 //cargamos los datos del chart
                 me.loadDesplazados();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCreditos: function getCreditos() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.creditos = respuesta.creditos;
+                //cargamos los datos del chart
+                me.loadCreditos();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getVariedades: function getVariedades() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.variedades = respuesta.variedades;
+                //cargamos los datos del chart
+                me.loadVariedades();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getInjertos: function getInjertos() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.injertos = respuesta.variedadesinjertado;
+                //cargamos los datos del chart
+                me.loadInjertos();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getControles: function getControles() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.controles = respuesta.control;
+                //cargamos los datos del chart
+                me.loadControles();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getMetodos: function getMetodos() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.metodos = respuesta.metodo;
+                //cargamos los datos del chart
+                me.loadMetodos();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getDrenajes: function getDrenajes() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.drenajes = respuesta.drenaje;
+                //cargamos los datos del chart
+                me.loadDrenajes();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCosechas: function getCosechas() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.cosechas = respuesta.cosecha;
+                //cargamos los datos del chart
+                me.loadCosechas();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getEconomico: function getEconomico() {
+            var me = this;
+            var url = 'dashboard';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.economicos = respuesta.economico;
+                //cargamos los datos del chart
+                me.loadEconomico();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -64644,6 +64950,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             });
         },
+        loadEscolaridades: function loadEscolaridades() {
+            var me = this;
+            me.escolaridades.map(function (x) {
+                me.varEsolaridades.push(x.nombre_escolaridad);
+                me.varTotalEscolaridades.push(x.total);
+            });
+            me.varEscolaridad = document.getElementById('escolaridad').getContext('2d');
+
+            me.charEscolaridad = new Chart(me.varEscolaridad, {
+                type: 'pie',
+                data: {
+                    labels: me.varEsolaridades,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalEscolaridades,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
         loadDiscapacitados: function loadDiscapacitados() {
             var me = this;
             me.discapacitados.map(function (x) {
@@ -64712,6 +65041,209 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
 
             });
+        },
+        loadCreditos: function loadCreditos() {
+            var me = this;
+            me.creditos.map(function (x) {
+                me.varCreditos.push(x.nombre_banco);
+                me.varTotalCreditos.push(x.total);
+            });
+            me.varCredito = document.getElementById('credito').getContext('2d');
+
+            me.charCredito = new Chart(me.varCredito, {
+                type: 'pie',
+                data: {
+                    labels: me.varCreditos,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalCreditos,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadVariedades: function loadVariedades() {
+            var me = this;
+            me.variedades.map(function (x) {
+                me.varTotalVariedad.push(x.criollo, x.CCN51, x.ICS95, x.otros);
+            });
+            me.varVariedadCultivo = document.getElementById('variedad').getContext('2d');
+
+            me.charVariedadCultivo = new Chart(me.varVariedadCultivo, {
+                type: 'pie',
+                data: {
+                    labels: me.varVariedades,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalVariedad,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadInjertos: function loadInjertos() {
+            var me = this;
+            me.injertos.map(function (x) {
+                me.varTotalInjerto.push(x.criollo, x.CCN51, x.ICS95, x.otros);
+            });
+            me.varInjertoCultivo = document.getElementById('injerto').getContext('2d');
+
+            me.charInjertoCultivo = new Chart(me.varInjertoCultivo, {
+                type: 'pie',
+                data: {
+                    labels: me.varVariedades,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalInjerto,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadControles: function loadControles() {
+            var me = this;
+            me.controles.map(function (x) {
+                me.varControles.push(x.opcion_control);
+                me.varTotalControles.push(x.total);
+            });
+            me.varControl = document.getElementById('control').getContext('2d');
+
+            me.charControl = new Chart(me.varControl, {
+                type: 'pie',
+                data: {
+                    labels: me.varControles,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalControles,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadMetodos: function loadMetodos() {
+            var me = this;
+            me.metodos.map(function (x) {
+                me.varMetodos.push(x.metodo);
+                me.varTotalMetodos.push(x.total);
+            });
+            me.varMetodo = document.getElementById('metodo').getContext('2d');
+
+            me.charMetodo = new Chart(me.varMetodo, {
+                type: 'pie',
+                data: {
+                    labels: me.varMetodos,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalMetodos,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadDrenajes: function loadDrenajes() {
+            var me = this;
+            me.drenajes.map(function (x) {
+                me.varDrenajes.push(x.drenaje);
+                me.varTotalDrenajes.push(x.total);
+            });
+            me.varDrenaje = document.getElementById('drenaje').getContext('2d');
+
+            me.charDrenaje = new Chart(me.varDrenaje, {
+                type: 'pie',
+                data: {
+                    labels: me.varDrenajes,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalDrenajes,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadCosechas: function loadCosechas() {
+            var me = this;
+            me.cosechas.map(function (x) {
+                me.varTotalCosechas.push(x.fresco, x.seco);
+            });
+            me.varCosecha = document.getElementById('cosecha').getContext('2d');
+
+            me.charCosecha = new Chart(me.varCosecha, {
+                type: 'pie',
+                data: {
+                    labels: me.varCosechas,
+                    datasets: [{
+                        label: 'Total',
+                        data: me.varTotalCosechas,
+                        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(208, 255, 181, 1)", "rgba(249, 250, 121, 1)", "rgba(255, 182, 128, 1)", "rgba(255, 85, 59, 1)", "rgba(204, 59, 255, 1)", "rgba(10, 16, 180, 1)", "rgba(10, 180, 150, 1)"],
+                        borderWidth: 1
+                    }]
+                }
+
+            });
+        },
+        loadEconomico: function loadEconomico() {
+            var me = this;
+            me.economicos.map(function (x) {
+                me.varTotalMensuales.push(x.ingresoMensual);
+                me.varTotalGastos.push(x.gastoMensual);
+                me.varTotalOtros.push(x.otrosIngresos);
+                me.varTotalNeto.push(x.ingresoNeto);
+            });
+            me.varEconomico = document.getElementById('economico').getContext('2d');
+            var gastos = {
+                label: "Gastos Mensuales($)",
+                data: me.varTotalGastos,
+                backgroundColor: 'rgba(211,93,110, 0.2)', // Color de fondo
+                borderColor: 'rgba(211,93,110, 1)', // Color del borde
+                borderWidth: 1 // Ancho del borde
+            };
+            var ingresos = {
+                label: "Ingresos Mensuales($)",
+                data: me.varTotalMensuales,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
+                borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+                borderWidth: 1 // Ancho del borde
+            };
+            var otrosIngresos = {
+                label: "Otros ingresos Mensuales($)",
+                data: me.varTotalOtros,
+                backgroundColor: 'rgba(209,234,163,0.5)', // Color de fondo
+                borderColor: 'rgba(209,234,163,1)', // Color del borde
+                borderWidth: 1 // Ancho del borde
+            };
+            var ingresoNeto = {
+                label: "Ingresos netos Mensuales($)",
+                data: me.varTotalNeto,
+                backgroundColor: 'rgba(255, 159, 64, 0.2)', // Color de fondo
+                borderColor: 'rgba(255, 159, 64, 1)', // Color del borde
+                borderWidth: 1 // Ancho del borde
+            };
+            var grafico = {
+                datasets: [gastos, ingresos, otrosIngresos, ingresoNeto]
+            };
+            me.charEconomico = new Chart(me.varEconomico, {
+                type: 'line',
+                data: grafico
+            });
         }
     },
     mounted: function mounted() {
@@ -64721,9 +65253,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getEtnias();
         this.getSexos();
         this.getEdades();
+        this.getEscolaridades();
         this.getDiscapacitados();
         this.getPersonasAcargo();
         this.getDesplazados();
+        this.getCreditos();
+        this.getVariedades();
+        this.getInjertos();
+        this.getControles();
+        this.getMetodos();
+        this.getDrenajes();
+        this.getCosechas();
+        this.getEconomico();
     }
 });
 
@@ -64902,6 +65443,32 @@ var staticRenderFns = [
               _c("div", { staticClass: "col-md-10" }, [
                 _c("div", { staticClass: "card card-chart" }, [
                   _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Escolaridad")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "escolaridad" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion por grado de escolaridad de los productores"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
                     _c("h4", [_vm._v("Discapacitados")])
                   ]),
                   _vm._v(" "),
@@ -64969,6 +65536,214 @@ var staticRenderFns = [
                     _c("p", [
                       _vm._v(
                         "Distribucion de acuerdo al numero de productores en condicion de desplazamiento y no desplazamiento"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Creditos ")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "credito" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo a los bancos que tienen los productores sus respectivos creditos"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Variedad Arboles ")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "variedad" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo a la variedad de arboles con que cuentan los productores"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Variedad Arboles con injerto")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "injerto" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo a la variedad de arboles con injerto con que cuentan los productores"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Control")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "control" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo a los productores que realizan control en su cultivo"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Metodo")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "metodo" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo a los mecanismos de control que usan los productores en su cultivo"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Drenaje")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "drenaje" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion de acuerdo al tipo de drenaje que usan los productores en su cultivo"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Cosecha")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "cosecha" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Distribucion entre la cosecha fresca y seca total del mes los productores en Kg"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "card card-chart" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", [_vm._v("Componente Economico Productor")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "ct-chart" }, [
+                      _c("canvas", { attrs: { id: "economico" } })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Diagrama de lineas entre ingreso mensual,otros ingresos, ingresos netos y gasto mensual de todos los productores."
                       )
                     ])
                   ])

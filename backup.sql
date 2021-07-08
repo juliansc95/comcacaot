@@ -53,7 +53,7 @@ CREATE TABLE `areacultivos` (
   CONSTRAINT `areacultivos_injertado_foreign` FOREIGN KEY (`injertado`) REFERENCES `opcions` (`id`),
   CONSTRAINT `areacultivos_mantenimiento_id_foreign` FOREIGN KEY (`mantenimiento_id`) REFERENCES `mantenimientoplantacions` (`id`),
   CONSTRAINT `areacultivos_productor_id_foreign` FOREIGN KEY (`productor_id`) REFERENCES `componentesocialproductors` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `areacultivos` (
 
 LOCK TABLES `areacultivos` WRITE;
 /*!40000 ALTER TABLE `areacultivos` DISABLE KEYS */;
-INSERT INTO `areacultivos` VALUES (1,36,2,20.00,20,21,12,11,23,1,3,3,30,31,221,1,1,'2021-04-12 04:54:58','2021-04-12 04:57:07');
+INSERT INTO `areacultivos` VALUES (1,36,2,20.00,20,21,12,11,23,1,3,3,30,31,221,1,1,'2021-04-12 04:54:58','2021-04-12 04:57:07'),(2,42,4,20.00,3,20,12,13,21,1,3,45,3,12,23,2,5,'2021-07-01 16:00:45','2021-07-01 16:00:45');
 /*!40000 ALTER TABLE `areacultivos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,7 +413,7 @@ CREATE TABLE `componentesocialproductors` (
 
 LOCK TABLES `componentesocialproductors` WRITE;
 /*!40000 ALTER TABLE `componentesocialproductors` DISABLE KEYS */;
-INSERT INTO `componentesocialproductors` VALUES (35,1,1,1,'2021-03-31',35,1,1,1,10,1,1,1,1,15,5,1,'asa',1,'asda',1,NULL,0,'2021-03-31',10,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,NULL,NULL),(36,1,3,2,'2021-04-06',116,1,1,1,1,1,1,2,1,1,1,1,'SENA',1,'PRUEBAS',2,'prueba',423423,'2021-04-02',1,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(37,1,1,1,'2021-04-05',23,1,1,1,1,1,1,4,1,1,1,1,'test',1,'test',5,'asda',124212,'2021-04-06',8,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(38,1,1,1,'2021-04-06',56,1,1,1,9,1,1,2,1,14,1,1,'aa',1,'uao',NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(40,1,1,1,'2021-04-06',137,1,1,1,1,1,1,3,1,1,1,1,'aa',1,'asd',2,'a',121233,'2021-04-07',2,1,'b',2222222,'2021-04-04',8,4,'c',4444444,'2021-04-05',9,5,'d',555555,'2021-04-19',8,6,'e',66666,'2021-04-05',6,NULL,NULL),(42,1,1,1,'2021-06-02',93,4,1,2,9,1,1,0,1,15,3,1,'sena',1,'prueba',NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,'2021-06-27 03:09:31','2021-06-27 03:09:31');
+INSERT INTO `componentesocialproductors` VALUES (35,1,1,1,'1985-03-31',35,1,1,1,10,1,1,1,1,15,5,1,'asa',1,'asda',1,NULL,0,'2021-03-31',10,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,1,NULL,0,'2021-03-31',1,NULL,NULL),(36,1,3,2,'1960-02-12',116,1,1,1,1,1,1,2,1,1,1,1,'SENA',1,'PRUEBAS',2,'prueba',423423,'2021-04-02',1,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(37,1,1,1,'1995-12-10',23,1,1,1,1,1,1,4,1,1,1,1,'test',1,'test',5,'asda',124212,'2021-04-06',8,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(38,1,1,1,'1950-12-10',56,1,1,1,9,1,1,2,1,14,1,1,'aa',1,'uao',NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL,0,'2021-04-05',NULL,NULL,NULL),(40,1,1,1,'1978-01-10',137,1,1,1,1,1,1,3,1,1,1,1,'aa',1,'asd',2,'a',121233,'2021-04-07',2,1,'b',2222222,'2021-04-04',8,4,'c',4444444,'2021-04-05',9,5,'d',555555,'2021-04-19',8,6,'e',66666,'2021-04-05',6,NULL,NULL),(42,1,1,1,'1967-01-10',93,4,1,2,9,1,1,0,1,15,3,1,'sena',1,'prueba',NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,NULL,NULL,0,'2021-06-26',NULL,'2021-06-27 03:09:31','2021-06-27 03:09:31'),(43,1,2,2,'2021-06-02',57,3,1,1,9,1,2,0,2,18,5,1,'ASISTCARD',2,'NINGUNO',NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,'2021-06-30 15:17:31','2021-06-30 15:17:31'),(44,2,3,1,'2021-06-09',94,4,3,2,6,1,2,0,2,16,4,2,'PRUEBA',1,'PRUEBA',NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,NULL,NULL,0,'2021-06-30',NULL,'2021-06-30 15:20:18','2021-06-30 15:20:18');
 /*!40000 ALTER TABLE `componentesocialproductors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1147,7 +1147,7 @@ CREATE TABLE `laborcultivos` (
   CONSTRAINT `laborcultivos_productor_id_foreign` FOREIGN KEY (`productor_id`) REFERENCES `componentesocialproductors` (`id`),
   CONSTRAINT `laborcultivos_tipocontrolenfermedad_foreign` FOREIGN KEY (`tipoControlEnfermedad`) REFERENCES `tipocontrols` (`id`),
   CONSTRAINT `laborcultivos_tipocontrolplagas_foreign` FOREIGN KEY (`tipoControlPlagas`) REFERENCES `tipocontrols` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1156,7 +1156,7 @@ CREATE TABLE `laborcultivos` (
 
 LOCK TABLES `laborcultivos` WRITE;
 /*!40000 ALTER TABLE `laborcultivos` DISABLE KEYS */;
-INSERT INTO `laborcultivos` VALUES (1,36,2,1,'Quimico','obs',2,'obs','Ambos',2,'Organica',3,1,1,1,1,'as',1,3,'as','2021-04-12 06:35:00','2021-04-12 06:38:44');
+INSERT INTO `laborcultivos` VALUES (1,36,2,1,'Quimico','obs',2,'obs','Ambos',2,'Organica',3,1,1,1,1,'as',1,3,'as','2021-04-12 06:35:00','2021-04-12 06:38:44'),(2,42,4,1,'Manual','prueba',3,'prueba','Secundario',2,'Quimica',3,2,2,1,1,'prueba',1,1,'prueba','2021-07-01 20:17:16','2021-07-01 20:17:16');
 /*!40000 ALTER TABLE `laborcultivos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1520,7 +1520,7 @@ CREATE TABLE `personas` (
   UNIQUE KEY `personas_nombre_unique` (`nombre`),
   KEY `personas_tipo_id_foreign` (`tipo_id`),
   CONSTRAINT `personas_tipo_id_foreign` FOREIGN KEY (`tipo_id`) REFERENCES `tipoids` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1529,7 +1529,7 @@ CREATE TABLE `personas` (
 
 LOCK TABLES `personas` WRITE;
 /*!40000 ALTER TABLE `personas` DISABLE KEYS */;
-INSERT INTO `personas` VALUES (1,'Admin',1,'1107090570','cll 123','3015562152','admin@sistemas.com',NULL,NULL),(2,'Admin Sistemas',1,'1006017055','cra 26 #17-31','3015562152','admin@sistemas.com','2020-12-07 22:15:15','2020-12-07 22:15:15'),(3,'Extensionista',1,'1006017055','cll 23 #12-50','3103861474','extensionista@asofrut.org','2020-12-07 22:16:25','2020-12-07 22:16:25'),(4,'Comercial',1,'1110678909','cll 123','42412412','comercial@asofrut.org','2020-12-07 22:17:28','2020-12-07 22:17:28'),(5,'Productor',1,'1006017055','cll 120','3305890','productor@asofrut.org','2020-12-07 22:18:51','2020-12-10 09:37:12'),(6,'Pedro Perez',1,'1107090570','cll 10','3306789','pedro@gmail.com','2020-12-10 09:36:39','2020-12-10 09:36:39'),(13,'lola',1,'124124','cll 1233','24235232','lola@gmail.com','2020-12-10 10:35:51','2020-12-10 10:35:51'),(22,'Juan Perez',1,'1107090541','cll 123','3389012','juan@hotmail.com','2020-12-12 00:47:21','2020-12-12 00:47:21'),(23,'Productor Ejemplo',2,'1006017055','cll 123','33090412','ejemplo@gmail.com','2020-12-12 02:29:30','2020-12-12 03:01:15'),(24,'Contador',1,'1107090212','cll 124','3305678','contador@asofrut.org','2020-12-22 17:00:49','2020-12-22 17:00:49'),(35,'asdad',1,'3212421','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-01 01:36:58','2021-04-01 01:36:58'),(36,'Prueba',1,'1241242','4235235','4235235','juan@gmail.com','2021-04-05 14:58:24','2021-04-05 14:58:24'),(37,'aaa',1,'1535325','3523532','3523532','julian@mail.com','2021-04-05 15:56:41','2021-04-05 15:56:41'),(38,'probando',1,'1107950432','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-05 20:00:58','2021-04-05 20:00:58'),(40,'Eduardo Luis',1,'1241241','3155644407','3155644407','Millansantiago15@gmail.com','2021-04-05 20:30:26','2021-04-05 20:30:26'),(42,'JUAN CAMILO',1,'1006017055','3105903892','3105903892','juan@correo.com','2021-06-27 03:09:31','2021-06-27 03:09:31');
+INSERT INTO `personas` VALUES (1,'Admin',1,'1107090570','cll 123','3015562152','admin@sistemas.com',NULL,NULL),(2,'Admin Sistemas',1,'1006017055','cra 26 #17-31','3015562152','admin@sistemas.com','2020-12-07 22:15:15','2020-12-07 22:15:15'),(3,'Extensionista',1,'1006017055','cll 23 #12-50','3103861474','extensionista@asofrut.org','2020-12-07 22:16:25','2020-12-07 22:16:25'),(4,'Comercial',1,'1110678909','cll 123','42412412','comercial@asofrut.org','2020-12-07 22:17:28','2020-12-07 22:17:28'),(5,'Productor',1,'1006017055','cll 120','3305890','productor@asofrut.org','2020-12-07 22:18:51','2020-12-10 09:37:12'),(6,'Pedro Perez',1,'1107090570','cll 10','3306789','pedro@gmail.com','2020-12-10 09:36:39','2020-12-10 09:36:39'),(13,'lola',1,'124124','cll 1233','24235232','lola@gmail.com','2020-12-10 10:35:51','2020-12-10 10:35:51'),(22,'Juan Perez',1,'1107090541','cll 123','3389012','juan@hotmail.com','2020-12-12 00:47:21','2020-12-12 00:47:21'),(23,'Productor Ejemplo',2,'1006017055','cll 123','33090412','ejemplo@gmail.com','2020-12-12 02:29:30','2020-12-12 03:01:15'),(24,'Contador',1,'1107090212','cll 124','3305678','contador@asofrut.org','2020-12-22 17:00:49','2020-12-22 17:00:49'),(35,'asdad',1,'3212421','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-01 01:36:58','2021-04-01 01:36:58'),(36,'Prueba',1,'1241242','4235235','4235235','juan@gmail.com','2021-04-05 14:58:24','2021-04-05 14:58:24'),(37,'aaa',1,'1535325','3523532','3523532','julian@mail.com','2021-04-05 15:56:41','2021-04-05 15:56:41'),(38,'probando',1,'1107950432','3015562152','3015562152','juliansilva95@hotmail.com','2021-04-05 20:00:58','2021-04-05 20:00:58'),(40,'Eduardo Luis',1,'1241241','3155644407','3155644407','Millansantiago15@gmail.com','2021-04-05 20:30:26','2021-04-05 20:30:26'),(42,'JUAN CAMILO',1,'1006017055','3105903892','3105903892','juan@correo.com','2021-06-27 03:09:31','2021-06-27 03:09:31'),(43,'ANA MOSQUERA',1,'45678432',NULL,'3015562152','juliansilva95@hotmail.com','2021-06-30 15:17:30','2021-06-30 15:17:30'),(44,'JUANA ROJAS',1,'21412',NULL,'3155644407','Millansantiago15@gmail.com','2021-06-30 15:20:18','2021-06-30 15:20:18');
 /*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2301,7 +2301,7 @@ CREATE TABLE `ventacoms` (
   CONSTRAINT `ventacoms_productor_id_foreign` FOREIGN KEY (`productor_id`) REFERENCES `componentesocialproductors` (`id`),
   CONSTRAINT `ventacoms_vereda_id_foreign` FOREIGN KEY (`vereda_id`) REFERENCES `veredascoms` (`id`),
   CONSTRAINT `ventacoms_zona_id_foreign` FOREIGN KEY (`zona_id`) REFERENCES `zonas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2310,7 +2310,7 @@ CREATE TABLE `ventacoms` (
 
 LOCK TABLES `ventacoms` WRITE;
 /*!40000 ALTER TABLE `ventacoms` DISABLE KEYS */;
-INSERT INTO `ventacoms` VALUES (5,40,13,57,3,'2021-04-14',345.00,314.10,400.00,125640.00,905640.00,5,'venta economica','2021-04-14 11:53:13','2021-05-24 20:49:45'),(8,36,16,7,1,'2021-05-24',35.00,33.73,100.00,3373.00,74550.00,1,'prueba','2021-05-24 14:57:43','2021-05-24 14:57:43'),(9,40,3,105,5,'2021-05-24',3.00,2.64,300.00,792.00,6864.00,1,'prueba','2021-05-24 19:45:50','2021-05-24 19:45:50'),(10,40,20,163,6,'2021-05-24',25.00,22.50,1000.00,22500.00,77725.80,1,'final','2021-05-24 20:48:38','2021-05-24 20:48:38');
+INSERT INTO `ventacoms` VALUES (5,40,13,57,3,'2021-04-14',345.00,314.10,400.00,125640.00,905640.00,5,'venta economica','2021-04-14 11:53:13','2021-05-24 20:49:45'),(8,36,16,7,1,'2021-05-24',35.00,33.73,100.00,3373.00,74550.00,1,'prueba','2021-05-24 14:57:43','2021-05-24 14:57:43'),(9,40,3,105,5,'2021-05-24',3.00,2.64,300.00,792.00,6864.00,1,'prueba','2021-05-24 19:45:50','2021-05-24 19:45:50'),(10,40,20,163,6,'2021-05-24',25.00,22.50,1000.00,22500.00,77725.80,1,'final','2021-05-24 20:48:38','2021-05-24 20:48:38'),(11,42,5,4,1,'2021-06-29',25.00,15.00,4500.00,67500.00,97998.00,1,'prueba factura','2021-06-29 12:41:37','2021-06-29 12:41:37'),(12,42,2,8,1,'2021-06-29',59.00,44.52,5600.00,249312.00,343348.00,1,'probando reporte','2021-06-29 12:42:49','2021-06-29 12:42:49'),(13,36,16,24,2,'2021-06-29',47.00,40.70,2000.00,81400.00,167270.00,1,'prueba factura','2021-06-29 12:44:42','2021-06-29 12:44:42'),(14,42,1,31,2,'2021-06-29',5.00,1.55,3000.00,4650.00,7918.00,1,'prueba final comprobante','2021-06-29 13:42:03','2021-06-29 13:42:03');
 /*!40000 ALTER TABLE `ventacoms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2382,7 +2382,7 @@ CREATE TABLE `ventas_categoriacoms` (
   KEY `ventas_categoriacoms_categoria_id_foreign` (`categoria_id`),
   CONSTRAINT `ventas_categoriacoms_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categoriamoras` (`id`),
   CONSTRAINT `ventas_categoriacoms_ventas_id_foreign` FOREIGN KEY (`ventas_id`) REFERENCES `ventacoms` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2391,7 +2391,7 @@ CREATE TABLE `ventas_categoriacoms` (
 
 LOCK TABLES `ventas_categoriacoms` WRITE;
 /*!40000 ALTER TABLE `ventas_categoriacoms` DISABLE KEYS */;
-INSERT INTO `ventas_categoriacoms` VALUES (4,5,1,300.00,15.00,87.00,21.00,2300.00,690000.00,'2021-04-14 11:53:13','2021-04-14 11:53:13'),(5,5,2,45.00,30.00,71.00,9.90,2000.00,90000.00,'2021-04-14 11:53:13','2021-04-14 11:53:13'),(6,8,1,2.00,22.00,33.00,0.28,2300.00,3956.00,'2021-05-24 14:57:43','2021-05-24 14:57:43'),(7,8,3,33.00,11.00,11.00,0.99,2100.00,67221.00,'2021-05-24 14:57:43','2021-05-24 14:57:43'),(8,9,1,3.00,20.00,31.00,0.36,2300.00,6072.00,'2021-05-24 19:45:50','2021-05-24 19:45:50'),(9,10,7,15.00,10.00,50.00,0.30,2000.00,29400.00,'2021-05-24 20:48:38','2021-05-24 20:48:38'),(10,10,6,10.00,30.00,60.00,2.20,3311.00,25825.80,'2021-05-24 20:48:38','2021-05-24 20:48:38');
+INSERT INTO `ventas_categoriacoms` VALUES (4,5,1,300.00,15.00,87.00,21.00,2300.00,690000.00,'2021-04-14 11:53:13','2021-04-14 11:53:13'),(5,5,2,45.00,30.00,71.00,9.90,2000.00,90000.00,'2021-04-14 11:53:13','2021-04-14 11:53:13'),(6,8,1,2.00,22.00,33.00,0.28,2300.00,3956.00,'2021-05-24 14:57:43','2021-05-24 14:57:43'),(7,8,3,33.00,11.00,11.00,0.99,2100.00,67221.00,'2021-05-24 14:57:43','2021-05-24 14:57:43'),(8,9,1,3.00,20.00,31.00,0.36,2300.00,6072.00,'2021-05-24 19:45:50','2021-05-24 19:45:50'),(9,10,7,15.00,10.00,50.00,0.30,2000.00,29400.00,'2021-05-24 20:48:38','2021-05-24 20:48:38'),(10,10,6,10.00,30.00,60.00,2.20,3311.00,25825.80,'2021-05-24 20:48:38','2021-05-24 20:48:38'),(11,11,1,2.00,25.00,80.00,0.34,2300.00,3818.00,'2021-06-29 12:41:37','2021-06-29 12:41:37'),(12,11,2,23.00,50.00,95.00,9.66,2000.00,26680.00,'2021-06-29 12:41:37','2021-06-29 12:41:37'),(13,12,1,4.00,40.00,80.00,1.28,2300.00,6256.00,'2021-06-29 12:42:49','2021-06-29 12:42:49'),(14,12,3,55.00,32.00,85.00,13.20,2100.00,87780.00,'2021-06-29 12:42:49','2021-06-29 12:42:49'),(15,13,1,2.00,8.00,80.00,0.00,2300.00,4600.00,'2021-06-29 12:44:42','2021-06-29 12:44:42'),(16,13,3,45.00,22.00,87.00,6.30,2100.00,81270.00,'2021-06-29 12:44:42','2021-06-29 12:44:42'),(17,14,1,2.00,80.00,89.00,1.44,2300.00,1288.00,'2021-06-29 13:42:03','2021-06-29 13:42:03'),(18,14,2,3.00,75.00,90.00,2.01,2000.00,1980.00,'2021-06-29 13:42:04','2021-06-29 13:42:04');
 /*!40000 ALTER TABLE `ventas_categoriacoms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2467,13 +2467,13 @@ CREATE TABLE `visita_compromisos` (
   `visita_id` int(10) unsigned NOT NULL,
   `compromiso` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cumplimiento` int(11) NOT NULL,
-  `predecesor_id` int(11) NOT NULL,
+  `predecesor_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `visita_compromisos_visita_id_foreign` (`visita_id`),
   CONSTRAINT `visita_compromisos_visita_id_foreign` FOREIGN KEY (`visita_id`) REFERENCES `visitas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2482,6 +2482,7 @@ CREATE TABLE `visita_compromisos` (
 
 LOCK TABLES `visita_compromisos` WRITE;
 /*!40000 ALTER TABLE `visita_compromisos` DISABLE KEYS */;
+INSERT INTO `visita_compromisos` VALUES (1,1,'prueba',0,NULL,'2021-06-29 02:07:23','2021-06-29 02:07:23');
 /*!40000 ALTER TABLE `visita_compromisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2512,7 +2513,7 @@ CREATE TABLE `visitas` (
   `observaciones` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nivelSatisfaccionAsistencia` int(11) NOT NULL,
   `nivelSatisfaccionEmpresa` int(11) NOT NULL,
-  `predecesor_id` int(11) NOT NULL,
+  `predecesor_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -2522,7 +2523,7 @@ CREATE TABLE `visitas` (
   CONSTRAINT `visitas_finca_id_foreign` FOREIGN KEY (`finca_id`) REFERENCES `fincascoms` (`id`),
   CONSTRAINT `visitas_lugarventa_id_foreign` FOREIGN KEY (`lugarVenta_id`) REFERENCES `lugarventas` (`id`),
   CONSTRAINT `visitas_productor_id_foreign` FOREIGN KEY (`productor_id`) REFERENCES `componentesocialproductors` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2531,6 +2532,7 @@ CREATE TABLE `visitas` (
 
 LOCK TABLES `visitas` WRITE;
 /*!40000 ALTER TABLE `visitas` DISABLE KEYS */;
+INSERT INTO `visitas` VALUES (1,42,4,11.00,2.00,3.00,3.00,34.00,4.00,5.00,1.00,2.00,9,'probar registro','prueba','probando','prueba',89,100,NULL,'2021-06-29 02:07:23','2021-06-29 02:07:23');
 /*!40000 ALTER TABLE `visitas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2636,4 +2638,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-26 23:16:42
+-- Dump completed on 2021-07-02 10:42:07
