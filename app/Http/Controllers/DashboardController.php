@@ -8,6 +8,7 @@ use App\ComponenteEconomico;
 use App\AreaCultivo;
 use App\LaborCultivo;
 use App\CosechaCultivo;
+use App\FincaComcacaot;
 
 class DashboardController extends Controller
 {
@@ -108,6 +109,11 @@ class DashboardController extends Controller
         'componenteeconomicos.otrosIngresos','componenteeconomicos.ingresoNeto')       
         ->get();
 
+        $finca=FincaComcacaot::join('veredascoms','fincascoms.vereda_id','=','veredascoms.id')
+        ->select( 'veredascoms.nombre as nombre_vereda',DB::raw('COUNT(*) as total'))       
+        ->groupBy('veredascoms.nombre')
+        ->get();
+
        
 
 
@@ -119,7 +125,7 @@ class DashboardController extends Controller
         'personasacargo'=>$personasacargo,'desplazados'=>$desplazados, 'creditos'=>$creditos,
         'variedades'=> $variedades,'variedadesinjertado'=>$variedadesinjertado,
         'control'=>$control,'metodo'=>$metodo,'drenaje'=>$drenaje,'cosecha'=>$cosecha,
-        'economico'=>$economico];  
+        'economico'=>$economico,'finca'=>$finca];  
 
     }
 }

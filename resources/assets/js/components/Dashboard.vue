@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     </div>
-                     <div class="row">
+                    <div class="row">
                     <div class="col-md-1"></div>    
                     <div class="col-md-10">
                         <div class="card card-chart">
@@ -352,6 +352,25 @@
                         </div>
                     </div>
                     </div>
+                    <div class="row">
+                    <div class="col-md-1"></div>    
+                    <div class="col-md-10">
+                        <div class="card card-chart">
+                            <div class="card-header">
+                                <h4>Fincas por vereda</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="ct-chart">
+                                    <canvas id="finca">                                                
+                                    </canvas>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p>Distribucion de acuerdo al numero de fincas por vereda</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -472,7 +491,13 @@
                 varTotalGastos:[],
                 varTotalOtros:[],
                 varTotalNeto:[],
-                varMensuales:["Total"],               
+                varMensuales:["Total"],
+
+                varFinca:null,
+                charFinca:null,
+                fincas:[],
+                varTotalFincas:[],
+                varFincas:[],               
             }
         },
         methods: {
@@ -705,6 +730,19 @@
                     me.economicos = respuesta.economico;
                     //cargamos los datos del chart
                     me.loadEconomico();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getFinca(){
+                let me=this;
+                var url= 'dashboard';
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    me.fincas = respuesta.finca;
+                    //cargamos los datos del chart
+                    me.loadFinca();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -1175,6 +1213,31 @@
                     data:grafico,
                 });
             },
+            loadFinca(){
+                let me=this;
+                me.fincas.map(function(x){
+                     me.varFincas.push(x.nombre_vereda);
+                    me.varTotalFincas.push(x.total);
+                });
+                me.varFinca=document.getElementById('finca').getContext('2d');
+
+                me.charFinca = new Chart(me.varFinca, {
+                    type: 'bar',
+                    data: {
+                        labels: me.varFincas,
+                        datasets: [{
+                            label: 'Total',
+                            data: me.varTotalFincas,
+                            backgroundColor: ["rgba(54, 162, 235, 0.2)","rgba(255, 99, 132, 0.2)","rgba(208, 255, 181, 1)","rgba(249, 250, 121, 1)","rgba(255, 182, 128, 1)",
+                            "rgba(255, 85, 59, 1)","rgba(204, 59, 255, 1)","rgba(10, 16, 180, 1)","rgba(10, 180, 150, 1)"],
+                            borderColor:  ["rgba(54, 162, 235, 0.2)","rgba(255, 99, 132, 0.2)","rgba(208, 255, 181, 1)","rgba(249, 250, 121, 1)","rgba(255, 182, 128, 1)",
+                            "rgba(255, 85, 59, 1)","rgba(204, 59, 255, 1)","rgba(10, 16, 180, 1)","rgba(10, 180, 150, 1)"],
+                            borderWidth: 1
+                        }]
+                    },
+                   
+                });
+            },
 
         },
         mounted() {
@@ -1196,7 +1259,7 @@
             this.getDrenajes();
             this.getCosechas();
             this.getEconomico();
-        
+            this.getFinca();
         },
     }
 </script>
