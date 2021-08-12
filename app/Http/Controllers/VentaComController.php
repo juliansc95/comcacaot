@@ -30,7 +30,7 @@ class VentaComController extends Controller
             'ventacoms.observaciones','personas.nombre as nombre_persona','estadoventas.nombre as nombre_estadoVenta',
             'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
-             ->orderBy('ventacoms.estado_id', 'asc')->paginate(10);
+             ->orderBy('ventacoms.id', 'desc')->paginate(10);
         }
         if($criterio == 'personas'){
             $ventas = VentaCom::join('personas','ventacoms.productor_id','=','personas.id')
@@ -46,7 +46,7 @@ class VentaComController extends Controller
             'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
         ->where($criterio.'.nombre', 'like', '%'. $buscar . '%')
-        ->orderBy('ventacoms.estado_id', 'asc')->paginate(10);
+        ->orderBy('ventacoms.id', 'desc')->paginate(10);
         }
         else{
             $ventas = VentaCom::join('personas','ventacoms.productor_id','=','personas.id')
@@ -62,7 +62,7 @@ class VentaComController extends Controller
             'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
             )
             ->where('ventacoms.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('ventacoms.estado_id', 'asc')->paginate(10);
+            ->orderBy('ventacoms.id', 'desc')->paginate(10);
         }
         
         return [

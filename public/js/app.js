@@ -52204,6 +52204,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             ccP5: 0,
 
             arrayProductor: [],
+            arrayProductor2: [],
             arrayFinca: [],
             arrayLugarVenta: [],
             arrayDetalle: [],
@@ -52296,6 +52297,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayProductor2 = respuesta.personas;
+                console.log(arrayProductor2);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -53091,7 +53093,7 @@ var render = function() {
                               [_vm._v("Seleccione")]
                             ),
                             _vm._v(" "),
-                            _vm._l(_vm.arrayProductor, function(productor) {
+                            _vm._l(_vm.arrayProductor2, function(productor) {
                               return _c("option", {
                                 key: productor.id,
                                 domProps: {
@@ -61083,7 +61085,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         pdfVenta: function pdfVenta(id) {
-            window.open('http://localhost/comcacaot/public/venta/pdf/' + id);
+            window.open('http://comcacaot.com//venta/pdf/' + id);
         },
         cargarPdf: function cargarPdf() {
             window.open('http://gestion.asofrut.org/venta/listarPdf');
@@ -61216,7 +61218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.subtotal = 0;
                 me.codigo = '';
                 me.arrayDetalle = [];
-                window.open('http://localhost/comcacaot/public/venta/pdf/' + response.data.id);
+                window.open('http://comcacaot.com/venta/pdf/' + response.data.id);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -66061,7 +66063,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         backupBD: function backupBD() {
-            window.open('http://localhost/comcacaot/public/backup');
+            window.open('http://comcacaot.com/backup');
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
             var me = this;

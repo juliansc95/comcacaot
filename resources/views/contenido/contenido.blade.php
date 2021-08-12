@@ -68,13 +68,90 @@
 
           
             @elseif(Auth::user()->idrol == 2)
-            
-            @elseif(Auth::user()->idrol == 3)
-         
-            @elseif(Auth::user()->idrol == 4)
-            
-            @elseif(Auth::user()->idrol == 5)
+            <template v-if="menu==1">
+               <finca></finca>
+            </template>
 
+            <template v-if="menu==2">
+                <cultivo></cultivo>
+            </template>
+
+            <template v-if="menu==3">
+                <labor></labor>
+            </template>
+            
+            <template v-if="menu==4">
+               <cosechaproduccion></cosechaproduccion>
+            </template>
+
+            <template v-if="menu==5">
+                <manejo></manejo>
+            </template>
+
+            <template v-if="menu==6">
+            <productor></productor>
+            </template>
+
+            <template v-if="menu==7">
+                <economico></economico>
+            </template>
+            <template v-if="menu==13">
+               <linea></linea>
+            </template>
+
+            <template v-if="menu==14">
+              <seguimiento></seguimiento>
+            </template>
+            @elseif(Auth::user()->idrol == 3)
+            <template v-if="menu==1">
+               <finca></finca>
+            </template>
+
+            <template v-if="menu==2">
+                <cultivo></cultivo>
+            </template>
+
+            <template v-if="menu==3">
+                <labor></labor>
+            </template>
+            
+            <template v-if="menu==4">
+               <cosechaproduccion></cosechaproduccion>
+            </template>
+
+            <template v-if="menu==5">
+                <manejo></manejo>
+            </template>
+
+            <template v-if="menu==6">
+            <productor></productor>
+            </template>
+
+            <template v-if="menu==7">
+                <economico></economico>
+            </template>
+            <template v-if="menu==13">
+               <linea></linea>
+            </template>
+
+            <template v-if="menu==14">
+              <seguimiento></seguimiento>
+            </template>
+            @elseif(Auth::user()->idrol == 4)
+            </template>
+            <template v-if="menu==8">
+                <venta></venta>
+            </template>
+            <template v-if="menu==9">
+                <categoriamora></categoriamora>
+            </template>
+            <template v-if="menu==10">
+               <lugarventa></lugarventa>
+            </template>
+            @elseif(Auth::user()->idrol == 5)
+            <template v-if="menu==8">
+                <venta></venta>
+            </template>
             @else
             @endif
         @endif

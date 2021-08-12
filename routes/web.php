@@ -18,7 +18,7 @@ Route::group(['middleware'=>['guest']],function(){
 });
 
 Route::group(['middleware'=>['auth']],function(){
-
+  
     Route::post('/logout','Auth\LoginController@logout')->name('logout');
     Route::get('/dashboard','DashboardController');
 
@@ -58,58 +58,28 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/posesion/selectPosesion','PosesionController@selectPosesion');
      Route::get('/linea/selectLinea','LineaController@selectLinea');
      Route::get('/finca/selectFinca/{id}','FincaComcacaotController@selectFinca');
-     Route::get('/cadena/selectCadena','CadenaController@selectCadena');
      Route::get('/lugarVenta/selectLugarVenta','LugarVentaController@selectLugarVenta');
      Route::get('/banco/selectBanco','BancoController@selectBanco');
      
      Route::get('/linea/selectLinea2','LineaController@selectLinea2');
      Route::get('/lugarVenta/selectLugarVenta2','LugarVentaController@selectLugarVenta2');
-     Route::get('/equipoAplicacion/selectEquipo','EquipoAplicacionController@selectEquipo');
-     Route::get('/metodoAplicacion/selectMetodo','EquipoAplicacionController@selectMetodo');
-     Route::get('/unidadAplicacion/selectUnidad','EquipoAplicacionController@selectUnidad');
-     Route::get('/unidadDosis/selectDosis','EquipoAplicacionController@selectDosis');
-     Route::get('/producto/selectProducto2','EquipoAplicacionController@selectProducto2');
-
+   
     //Ruta Backup
     Route::get('/backup', 'BackupController@backupDatabase');
     
     //Ruta Linea Base
     Route::post('/visita/registrar', 'VisitaController@store');
 
-     //Rutas Encuesta fitosanitaria
-     Route::get('/fitosanitaria', 'EncuestaFitosanitariaController@index');
-     Route::post('/fitosanitaria/registrar', 'EncuestaFitosanitariaController@store');
-     Route::get('/fitosanitaria/id', 'EncuestaFitosanitariaController@MostrarId');
 
-
-
-  
-
-    Route::post('/formSubmit','GpxUploadController@formSubmit');
-
-     Route::group(['middleware'=>['Productor']],function(){
-        Route::get('/cultivoP','CultivoController@indexProductor');   
-        Route::get('/productorP','ProductorController@indexProductor');
-        Route::get('/fincaP','FincaController@indexProductor');
-        Route::get('/ventaP','ventaController@indexProductor');
-       });
-
-       Route::group(['middleware'=>['Contador']],function(){
-        Route::put('/venta/pasarFacturacion', 'VentaController@pasarFacturacion');    
-        Route::put('/venta/pasarDisponiblePago', 'VentaController@pasarDisponiblePago');    
-        Route::put('/venta/pasarPagado', 'VentaController@pasarPagado'); 
-        Route::get('/venta', 'VentaController@index');       
-        });
+     Route::group(['middleware'=>['SupervisorAgronomo']],function(){
+    
+    });
   
 
     Route::group(['middleware'=>['Administrador']],function(){
-        Route::post('/formSubmit','GpxUploadController@formSubmit');
-        Route::get('/gps','GpxUploadController@index');
+       
 
-     //Ruta productor fitosanitarios   
-     Route::post('/fitosanitario/registrar','ProductoFitosanitarioController@store');
-     Route::put('/fitosanitario/actualizar','ProductoFitosanitarioController@update');
-     Route::get('/fitosanitario','ProductoFitosanitarioController@index');
+     
    
      //Rutas Ventas
      Route::get('/venta', 'VentaComController@index');
@@ -137,10 +107,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/categoriaMora/buscarCategoria','CategoriaMoraController@buscarCategoria');
     Route::get('/categoriaMora/listarCategoria','CategoriaMoraController@listarCategoria');  
 
-    //Rutas Cultivos
-    Route::get('/cultivo','CultivoController@index');
-    Route::post('/cultivo/registrar','CultivoController@store');
-    Route::put('/cultivo/actualizar','CultivoController@update');    
+     
 
      //Rutas Fincas
     Route::get('/finca','FincaComcacaotController@index');
@@ -190,30 +157,11 @@ Route::group(['middleware'=>['auth']],function(){
      Route::put('/user/desactivar','UserController@desactivar');
      Route::put('/user/activar','UserController@activar');
 
-    Route::get('/categoria','CategoriaController@index');
-    Route::post('/categoria/registrar','CategoriaController@store');
-    Route::put('/categoria/actualizar','CategoriaController@update');
-    Route::put('/categoria/desactivar','CategoriaController@desactivar');
-    Route::put('/categoria/activar','CategoriaController@activar');
-    Route::get('/categoria/selectCategoria','CategoriaController@selectCategoria');
+  
     
-    
-    Route::get('/articulo','ArticuloController@index');
-    Route::post('/articulo/registrar','ArticuloController@store');
-    Route::put('/articulo/actualizar','ArticuloController@update');
-    Route::put('/articulo/desactivar','ArticuloController@desactivar');
-    Route::put('/articulo/activar','ArticuloController@activar');
-    
-    Route::get('/cliente','ClienteController@index');
-    Route::post('/cliente/registrar','ClienteController@store');
-    Route::put('/cliente/actualizar','ClienteController@update');
-    
-    Route::get('/proveedor','ProveedorController@index');
-    Route::post('/proveedor/registrar','ProveedorController@store');
-    Route::put('/proveedor/actualizar','ProveedorController@update');
     });
 
-
+    //Esta funcionando como el supervisor de ventas
     Route::group(['middleware'=>['TecnicoComercial']],function(){
     //Rutas Ventas
     Route::get('/venta', 'VentaComController@index');
@@ -228,16 +176,51 @@ Route::group(['middleware'=>['auth']],function(){
      //Rutas Categoria Moras
     Route::get('/categoriaMora','CategoriaMoraController@index');
     Route::get('/categoriaMora/buscarCategoria','CategoriaMoraController@buscarCategoria');
-    Route::get('/categoriaMora/listarCategoria','CategoriaMoraController@listarCategoria');      
+    Route::get('/categoriaMora/listarCategoria','CategoriaMoraController@listarCategoria');
+    
+    //Rutas Lugares de Venta
+    Route::get('/lugarVenta','LugarVentaController@index');
+    Route::post('/lugarVenta/registrar','LugarVentaController@store');
+    Route::put('/lugarVenta/actualizar','LugarVentaController@update');
     });
 
+    //Esta funcionando como tecnico de campo y supervisor agronomo
     Route::group(['middleware'=>['TecnicoExtensionista']],function(){
+    
+    //Rutas productores
+        Route::get('/productor','ComponenteSocialProductorController@index');
+        Route::post('/productor/registrar','ComponenteSocialProductorController@store');
+        Route::put('/productor/actualizar','ComponenteSocialProductorController@update');
+        Route::get('/productor/zonas','ComponenteSocialProductorController@listarPdf')->name('zonas_pdf');
+
+        Route::get('/economico','ComponenteEconomicoController@index');
+        Route::post('/economico/registrar','ComponenteEconomicoController@store');
+        Route::put('/economico/actualizar','ComponenteEconomicoController@update');
+         //Rutas Fincas
+       Route::get('/finca','FincaComcacaotController@index');
+       Route::post('/finca/registrar','FincaComcacaotController@store');
+       Route::put('/finca/actualizar','FincaComcacaotController@update');
+       
+       //Rutas Area cultivo
+       Route::get('/areacultivo','AreaCultivoController@index');
+       Route::post('/areacultivo/registrar','AreaCultivoController@store');
+       Route::put('/areacultivo/actualizar','AreaCultivoController@update');
+   
+        //Rutas Labor cultivo
+        Route::get('/laborcultivo','LaborCultivoController@index');
+        Route::post('/laborcultivo/registrar','LaborCultivoController@store');
+        Route::put('/laborcultivo/actualizar','LaborCultivoController@update');
+   
+        //Rutas Cosecha cultivo
+        Route::get('/cosechacultivo','CosechaCultivoController@index');
+        Route::post('/cosechacultivo/registrar','CosechaCultivoController@store');
+        Route::put('/cosechacultivo/actualizar','CosechaCultivoController@update');
+   
+        //Rutas Manejo Ambiental
+        Route::get('/manejoambiental','ManejoAmbientalController@index');
+        Route::post('/manejoambiental/registrar','ManejoAmbientalController@store');
+        Route::put('/manejoambiental/actualizar','ManejoAmbientalController@update');
         
-        
-        //Rutas Cultivos
-        Route::get('/cultivo','CultivoController@index');
-        Route::post('/cultivo/registrar','CultivoController@store');
-        Route::put('/cultivo/actualizar','CultivoController@update'); 
 
       
     });

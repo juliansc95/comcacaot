@@ -248,7 +248,7 @@ class ProductorController extends Controller
         }  
     }
     public function selectProductor(Request $request){
-        if(!$request->ajax()) return redirect('/');
+        //if(!$request->ajax()) return redirect('/');
         $personas= Productor::join('personas','productors.id','=','personas.id')
         ->select('productors.id','personas.nombre')->orderBy('productors.id','asc')->get();
         return['personas'=>$personas];

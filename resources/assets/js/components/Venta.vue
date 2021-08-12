@@ -691,7 +691,7 @@
                 });
             },
             pdfVenta(id){
-                window.open('http://localhost/comcacaot/public/venta/pdf/'+id);
+                window.open('http://comcacaot.com//venta/pdf/'+id);
             },
             cargarPdf(){
                 window.open('http://gestion.asofrut.org/venta/listarPdf');
@@ -832,7 +832,7 @@
                     me.subtotal=0;
                     me.codigo='';
                     me.arrayDetalle=[];
-                    window.open('http://localhost/comcacaot/public/venta/pdf/'+response.data.id);
+                    window.open('http://comcacaot.com/venta/pdf/'+response.data.id);
 
                 }).catch(function (error) {
                     console.log(error);

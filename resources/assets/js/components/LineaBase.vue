@@ -91,7 +91,7 @@
                                     <label for="">Productor</label>
                                       <select class="form-control" v-model="productor_id" @click="selectFinca(productor_id)" @change="selectFinca(productor_id)">
                                             <option value="0" disabled>Seleccione</option>
-                                            <option v-for="productor in arrayProductor" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
+                                            <option v-for="productor in arrayProductor2" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
                                       </select>  
                                 </div>
                                 </div>
@@ -472,6 +472,7 @@
                 ccP5:0,
 
                 arrayProductor : [],
+                arrayProductor2 : [],
                 arrayFinca : [],
                 arrayLugarVenta: [],                
                 arrayDetalle : [],
@@ -564,6 +565,7 @@
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayProductor2= respuesta.personas;
+                    console.log(arrayProductor2);
                 })
                 .catch(function (error) {
                     console.log(error);

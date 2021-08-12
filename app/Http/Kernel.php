@@ -60,9 +60,13 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'Administrador' => \App\Http\Middleware\Administrador::class,
-        'Productor' => \App\Http\Middleware\Productor::class,
+        //'Productor' => \App\Http\Middleware\Productor::class,
         'TecnicoComercial' => \App\Http\Middleware\TecnicoComercial::class,
         'TecnicoExtensionista' => \App\Http\Middleware\TecnicoExtensionista::class,
-        'Contador' => \App\Http\Middleware\Contador::class
+        'Contador' => \App\Http\Middleware\Contador::class,
+        'SupervisorAgronomo' => \App\Http\Middleware\SupervisorAgronomo::class,
+        'TecnicoCampo' => \App\Http\Middleware\TecnicoCampo::class,
+        'SupervisorVentas' => \App\Http\Middleware\SupervisorVentas::class,
+        'Vendedor' => \App\Http\Middleware\Vendedor::class
     ];
 }

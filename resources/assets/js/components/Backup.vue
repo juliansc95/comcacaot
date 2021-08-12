@@ -113,7 +113,7 @@
         },
         methods : {
             backupBD(){
-                window.open('http://localhost/comcacaot/public/backup');
+                window.open('http://comcacaot.com/backup');
             },
             cambiarPagina(page,buscar,criterio){
                 let me = this;
