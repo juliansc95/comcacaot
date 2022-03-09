@@ -150,7 +150,7 @@
             </template>
             @elseif(Auth::user()->idrol == 5)
             <template v-if="menu==8">
-                <venta></venta>
+                <ventavendedor></ventavendedor>
             </template>
             @else
             @endif

@@ -143,6 +143,18 @@
                                         </select>   
                                     </div>
                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Secado</label>
+                                    <div class="col-md-9">
+                                         <select class="form-control" v-model="secado">
+                                          <option value="Seleccione" disabled>Seleccione</option>
+                                          <option value="Muelle">Muelle</option>
+                                          <option value="Piso">Piso</option>
+                                          <option value="Marquesina">Marquesina</option>
+                                           <option value="Otros">Otros</option>
+                                      </select>  
+                                    </div>
+                                </div>
                                 <label class="col-md-3 form-control-label" for="text-input">Produccion Mes</label> 
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="number-input">Fresco(Kg)</label>
@@ -197,6 +209,7 @@ import Datepicker from 'vuejs-datepicker';
                 productor_id:0,
                 finca_id:0,
                 frecuencia:'Seleccione',
+                secado:'Seleccione',
                 frescoTotal :0,
                 secoTotal :0,
                 beneficio :0,
@@ -342,6 +355,7 @@ import Datepicker from 'vuejs-datepicker';
                 'secoTotal':this.secoTotal,
                 'beneficio':this.beneficio,
                 'fermentacion_id':this.fermentacion_id,
+                'secado':this.secado,
                 'frescoTotalMes':this.frescoTotalMes,
                 'secoTotalMes':this.secoTotalMes,
                 'lugarVenta_id':this.lugarVenta_id
@@ -369,6 +383,7 @@ import Datepicker from 'vuejs-datepicker';
                 'secoTotal':this.secoTotal,
                 'beneficio':this.beneficio,
                 'fermentacion_id':this.fermentacion_id,
+                'secado':this.secado,
                 'frescoTotalMes':this.frescoTotalMes,
                 'secoTotalMes':this.secoTotalMes,
                 'lugarVenta_id':this.lugarVenta_id
@@ -402,6 +417,7 @@ import Datepicker from 'vuejs-datepicker';
                 this.secoTotal=0;
                 this.beneficio=0;
                 this.fermentacion_id=0;
+                this.secado='Seleccione';
                 this.frescoTotalMes=0;
                 this.secoTotalMes=0;
                 this.lugarVenta_id=0;
@@ -423,6 +439,7 @@ import Datepicker from 'vuejs-datepicker';
                         this.secoTotal=0;
                         this.beneficio=0;
                         this.fermentacion_id=0;
+                        this.secado='Seleccione';
                         this.frescoTotalMes=0;
                         this.secoTotalMes=0;
                         this.lugarVenta_id=0;
@@ -442,6 +459,7 @@ import Datepicker from 'vuejs-datepicker';
                         this.secoTotal=data['secoTotal'];
                         this.beneficio=data['beneficio'];
                         this.fermentacion_id=data['fermentacion_id'];
+                        this.secado=data['secado'];
                         this.frescoTotalMes=data['frescoTotalMes'];
                         this.secoTotalMes=data['secoTotalMes'];
                         this.lugarVenta_id=data['lugarVenta_id'];

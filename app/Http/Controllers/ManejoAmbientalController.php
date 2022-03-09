@@ -31,7 +31,7 @@ class ManejoAmbientalController extends Controller
             'op1.nombre as opcion_fuentes','residuossolidos.nombre as nombre_residuo',
             'op2.nombre as opcion_erosion', 'op3.nombre as opcion_proteccion',
             'op4.nombre as opcion_agroquimico', 'op5.nombre as opcion_fauna')
-            ->orderBy('manejoambientals.id','desc')->paginate(3);
+            ->orderBy('manejoambientals.id','desc')->paginate(10);
         }
         else{
             $ambiental= ManejoAmbiental::join('componentesocialproductors','manejoambientals.productor_id','=','componentesocialproductors.id')
@@ -51,7 +51,7 @@ class ManejoAmbientalController extends Controller
             'op2.nombre as opcion_erosion', 'op3.nombre as opcion_proteccion',
             'op4.nombre as opcion_agroquimico', 'op5.nombre as opcion_fauna')
             ->where('manejoambientals.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('manejoambientals.id', 'desc')->paginate(3);
+            ->orderBy('manejoambientals.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [

@@ -37,7 +37,7 @@ class LaborCultivoController extends Controller
             'estadocultivos.nombre as nombre_estado','financiacions.nombre as nombre_financiacion',
             'op1.nombre as nombre_controlEnfermedad','tp1.nombre as nombre_tipoControlEnfermedad',
             'op2.nombre as nombre_controlPlaga','tp2.nombre as nombre_tipoControlPlaga')
-            ->orderBy('laborcultivos.id','desc')->paginate(3);
+            ->orderBy('laborcultivos.id','desc')->paginate(10);
         }
         else{
             $labor= LaborCultivo::join('componentesocialproductors','laborcultivos.productor_id','=','componentesocialproductors.id')
@@ -63,7 +63,7 @@ class LaborCultivoController extends Controller
             'op1.nombre as nombre_controlEnfermedad','tp1.nombre as nombre_tipoControlEnfermedad',
             'op2.nombre as nombre_controlPlaga','tp2.nombre as nombre_tipoControlPlaga')
             ->where('laborcultivos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('laborcultivos.id', 'desc')->paginate(3);
+            ->orderBy('laborcultivos.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [

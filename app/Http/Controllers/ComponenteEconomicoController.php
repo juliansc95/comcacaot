@@ -33,7 +33,7 @@ class ComponenteEconomicoController extends Controller
             'op2.nombre as nombre_ahorro','b2.nombre as nombre_banco_ahorro',
             'op3.nombre as opcion_accionista','op4.nombre as opcion_interesados'
            )
-            ->orderBy('componenteeconomicos.id','desc')->paginate(3);
+            ->orderBy('componenteeconomicos.id','desc')->paginate(10);
         }
         else{
             $componentes= ComponenteEconomico::join('componentesocialproductors','componenteeconomicos.productor_id','=','componentesocialproductors.id')
@@ -56,7 +56,7 @@ class ComponenteEconomicoController extends Controller
             'op3.nombre as opcion_accionista','op4.nombre as opcion_interesados'
            )
             ->where('componenteeconomicos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('componenteeconomicos.id', 'desc')->paginate(3);
+            ->orderBy('componenteeconomicos.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [

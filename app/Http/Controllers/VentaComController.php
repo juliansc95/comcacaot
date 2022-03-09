@@ -198,7 +198,41 @@ class VentaComController extends Controller
         $nombrePdf=VentaCom::select('ventacoms.fechaVenta')
         ->where('id',$id)->get();
 
+        
         $pdf = \PDF::loadView('pdf.venta',['venta'=>$venta,'ventaCategoria' => $ventaCategoria]);
+        return $pdf->download('venta-'.$nombrePdf[0]->fechaVenta.'.pdf');
+    }
+
+    public function pdfTicket(Request $request,$id){
+        $venta = VentaCom::join('personas','ventacoms.productor_id','=','personas.id')
+        ->join('componentesocialproductors','ventacoms.productor_id','=','componentesocialproductors.id')
+        ->join('lugarventas','ventacoms.lugarVenta_id','=','lugarventas.id')
+        ->join('veredascoms','ventacoms.vereda_id','=','veredascoms.id')
+        ->join('zonas','ventacoms.zona_id','=','zonas.id')
+        ->join('estadoventas','ventacoms.estado_id','=','estadoventas.id')
+        ->select('ventacoms.id','ventacoms.productor_id','ventacoms.lugarVenta_id','ventacoms.vereda_id',
+        'ventacoms.zona_id','ventacoms.fechaVenta','ventacoms.totalKilos','ventacoms.totalKilosNetos',
+        'ventacoms.totalIncentivoXkg','ventacoms.totalIncentivo','ventacoms.totalNeto','ventacoms.estado_id',
+        'ventacoms.observaciones','personas.nombre as nombre_persona','personas.num_documento as num_documento',
+        'estadoventas.nombre as nombre_estadoVenta','personas.direccion as direccion',
+        'personas.telefono as telefono','personas.email as email',
+        'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
+        )
+        ->where('ventacoms.id','=',$id)    
+        ->orderBy('ventacoms.id', 'desc')->take(1)->get();
+
+        $ventaCategoria = VentaCategoriaCom::join('categoriamoras','ventas_categoriacoms.categoria_id','=','categoriamoras.id')
+        ->select('ventas_categoriacoms.peso','ventas_categoriacoms.humedad','ventas_categoriacoms.fermentacion',
+        'ventas_categoriacoms.descuentoHumedadKg','ventas_categoriacoms.valorUnitario','ventas_categoriacoms.subtotal',
+        'categoriamoras.nombre as nombre_categoria')
+        ->where('ventas_categoriacoms.ventas_id','=',$id)
+        ->orderBy('ventas_categoriacoms.id', 'desc')->get();
+
+        $nombrePdf=VentaCom::select('ventacoms.fechaVenta')
+        ->where('id',$id)->get();
+
+        $customPaper = array(0,0,140,1024);
+        $pdf = \PDF::loadView('pdf.ventaTicket',['venta'=>$venta,'ventaCategoria' => $ventaCategoria])->setPaper($customPaper);
         return $pdf->download('venta-'.$nombrePdf[0]->fechaVenta.'.pdf');
     }
 

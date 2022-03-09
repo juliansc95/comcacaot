@@ -13,7 +13,7 @@ class ComponenteSocialProductorController extends Controller
 {
     public function index(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
         $buscar = $request->buscar;
         $criterio = $request->criterio;
 
@@ -55,7 +55,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
             'componentesocialproductors.temas'
             )
-            ->orderBy('componentesocialproductors.id','desc')->paginate(3);
+            ->orderBy('componentesocialproductors.id','desc')->paginate(10);
         }
         else{
             $personas= ComponenteSocialProductor::join('personas','componentesocialproductors.id','=','personas.id')
@@ -96,7 +96,7 @@ class ComponenteSocialProductorController extends Controller
             'componentesocialproductors.temas'
             )
             ->where('personas.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('personas.id', 'desc')->paginate(3);
+            ->orderBy('personas.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [
@@ -110,6 +110,94 @@ class ComponenteSocialProductorController extends Controller
             'personas' => $personas
         ];
     }
+
+    public function getProductor(Request $request,$id)
+    {      
+        $personas= ComponenteSocialProductor::join('personas','componentesocialproductors.id','=','personas.id')
+            ->join('estadocivils','componentesocialproductors.estadoCivil_id','=','estadocivils.id')
+            ->join('etnias','componentesocialproductors.etnia_id','=','etnias.id')
+            ->join('sexos','componentesocialproductors.sexo_id','=','sexos.id')
+            ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+            ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
+            ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
+            ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
+            ->join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
+            ->join('opcions AS op1','componentesocialproductors.carnetSalud','=','op1.id')
+            ->join('opcions AS op2','componentesocialproductors.discapacitado','=','op2.id')
+            ->join('opcions AS op3','componentesocialproductors.desplazado','=','op3.id')
+            ->join('opcions AS op4','componentesocialproductors.asistencia','=','op4.id')
+            ->join('opcions AS op5','componentesocialproductors.capacitacion','=','op5.id')
+            ->join('asociacions','componentesocialproductors.asociacion_id','=','asociacions.id')
+            ->join('programaestados','componentesocialproductors.programaEstado_id','=','programaestados.id')
+            ->leftjoin('parentescos AS p1','componentesocialproductors.parentesco1','=','p1.id')
+            ->leftjoin('gradoescolaridads AS escolaridadP1','componentesocialproductors.escolaridad_idP1','=','escolaridadP1.id')
+            ->leftjoin('parentescos AS p2','componentesocialproductors.parentesco2','=','p2.id')
+            ->leftjoin('gradoescolaridads AS escolaridadP2','componentesocialproductors.escolaridad_idP2','=','escolaridadP2.id')
+            ->leftjoin('parentescos AS p3','componentesocialproductors.parentesco3','=','p3.id')
+            ->leftjoin('gradoescolaridads AS escolaridadP3','componentesocialproductors.escolaridad_idP3','=','escolaridadP3.id')
+            ->leftjoin('parentescos AS p4','componentesocialproductors.parentesco4','=','p4.id')
+            ->leftjoin('gradoescolaridads AS escolaridadP4','componentesocialproductors.escolaridad_idP4','=','escolaridadP4.id')
+            ->leftjoin('parentescos AS p5','componentesocialproductors.parentesco5','=','p5.id')
+            ->leftjoin('gradoescolaridads AS escolaridadP5','componentesocialproductors.escolaridad_idP5','=','escolaridadP5.id')
+
+
+            ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento','personas.telefono','personas.email',
+            'componentesocialproductors.estadoCivil_id','estadocivils.nombre as estadocivil_nombre',
+            'componentesocialproductors.etnia_id','etnias.nombre as nombre_etnia',
+            'componentesocialproductors.sexo_id','sexos.nombre as nombre_sexo',
+            'componentesocialproductors.fechaNacimiento',
+            'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda',
+            'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
+            'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
+            'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
+            'componentesocialproductors.escolaridad_id','gradoescolaridads.nombre as nombre_escolaridad',
+            'componentesocialproductors.carnetSalud','op1.nombre as opcion_salud',
+            'componentesocialproductors.discapacitado','op2.nombre as opcion_discapacitado',
+            'componentesocialproductors.personasAcargo',
+            'componentesocialproductors.desplazado','op3.nombre as opcion_desplazado',
+            'componentesocialproductors.asociacion_id','asociacions.nombre as nombre_asociacion',
+            'componentesocialproductors.programaEstado_id','programaestados.nombre as nombre_programa',
+            'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
+            'componentesocialproductors.entidad',
+            'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
+            'componentesocialproductors.temas',
+
+            'componentesocialproductors.parentesco1','p1.nombre as nombre_parentesco1',
+            'componentesocialproductors.NombreP1','componentesocialproductors.ccP1',
+            'componentesocialproductors.fechaNacimientoP1',
+            'componentesocialproductors.escolaridad_idP1','escolaridadP1.nombre as nombre_escolaridadP1',
+
+            'componentesocialproductors.parentesco2','p2.nombre as nombre_parentesco2',
+            'componentesocialproductors.NombreP2','componentesocialproductors.ccP2',
+            'componentesocialproductors.fechaNacimientoP2',
+            'componentesocialproductors.escolaridad_idP2','escolaridadP2.nombre as nombre_escolaridadP2',
+
+            'componentesocialproductors.parentesco3','p3.nombre as nombre_parentesco3',
+            'componentesocialproductors.NombreP3','componentesocialproductors.ccP3',
+            'componentesocialproductors.fechaNacimientoP3',
+            'componentesocialproductors.escolaridad_idP3','escolaridadP3.nombre as nombre_escolaridadP3',
+
+            'componentesocialproductors.parentesco4','p4.nombre as nombre_parentesco4',
+            'componentesocialproductors.NombreP4','componentesocialproductors.ccP4',
+            'componentesocialproductors.fechaNacimientoP4',
+            'componentesocialproductors.escolaridad_idP4','escolaridadP4.nombre as nombre_escolaridadP4',
+
+            'componentesocialproductors.parentesco5','p5.nombre as nombre_parentesco5',
+            'componentesocialproductors.NombreP5','componentesocialproductors.ccP5',
+            'componentesocialproductors.fechaNacimientoP5',
+            'componentesocialproductors.escolaridad_idP5','escolaridadP5.nombre as nombre_escolaridadP5'
+    
+            )
+            ->where('componentesocialproductors.id','=',$id)
+            ->get();
+            return ['personas' => $personas];
+        }
+      
+      
+    
+
+
+
 
     public function index2(Request $request)
     {

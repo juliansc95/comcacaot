@@ -433,8 +433,6 @@
             if(!this.nombre) this.errorMostrarMsjpersona.push("El nombre de la persona no puede estar vacío ");
             if(this.tipo_id==0)this.errorMostrarMsjpersona.push("Seleccione un tipo de documento.");
             if(!this.num_documento) this.errorMostrarMsjpersona.push("Ingrese un numero de documento valido");
-            if(!this.telefono) this.errorMostrarMsjpersona.push("Ingrese un numero de telefono valido sin lineas ni puntos");
-            if(!this.email) this.errorMostrarMsjpersona.push("Ingrese un correo electronico valido");
             if(!this.usuario) this.errorMostrarMsjpersona.push("El nombre de usuario no puede estar vacío ");
             if(!this.password) this.errorMostrarMsjpersona.push("El password no puede estar vacío ");
             if(this.tipo_id==0)this.errorMostrarMsjpersona.push("Seleccione un rol para el usuario.");

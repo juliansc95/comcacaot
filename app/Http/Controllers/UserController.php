@@ -21,7 +21,7 @@ class UserController extends Controller
             ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento',
             'personas.direccion','personas.telefono','personas.email','users.usuario','users.password',
             'users.condicion','users.idrol','roles.nombre as rol')
-            ->orderBy('personas.id','desc')->paginate(3);
+            ->orderBy('personas.id','desc')->paginate(10);
         }
         if($criterio == 'usuario'){
             $personas= User::join('personas','users.id','=','personas.id')
@@ -30,7 +30,7 @@ class UserController extends Controller
             'personas.direccion','personas.telefono','personas.email','users.usuario','users.password',
             'users.condicion','users.idrol','roles.nombre as rol')
             ->where('users.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('personas.id', 'desc')->paginate(3);    
+            ->orderBy('personas.id', 'desc')->paginate(10);    
         }
         else{
             $personas= User::join('personas','users.id','=','personas.id')
@@ -39,7 +39,7 @@ class UserController extends Controller
             'personas.direccion','personas.telefono','personas.email','users.usuario','users.password',
             'users.condicion','users.idrol','roles.nombre as rol')
             ->where('personas.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('personas.id', 'desc')->paginate(3);          
+            ->orderBy('personas.id', 'desc')->paginate(10);          
         }
         return [
             'pagination' => [

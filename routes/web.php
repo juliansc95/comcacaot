@@ -91,6 +91,7 @@ Route::group(['middleware'=>['auth']],function(){
      Route::put('/venta/pasarDisponiblePago', 'VentaComController@pasarDisponiblePago');    
      Route::put('/venta/pasarPagado', 'VentaComController@pasarPagado');    
      Route::get('/venta/pdf/{id}','VentaComController@pdf')->name('venta_pdf');
+     Route::get('/venta/ticket/{id}','VentaComController@pdfTicket')->name('venta_pdf');
      Route::get('/venta/listarPdf','VentaComController@listarPdf')->name('ventas_pdf');
      Route::get('/venta/listarDiario','VentaComController@listarPdfDiario')->name('ventas_dia_pdf');
     
@@ -136,6 +137,7 @@ Route::group(['middleware'=>['auth']],function(){
     
      //Rutas productores
      Route::get('/productor','ComponenteSocialProductorController@index');
+     Route::get('/productor/{id}','ComponenteSocialProductorController@getProductor');
      Route::post('/productor/registrar','ComponenteSocialProductorController@store');
      Route::put('/productor/actualizar','ComponenteSocialProductorController@update');
      Route::get('/productor/zonas','ComponenteSocialProductorController@listarPdf')->name('zonas_pdf');
@@ -171,7 +173,9 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/venta/obtenerDetalles', 'VentaComController@obtenerVentaCategoria');
     Route::put('/venta/pasarFacturacion', 'VentaComController@pasarFacturacion');    
     Route::put('/venta/pasarDisponiblePago', 'VentaComController@pasarDisponiblePago');    
-    Route::put('/venta/pasarPagado', 'VentaComController@pasarPagado'); 
+    Route::put('/venta/pasarPagado', 'VentaComController@pasarPagado');
+    Route::get('/venta/pdf/{id}','VentaComController@pdf')->name('venta_pdf'); 
+    Route::get('/venta/ticket/{id}','VentaComController@pdfTicket')->name('venta_pdf');
     
      //Rutas Categoria Moras
     Route::get('/categoriaMora','CategoriaMoraController@index');

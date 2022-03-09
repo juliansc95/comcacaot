@@ -17,13 +17,13 @@ class CategoriaMoraController extends Controller
         if($buscar == ''){
             $categoriaMoras= CategoriaMora::select('id','nombre','valorUnitario','ValorDonacion','valorTransporte',
             'valorAsohof','valorCuatroPorMil')
-            ->orderBy('id','desc')->paginate(3);
+            ->orderBy('id','desc')->paginate(19);
         }
         else{
             $categoriaMoras= CategoriaMora::select('id','nombre','valorUnitario','ValorDonacion','valorTransporte',
             'valorAsohof','valorCuatroPorMil')
-            ->where('categoriaMoras.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('categoriaMoras.id', 'desc')->paginate(3);
+            ->where('categoriamoras.'.$criterio, 'like', '%'. $buscar . '%')
+            ->orderBy('categoriamoras.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [
@@ -66,8 +66,8 @@ class CategoriaMoraController extends Controller
         else{
             $categoriaMoras= CategoriaMora::select('id','nombre','valorUnitario','ValorDonacion','valorTransporte',
             'valorAsohof','valorCuatroPorMil')
-            ->where('categoriaMoras.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('categoriaMoras.id', 'desc')->paginate(10);
+            ->where('categoriamoras.'.$criterio, 'like', '%'. $buscar . '%')
+            ->orderBy('categoriamoras.id', 'desc')->paginate(10);
         }
 
 

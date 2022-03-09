@@ -207,6 +207,7 @@ label,
 select,
 summary,
 textarea {
+  text-transform: uppercase;
   -ms-touch-action: manipulation;
       touch-action: manipulation; }
 

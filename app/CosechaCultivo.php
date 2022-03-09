@@ -10,7 +10,7 @@ class CosechaCultivo extends Model
     protected $table = 'cosechacultivos';
     protected $fillable = [
     'productor_id','finca_id','frecuencia','frescoTotal','secoTotal',
-    'beneficio','fermentacion_id','frescoTotalMes','secoTotalMes','lugarVenta_id',
+    'beneficio','fermentacion_id','secado','frescoTotalMes','secoTotalMes','lugarVenta_id',
     ]; 
 
     public function productor(){

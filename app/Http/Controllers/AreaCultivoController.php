@@ -28,7 +28,7 @@ class AreaCultivoController extends Controller
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'opcions.nombre as opcion_injertado','estadocultivos.nombre as nombre_estado',
             'mantenimientoplantacions.nombre as nombre_mantenimiento')
-            ->orderBy('areacultivos.id','desc')->paginate(3);
+            ->orderBy('areacultivos.id','desc')->paginate(10);
         }
         else{
             $cultivos= AreaCultivo::join('componentesocialproductors','areacultivos.productor_id','=','componentesocialproductors.id')
@@ -45,7 +45,7 @@ class AreaCultivoController extends Controller
             'opcions.nombre as opcion_injertado','estadocultivos.nombre as nombre_estado',
             'mantenimientoplantacions.nombre as nombre_mantenimiento')
             ->where('areacultivos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('areacultivos.id', 'desc')->paginate(3);
+            ->orderBy('areacultivos.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [

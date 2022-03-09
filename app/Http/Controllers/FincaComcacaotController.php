@@ -30,7 +30,7 @@ class FincaComcacaotController extends Controller
             'municipios.nombre as nombre_municipio','veredascoms.nombre as nombre_vereda',
             'zonas.nombre as nombre_zona',
             'posesions.nombre as nombre_posesion')
-            ->orderBy('fincascoms.id','desc')->paginate(3);
+            ->orderBy('fincascoms.id','desc')->paginate(10);
         }
         else{
             $fincas= FincaComcacaot::join('componentesocialproductors','fincascoms.productor_id','=','componentesocialproductors.id')
@@ -47,7 +47,7 @@ class FincaComcacaotController extends Controller
             'municipios.nombre as nombre_municipio','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona',
             'posesions.nombre as nombre_posesion')
             ->where('fincascoms.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('fincascoms.id', 'desc')->paginate(3);
+            ->orderBy('fincascoms.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [

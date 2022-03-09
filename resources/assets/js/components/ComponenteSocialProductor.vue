@@ -403,7 +403,15 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Entidad</label>
-                                    <input type="text" v-model="entidad"  class="form-control" placeholder="">     
+                                    <select class="form-control" v-model="entidad">
+                                            <option value="Seleccione" disabled>Seleccione</option>
+                                            <option value="Fedecacao" >Fedecacao</option>
+                                            <option value="Comcacaot" >Comcacaot</option>
+                                            <option value="Asproca" >Asproca</option>
+                                            <option value="Chocolate Tumaco" >Chocolate Tumaco</option>
+                                            <option value="Alcaldía" >Alcaldía</option>
+                                            <option value="Otros" >Otros</option>
+                                    </select>  
                                 </div>
                             </div>
                             <div class="col-md-1">
@@ -441,78 +449,365 @@
                     </template>
                     <!-- Fin Detalle-->
                     <!-- Ver ingreso -->
-                    <template v-else-if="listado==2">
+                     <template v-else-if="listado==2">
                     <div class="card-body">
-                        <div class="form-group row border">
+                        <div class="form-group row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Productor</label>
-                                    <p v-text="productor"></p>
+                                    <label for="">Nombre Productor</label>
+                                     <input type="text" v-model="nombre"  class="form-control" placeholder="Nombre del productor">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Lugar de Venta</label>
-                                    <p v-text="lugarVenta"></p>
+                                    <label for="">Tipo documento</label>
+                                     <select class="form-control" v-model="tipo_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="tipoId in arrayTipoId" :key="tipoId.id" :value="tipoId.id" v-text="tipoId.nombre" ></option>
+                                      </select>  
                                 </div>
                             </div>
-                           
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Fecha</label>
-                                    <p v-text="fechaVenta"></p>
+                                    <label for="">Numero Documento</label>
+                                      <input type="number" v-model="num_documento"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                             <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Telefono</label>
+                                       <input type="number" v-model="telefono"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Correo electronico </label>
+                                    <input type="text" v-model="email" class="form-control" >
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row border">
+                          <div class="form-group row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Estado Civil</label>
+                                    <select class="form-control" v-model="estadoCivil_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="estadoCivil in arrayEstadoCivil" :key="estadoCivil.id" :value="estadoCivil.id" v-text="estadoCivil.nombre" ></option>
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Etnia</label>
+                                      <select class="form-control" v-model="etnia_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="etnia in arrayEtnia" :key="etnia.id" :value="etnia.id" v-text="etnia.nombre" ></option>
+                                      </select>    
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Sexo</label>
+                                       <select class="form-control" v-model="sexo_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="sexo in arraySexo" :key="sexo.id" :value="sexo.id" v-text="sexo.nombre" ></option>
+                                      </select>  
+                                </div>
+                            </div>
+                             <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Fecha nacimiento</label>
+                                       <v-datepicker  v-model="fechaNacimiento"></v-datepicker>
+                                </div>
+                            </div>
+                           <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Zona </label>
+                                    <select class="form-control" v-model="zona_id" @click="selectVereda(zona_id)" @change="selectVereda(zona_id)">
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="arrayZona in arrayZona" :key="arrayZona.id" :value="arrayZona.id" v-text="arrayZona.nombre" ></option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Vereda</label>
+                                    <select class="form-control" v-model="vereda_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="vereda in arrayVeredaView" :key="vereda.id" :value="vereda.id" v-text="vereda.nombre" ></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="form-group">
                             <div class="table-responsive col-md-12">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th>Tipo Cacao</th>
-                                            <th>Peso(Kg)</th>
-                                            <th>Valor Unitario</th>
-                                            <th>Subtotal</th>
+                                            <th>No</th>
+                                            <th>Nombre</th>
+                                            <th>Parentesco</th>
+                                            <th>Numero Documento</th>
+                                            <th>Fecha Nacimiento</th>
+                                            <th>Nivel de Estudios</th>
                                         </tr>
                                     </thead>
-                                    <tbody v-if="arrayDetalle.length">
-                                        <tr v-for="detalle in arrayDetalle" :key="detalle.id">
-                                            <td v-text="detalle.nombre_categoria">
-                                            </td>
-                                            <td v-text="detalle.peso">
-                                            </td>
-                                            <td v-text="detalle.valorUnitario">
-                                            </td>
-                                            <td v-text="detalle.subtotal">
-                                            </td>
-                                        </tr>
-                                       <tr style="background-color: #CEECF5;">
-                                            <td colspan="3" align="right"><strong>Peso Total(Kg):</strong></td>
-                                            <td v-text="totalKilos"></td>
-                                        </tr>
-                                         <tr style="background-color: #ff4d4d;">
-                                            <td colspan="3" align="right"><strong>Descuento por humedad:</strong></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr style="background-color: #CEECF5;">
-                                            <td colspan="3" align="right"><strong>Total Neto:</strong></td>
-                                            <td v-text="totalVenta"></td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody v-else>
+                                    <tbody>
                                         <tr>
-                                            <td colspan="4">
-                                                NO hay categorias agregadas
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP1"  class="form-control" placeholder="Nombre"> 
                                             </td>
+                                            <td>
+                                                <select class="form-control" v-model="parentesco1">
+                                                <option v-for="parentesco in arrayParentesco" :key="parentesco.id" :value="parentesco.id" v-text="parentesco.nombre" ></option>
+                                                </select>  
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP1"  class="form-control" placeholder="">
+                                            </td>
+                                            <td>
+                                            <v-datepicker  v-model="fechaNacimientoP1"></v-datepicker>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="escolaridad_idP1">
+                                                    <option v-for="escolaridad in arrayEscolaridad" :key="escolaridad.id" :value="escolaridad.id" v-text="escolaridad.nombre" ></option>
+                                                </select>
+                                            </td>   
                                         </tr>
-                                    </tbody>                                    
+                                    </tbody>  
+                                     <tbody>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP2"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="parentesco2">
+                                                    <option v-for="parentesco in arrayParentesco" :key="parentesco.id" :value="parentesco.id" v-text="parentesco.nombre" ></option>
+                                                </select>  
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP2"  class="form-control" placeholder="">
+                                            </td>
+                                            <td>
+                                            <v-datepicker  v-model="fechaNacimientoP2"></v-datepicker>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="escolaridad_idP2">
+                                                    <option v-for="escolaridad in arrayEscolaridad" :key="escolaridad.id" :value="escolaridad.id" v-text="escolaridad.nombre" ></option>
+                                                </select>
+                                            </td>   
+                                        </tr>
+                                    </tbody> 
+                                    <tbody>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP3"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="parentesco3">
+                                                   <option v-for="parentesco in arrayParentesco" :key="parentesco.id" :value="parentesco.id" v-text="parentesco.nombre" ></option>
+                                                </select>  
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP3"  class="form-control" placeholder="">
+                                            </td>
+                                            <td>
+                                            <v-datepicker  v-model="fechaNacimientoP3"></v-datepicker>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="escolaridad_idP3">
+                                                    <option v-for="escolaridad in arrayEscolaridad" :key="escolaridad.id" :value="escolaridad.id" v-text="escolaridad.nombre" ></option>
+                                                </select>
+                                            </td>   
+                                        </tr>
+                                    </tbody> 
+                                    <tbody>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP4"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="parentesco4">
+                                                  <option v-for="parentesco in arrayParentesco" :key="parentesco.id" :value="parentesco.id" v-text="parentesco.nombre" ></option>
+                                                </select>  
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP4"  class="form-control" placeholder="">
+                                            </td>
+                                            <td>
+                                            <v-datepicker  v-model="fechaNacimientoP4"></v-datepicker>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="escolaridad_idP4">
+                                                    <option v-for="escolaridad in arrayEscolaridad" :key="escolaridad.id" :value="escolaridad.id" v-text="escolaridad.nombre" ></option>
+                                                </select>
+                                            </td>   
+                                        </tr>
+                                    </tbody>   
+                                    <tbody>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>
+                                                <input type="text" v-model="NombreP5"  class="form-control" placeholder="Nombre"> 
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="parentesco5">
+                                                    <option v-for="parentesco in arrayParentesco" :key="parentesco.id" :value="parentesco.id" v-text="parentesco.nombre" ></option>
+                                                </select>  
+                                            </td>
+                                            <td>
+                                             <input type="number" v-model="ccP5"  class="form-control" placeholder="">
+                                            </td>
+                                            <td>
+                                            <v-datepicker  v-model="fechaNacimientoP5"></v-datepicker>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" v-model="escolaridad_idP5">
+                                                    <option v-for="escolaridad in arrayEscolaridad" :key="escolaridad.id" :value="escolaridad.id" v-text="escolaridad.nombre" ></option>
+                                                </select>
+                                            </td>   
+                                        </tr>
+                                    </tbody>                             
                                 </table>
+                            </div>
+                        </div> 
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Vivienda</label>
+                                    <select class="form-control" v-model="vivienda_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="vivienda in arrayVivienda" :key="vivienda.id" :value="vivienda.id" v-text="vivienda.nombre" ></option>
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Tipo Vivienda</label>
+                                     <select class="form-control" v-model="tipovivienda_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="tipovivienda in arrayTipoVivienda" :key="tipovivienda.id" :value="tipovivienda.id" v-text="tipovivienda.nombre" ></option>
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Estudios</label>
+                                       <select class="form-control" v-model="escolaridad_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="escolaridad in arrayEscolaridad" :key="escolaridad.id" :value="escolaridad.id" v-text="escolaridad.nombre" ></option>
+                                        </select> 
+                                </div>
+                            </div>
+                             <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Carnet Salud</label>
+                                       <select class="form-control" v-model="carnetSalud">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="opcion in arrayOpcion" :key="opcion.id" :value="opcion.id" v-text="opcion.nombre" ></option>
+                                        </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Discapacitado</label>
+                                        <select class="form-control" v-model="discapacitado">
+                                           <option value="0" disabled>Seleccione</option>
+                                           <option v-for="opcion in arrayOpcion" :key="opcion.id" :value="opcion.id" v-text="opcion.nombre" ></option>
+                                        </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Personas a cargo</label>
+                                    <input type="number" v-model="personasAcargo"  class="form-control" placeholder="">  
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="">Desplazado</label>
+                                    <select class="form-control" v-model="desplazado">
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="opcion in arrayOpcion" :key="opcion.id" :value="opcion.id" v-text="opcion.nombre" ></option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Asociacion</label>
+                                    <select class="form-control" v-model="asociacion_id">
+                                        <option value="0" disabled>Seleccione</option>
+                                        <option v-for="asociacion in arrayAsociacion" :key="asociacion.id" :value="asociacion.id" v-text="asociacion.nombre" ></option>
+                                    </select>   
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Programa del Estado</label>
+                                       <select class="form-control" v-model="programaEstado_id">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="programa in arrayProgramaEstado" :key="programa.id" :value="programa.id" v-text="programa.nombre" ></option>
+                                        </select> 
+                                </div>
+                            </div>
+                             <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Asistencia Tecnica</label>
+                                       <select class="form-control" v-model="asistencia">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="opcion in arrayOpcion" :key="opcion.id" :value="opcion.id" v-text="opcion.nombre" ></option>
+                                        </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Entidad</label>
+                                    <select class="form-control" v-model="entidad">
+                                            <option value="Seleccione" disabled>Seleccione</option>
+                                            <option value="Fedecacao" >Fedecacao</option>
+                                            <option value="Comcacaot" >Comcacaot</option>
+                                            <option value="Asproca" >Asproca</option>
+                                            <option value="Chocolate Tumaco" >Chocolate Tumaco</option>
+                                            <option value="Alcaldía" >Alcaldía</option>
+                                            <option value="Otros" >Otros</option>
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label>Capacitacion</label>
+                                     <select class="form-control" v-model="capacitacion">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="opcion in arrayOpcion" :key="opcion.id" :value="opcion.id" v-text="opcion.nombre" ></option>
+                                    </select>   
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Temas</label>
+                                    <input type="text" v-model="temas"  class="form-control" placeholder="">     
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div v-show="errorProductor" class="form-group row div-error">
+                                    <div class="text-center text-error">
+                                        <div v-for="error in errorMostrarMsjProductor" :key="error" v-text="error">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
-                                
                             </div>
                         </div>
                     </div>
@@ -610,7 +905,7 @@
                 asociacion_id:0,
                 programaEstado_id:0,
                 asistencia:0,
-                entidad:'',
+                entidad:'Seleccione',
                 capacitacion:0,
                 temas:'',
                 parentesco1:'',
@@ -655,6 +950,8 @@
                 arrayOpcion:[],
                 arrayAsociacion:[],
                 arrayProgramaEstado:[],
+                arrayProductorT:[],
+                arrayVeredaView:[],
                 
                 arrayDetalle : [],
                 listado:1,
@@ -879,6 +1176,17 @@
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayVereda= respuesta.veredas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+             selectVeredaView(){
+                let me =this;
+                var url ='vereda/selectVereda';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayVeredaView= respuesta.veredas;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -1136,7 +1444,7 @@
                     me.asociacion_id=0;
                     me.programaEstado_id=0;
                     me.asistencia=0;
-                    me.entidad='';
+                    me.entidad='Seleccione';
                     me.capacitacion=0;
                     me.temas='';
                     me.parentesco1='';
@@ -1222,6 +1530,7 @@
                 this.selectVereda(this.zona_id);
             },
             ocultarDetalle(){
+                let me=this;
                 this.listado=1;
                 this.selectTipoId();
                 this.selectEstadoCivil();
@@ -1236,31 +1545,134 @@
                 this.selectProgramaEstado();
                 this.selectZona();
                 this.selectVereda(this.zona_id);
+                me.nombre ='';
+                me.tipo_id = 0;
+                me.num_documento = '';
+                me.telefono = '';
+                me.email = '';
+                me.estadoCivil_id = 0;
+                me.etnia_id = 0
+                me.sexo_id =0;
+                me.fechaNacimiento = '';
+                me.zona_id = 0;
+                me.vereda_id =0;
+                me.vivienda_id = 0;
+                me.tipovivienda_id = 0;
+                me.escolaridad_id = 0;
+                me.carnetSalud = 0;
+                me.discapacitado = 0;
+                me.personasAcargo = 0;
+                me.desplazado =0;
+                me.asociacion_id = 0;                   
+                me.programaEstado_id =0;                   
+                me.asistencia = 0;                   
+                me.entidad ='Seleccione'; 
+                me.capacitacion = 0;                   
+                me.temas = '';
+                me.NombreP1 = '';
+                me.parentesco1 =0;
+                me.ccP1 ='';
+                me.fechaNacimientoP1 ='';
+                me.escolaridad_idP1 =0;
+
+                me.NombreP2 = '';
+                me.parentesco2 =0;
+                me.ccP2 ='';
+                me.fechaNacimientoP2 ='';
+                me.escolaridad_idP2 =0;
+
+                me.NombreP3 = '';
+                me.parentesco3 =0;
+                me.ccP3 ='';
+                me.fechaNacimientoP3 ='';
+                me.escolaridad_idP3 =0;
+
+                me.NombreP4 = '';
+                me.parentesco4 =0;
+                me.ccP4 ='';
+                me.fechaNacimientoP4 ='';
+                me.escolaridad_idP4 =0;
+
+                me.NombreP5 = '';
+                me.parentesco5 =0;
+                me.ccP5 ='';
+                me.fechaNacimientoP5 ='';
+                me.escolaridad_idP5 =0;
+
             },
             verVenta(id){
                 let me=this;
-                me.listado=2;
-                
-                //Obtener los datos del ingreso
-                var arrayProductorT=[];
-                var url= 'venta/obtenerCabecera?id=' + id;
-                
+                var url= 'productor/' + id;
+                    this.selectEstadoCivil();
+                    this.selectEtnia();
+                    this.selectSexo();
+                    this.selectParentesco();
+                    this.selectEscolaridad();
+                    this.selectVivienda();
+                    this.selectTipoVivienda();
+                    this.selectOpcion();
+                    this.selectAsociacion();
+                    this.selectProgramaEstado();
+                    this.selectZona();
+                    this.selectVeredaView();
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    arrayProductorT = respuesta.venta;
+                    me.arrayProductorT = respuesta.personas;
+                    me.nombre = me.arrayProductorT[0]['nombre'];
+                    me.tipo_id = me.arrayProductorT[0]['tipo_id'];
+                    me.num_documento = me.arrayProductorT[0]['num_documento'];
+                    me.telefono = me.arrayProductorT[0]['telefono'];
+                    me.email = me.arrayProductorT[0]['email'];
+                    me.estadoCivil_id = me.arrayProductorT[0]['estadoCivil_id'];
+                    me.etnia_id = me.arrayProductorT[0]['etnia_id'];
+                    me.sexo_id = me.arrayProductorT[0]['sexo_id'];
+                    me.fechaNacimiento = me.arrayProductorT[0]['fechaNacimiento'];
+                    me.zona_id = me.arrayProductorT[0]['zona_id'];
+                    me.vereda_id = me.arrayProductorT[0]['vereda_id'];
+                    me.vivienda_id = me.arrayProductorT[0]['vivienda_id'];
+                    me.tipovivienda_id = me.arrayProductorT[0]['tipovivienda_id'];
+                    me.escolaridad_id = me.arrayProductorT[0]['escolaridad_id'];
+                    me.carnetSalud = me.arrayProductorT[0]['carnetSalud'];
+                    me.discapacitado = me.arrayProductorT[0]['discapacitado'];
+                    me.personasAcargo = me.arrayProductorT[0]['personasAcargo'];
+                    me.desplazado = me.arrayProductorT[0]['desplazado'];
+                    me.asociacion_id = me.arrayProductorT[0]['asociacion_id'];                   
+                    me.programaEstado_id = me.arrayProductorT[0]['programaEstado_id'];                   
+                    me.asistencia = me.arrayProductorT[0]['asistencia'];                   
+                    me.entidad = me.arrayProductorT[0]['entidad']; 
+                    me.capacitacion = me.arrayProductorT[0]['capacitacion'];                   
+                    me.temas = me.arrayProductorT[0]['temas'];
+                    me.NombreP1 = me.arrayProductorT[0]['NombreP1'];
+                    me.parentesco1 =me.arrayProductorT[0]['parentesco1'];
+                    me.ccP1 =me.arrayProductorT[0]['ccP1'];
+                    me.fechaNacimientoP1 =me.arrayProductorT[0]['fechaNacimientoP1'];
+                    me.escolaridad_idP1 =me.arrayProductorT[0]['escolaridad_idP1'];
 
-                    me.productor = arrayProductorT[0]['nombre_persona'];
-                    me.linea=arrayProductorT[0]['nombre_linea'];
-                    me.lugarVenta=arrayProductorT[0]['nombre_lugarVenta'];
-                    me.estado=arrayProductorT[0]['nombre_estadoVenta'];
-                    me.totalVenta=arrayProductorT[0]['totalVenta'];
-                    me.totalKilos=arrayProductorT[0]['totalKilos'];
-                    me.fechaVenta=arrayProductorT[0]['fechaVenta'];
-                    me.totalDonacion=arrayProductorT[0]['totalDonacion'];
-                    me.totalTransporte=arrayProductorT[0]['totalTransporte'];
-                    me.totalAsohof=arrayProductorT[0]['totalAsohof'];
-                    me.totalCuatroXmil=arrayProductorT[0]['totalCuatroXmil'];
+                    me.NombreP2 = me.arrayProductorT[0]['NombreP2'];
+                    me.parentesco2 =me.arrayProductorT[0]['parentesco2'];
+                    me.ccP2 =me.arrayProductorT[0]['ccP2'];
+                    me.fechaNacimientoP2 =me.arrayProductorT[0]['fechaNacimientoP2'];
+                    me.escolaridad_idP2 =me.arrayProductorT[0]['escolaridad_idP2'];
 
+                    me.NombreP3 = me.arrayProductorT[0]['NombreP3'];
+                    me.parentesco3 =me.arrayProductorT[0]['parentesco3'];
+                    me.ccP3 =me.arrayProductorT[0]['ccP3'];
+                    me.fechaNacimientoP3 =me.arrayProductorT[0]['fechaNacimientoP3'];
+                    me.escolaridad_idP3 =me.arrayProductorT[0]['escolaridad_idP3'];
+
+                    me.NombreP4 = me.arrayProductorT[0]['NombreP4'];
+                    me.parentesco4 =me.arrayProductorT[0]['parentesco4'];
+                    me.ccP4 =me.arrayProductorT[0]['ccP4'];
+                    me.fechaNacimientoP4 =me.arrayProductorT[0]['fechaNacimientoP4'];
+                    me.escolaridad_idP4 =me.arrayProductorT[0]['escolaridad_idP4'];
+
+                    me.NombreP5 = me.arrayProductorT[0]['NombreP5'];
+                    me.parentesco5 =me.arrayProductorT[0]['parentesco5'];
+                    me.ccP5 =me.arrayProductorT[0]['ccP5'];
+                    me.fechaNacimientoP5 =me.arrayProductorT[0]['fechaNacimientoP5'];
+                    me.escolaridad_idP5 =me.arrayProductorT[0]['escolaridad_idP5'];
+
+                    me.listado=2;
                 })
                 .catch(function (error) {
                     console.log(error);

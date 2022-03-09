@@ -22,12 +22,12 @@ class CosechaCultivoController extends Controller
             ->join('fermentacions','cosechacultivos.fermentacion_id','=','fermentacions.id')
             ->join('lugarventas','cosechacultivos.lugarVenta_id','=','lugarventas.id')
             ->select('cosechacultivos.id','cosechacultivos.productor_id','cosechacultivos.finca_id','cosechacultivos.frecuencia',
-            'cosechacultivos.frescoTotal','cosechacultivos.secoTotal','cosechacultivos.beneficio','cosechacultivos.fermentacion_id',
+            'cosechacultivos.frescoTotal','cosechacultivos.secoTotal','cosechacultivos.beneficio','cosechacultivos.fermentacion_id','cosechacultivos.secado',
             'cosechacultivos.frescoTotalMes','cosechacultivos.secoTotalMes','cosechacultivos.lugarVenta_id',
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'opcions.nombre as opcion_benefico','fermentacions.nombre as nombre_fermentacion',
             'lugarventas.nombre as nombre_lugarVenta')
-            ->orderBy('cosechacultivos.id','desc')->paginate(3);
+            ->orderBy('cosechacultivos.id','desc')->paginate(10);
         }
         else{
             $cosechas= CosechaCultivo::join('componentesocialproductors','cosechacultivos.productor_id','=','componentesocialproductors.id')
@@ -37,13 +37,13 @@ class CosechaCultivoController extends Controller
             ->join('fermentacions','cosechacultivos.fermentacion_id','=','fermentacions.id')
             ->join('lugarventas','cosechacultivos.lugarVenta_id','=','lugarventas.id')
             ->select('cosechacultivos.id','cosechacultivos.productor_id','cosechacultivos.finca_id','cosechacultivos.frecuencia',
-            'cosechacultivos.frescoTotal','cosechacultivos.secoTotal','cosechacultivos.beneficio','cosechacultivos.fermentacion_id',
+            'cosechacultivos.frescoTotal','cosechacultivos.secoTotal','cosechacultivos.beneficio','cosechacultivos.fermentacion_id','cosechacultivos.secado',
             'cosechacultivos.frescoTotalMes','cosechacultivos.secoTotalMes','cosechacultivos.lugarVenta_id',
             'personas.nombre as nombre_persona','fincascoms.nombre as nombre_finca',
             'opcions.nombre as opcion_benefico','fermentacions.nombre as nombre_fermentacion',
             'lugarventas.nombre as nombre_lugarVenta')
             ->where('cosechacultivos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('cosechacultivos.id', 'desc')->paginate(3);
+            ->orderBy('cosechacultivos.id', 'desc')->paginate(10);
         }
         return [
             'pagination' => [
@@ -70,6 +70,7 @@ class CosechaCultivoController extends Controller
         $cosecha->secoTotal = $request->secoTotal;
         $cosecha->beneficio = $request->beneficio;
         $cosecha->fermentacion_id = $request->fermentacion_id;
+        $cosecha->secado = $request->secado;
         $cosecha->frescoTotalMes = $request->frescoTotalMes;
         $cosecha->secoTotalMes = $request->secoTotalMes;
         $cosecha->lugarVenta_id = $request->lugarVenta_id;
@@ -91,6 +92,7 @@ class CosechaCultivoController extends Controller
         $cosecha->secoTotal = $request->secoTotal;
         $cosecha->beneficio = $request->beneficio;
         $cosecha->fermentacion_id = $request->fermentacion_id;
+        $cosecha->secado = $request->secado;
         $cosecha->frescoTotalMes = $request->frescoTotalMes;
         $cosecha->secoTotalMes = $request->secoTotalMes;
         $cosecha->lugarVenta_id = $request->lugarVenta_id;
