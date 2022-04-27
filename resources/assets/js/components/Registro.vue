@@ -38,9 +38,8 @@
                                     <th>Numero documento</th>
                                     <th>Telefono</th>
                                     <th>Correo electronico</th>
-                                    <th>Usuario</th>
-                                    <th>Rol</th>
-                                    <th>Estado</th>
+                                    <th>Zona</th>
+                                    <th>Socio</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,32 +48,14 @@
                                         <button type="button" @click="abrirModal('persona','actualizar',persona)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
-                                        <template v-if="persona.condicion">
-                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(persona.id)">
-                                                <i class="icon-trash"></i>
-                                            </button>
-                                        </template>
-                                        <template v-else>
-                                            <button type="button" class="btn btn-info btn-sm" @click="activarUsuario(persona.id)">
-                                                <i class="icon-check"></i>
-                                            </button>
-                                        </template>
                                     </td>
                                     <td v-text="persona.nombre"></td>
                                     <td v-text="arrayTipoId[persona.tipo_id-1].nombre"></td>
                                     <td v-text="persona.num_documento"></td>
                                     <td v-text="persona.telefono"></td>
                                     <td v-text="persona.email"></td>
-                                    <td v-text="persona.usuario"></td>
-                                    <td v-text="persona.rol"></td>
-                                    <td>
-                                        <div v-if="persona.condicion">
-                                            <span class="badge badge-success">Activo</span>
-                                        </div>
-                                        <div v-else>
-                                            <span class="badge badge-danger">Desactivado</span>
-                                        </div>                                        
-                                    </td>
+                                    <td v-text="persona.nombre_zona"></td>
+                                    <td v-text="persona.opcion_socio"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -258,7 +239,7 @@
             listarPersona(page,buscar,criterio){
                 this.selectTipoId();
                 let me =this;
-                var url ='user?page='+page + '&buscar='+buscar+'&criterio='+criterio;
+                var url ='registro?page='+page + '&buscar='+buscar+'&criterio='+criterio;
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arraypersona= respuesta.personas.data;
@@ -347,16 +328,15 @@
                 return;
             }
             let me=this;
-            axios.put('user/actualizar',{
+            axios.put('registro/actualizar',{
                 'nombre':this.nombre,
                 'tipo_id':this.tipo_id,
                 'num_documento':this.num_documento,
                 'telefono':this.telefono,
                 'direccion':this.direccion,
                 'email':this.email,
-                'usuario':this.usuario,
-                'password':this.password,
-                'idrol':this.idrol, 
+                'zona_id':this.zona_id,
+                'socio':this.accionista,
                 'id':this.persona_id
             }).then(function (response) {
                     me.cerrarModal();
@@ -469,9 +449,8 @@
                 this.telefono = '';
                 this.direccion='';
                 this.email = '';
-                this.usuario='';
-                this.password='';
-                this.idrol=0;
+                this.zona_id=0;
+                this.accionista=0;
 		        this.errorpersona=0;
         },
             abrirModal(modelo,accion,data = []){
@@ -489,9 +468,8 @@
                         this.telefono = ''; 
                         this.direccion='';
                         this.email = '';
-                        this.usuario='';
-                        this.password='';
-                        this.idrol=0;
+                        this.zona_id=0;
+                        this.accionista=0;
                         this.tipoAccion=1;
                         break;
                     }    
@@ -507,9 +485,8 @@
                         this.telefono = data['telefono'];
                         this.direccion=data['direccion'];
                         this.email = data['email'];
-                        this.usuario = data['usuario'];
-                        this.password=data['password'];
-                        this.idrol=data['idrol'];
+                        this.zona_id=data['zona_id'];
+                        this.accionista=data['socio'];
                         break;
                     }       
                 }

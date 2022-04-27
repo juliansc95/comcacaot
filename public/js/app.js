@@ -46484,25 +46484,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -46571,7 +46552,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         listarPersona: function listarPersona(page, buscar, criterio) {
             this.selectTipoId();
             var me = this;
-            var url = 'user?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            var url = 'registro?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arraypersona = respuesta.personas.data;
@@ -46653,16 +46634,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
             var me = this;
-            axios.put('user/actualizar', {
+            axios.put('registro/actualizar', {
                 'nombre': this.nombre,
                 'tipo_id': this.tipo_id,
                 'num_documento': this.num_documento,
                 'telefono': this.telefono,
                 'direccion': this.direccion,
                 'email': this.email,
-                'usuario': this.usuario,
-                'password': this.password,
-                'idrol': this.idrol,
+                'zona_id': this.zona_id,
+                'socio': this.accionista,
                 'id': this.persona_id
             }).then(function (response) {
                 me.cerrarModal();
@@ -46760,9 +46740,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.telefono = '';
             this.direccion = '';
             this.email = '';
-            this.usuario = '';
-            this.password = '';
-            this.idrol = 0;
+            this.zona_id = 0;
+            this.accionista = 0;
             this.errorpersona = 0;
         },
         abrirModal: function abrirModal(modelo, accion) {
@@ -46782,9 +46761,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.telefono = '';
                                     this.direccion = '';
                                     this.email = '';
-                                    this.usuario = '';
-                                    this.password = '';
-                                    this.idrol = 0;
+                                    this.zona_id = 0;
+                                    this.accionista = 0;
                                     this.tipoAccion = 1;
                                     break;
                                 }
@@ -46800,9 +46778,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.telefono = data['telefono'];
                                     this.direccion = data['direccion'];
                                     this.email = data['email'];
-                                    this.usuario = data['usuario'];
-                                    this.password = data['password'];
-                                    this.idrol = data['idrol'];
+                                    this.zona_id = data['zona_id'];
+                                    this.accionista = data['socio'];
                                     break;
                                 }
                         }
@@ -46963,61 +46940,26 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.arraypersona, function(persona) {
                     return _c("tr", { key: persona.id }, [
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-warning btn-sm",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.abrirModal(
-                                    "persona",
-                                    "actualizar",
-                                    persona
-                                  )
-                                }
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.abrirModal(
+                                  "persona",
+                                  "actualizar",
+                                  persona
+                                )
                               }
-                            },
-                            [_c("i", { staticClass: "icon-pencil" })]
-                          ),
-                          _vm._v("  \n                                "),
-                          persona.condicion
-                            ? [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-danger btn-sm",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.desactivarUsuario(persona.id)
-                                      }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "icon-trash" })]
-                                )
-                              ]
-                            : [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-info btn-sm",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.activarUsuario(persona.id)
-                                      }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "icon-check" })]
-                                )
-                              ]
-                        ],
-                        2
-                      ),
+                            }
+                          },
+                          [_c("i", { staticClass: "icon-pencil" })]
+                        ),
+                        _vm._v("  \n                            ")
+                      ]),
                       _vm._v(" "),
                       _c("td", {
                         domProps: { textContent: _vm._s(persona.nombre) }
@@ -47044,30 +46986,12 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("td", {
-                        domProps: { textContent: _vm._s(persona.usuario) }
+                        domProps: { textContent: _vm._s(persona.nombre_zona) }
                       }),
                       _vm._v(" "),
                       _c("td", {
-                        domProps: { textContent: _vm._s(persona.rol) }
-                      }),
-                      _vm._v(" "),
-                      _c("td", [
-                        persona.condicion
-                          ? _c("div", [
-                              _c(
-                                "span",
-                                { staticClass: "badge badge-success" },
-                                [_vm._v("Activo")]
-                              )
-                            ])
-                          : _c("div", [
-                              _c(
-                                "span",
-                                { staticClass: "badge badge-danger" },
-                                [_vm._v("Desactivado")]
-                              )
-                            ])
-                      ])
+                        domProps: { textContent: _vm._s(persona.opcion_socio) }
+                      })
                     ])
                   }),
                   0
@@ -47696,11 +47620,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Correo electronico")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Usuario")]),
+        _c("th", [_vm._v("Zona")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Rol")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Estado")])
+        _c("th", [_vm._v("Socio")])
       ])
     ])
   }

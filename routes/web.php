@@ -150,6 +150,8 @@ Route::group(['middleware'=>['auth']],function(){
     //Rutas registro agil
     Route::post('/registro/registrar','RegistroController@store');
     Route::get('/registro','RegistroController@index');
+    Route::put('/registro/actualizar','RegistroController@update');
+
 
 
      
