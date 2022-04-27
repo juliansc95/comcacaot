@@ -90,7 +90,16 @@ class LaborCultivoController extends Controller
         $labor->metodo = $request->metodo;
         $labor->observacionMetodo = $request->observacionMetodo;
         $labor->poda_id = $request->poda_id;
-        $labor->observacionPoda = $request->observacionPoda;
+        $podas = json_decode($request->podasC, true);//Array de detalles
+        //Recorro todos los elementos
+        foreach($podas as $poda)
+        {
+            $newpodas = new MantenimientoAreaCultivo();
+            $newpodas -> tipopoda_id = $poda['tipopoda_id'];
+            $newpodas -> laborcultivo_id = $poda['laborcultivo_id'];
+            $newpodas->save();
+        }    
+        // $labor->observacionPoda = $request->observacionPoda;
         $labor->drenaje = $request->drenaje;
         $labor->estado_id = $request->estado_id;
         $labor->fertilizacion = $request->fertilizacion;

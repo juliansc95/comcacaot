@@ -65,6 +65,9 @@
             <template v-if="menu==15">
               <backup></backup>
             </template>
+            <template v-if="menu==16">
+              <registro></registro>
+            </template>
 
           
             @elseif(Auth::user()->idrol == 2)
@@ -102,6 +105,10 @@
             <template v-if="menu==14">
               <seguimiento></seguimiento>
             </template>
+            <template v-if="menu==16">
+              <registro></registro>
+            </template>
+
             @elseif(Auth::user()->idrol == 3)
             <template v-if="menu==1">
                <finca></finca>
@@ -137,6 +144,10 @@
             <template v-if="menu==14">
               <seguimiento></seguimiento>
             </template>
+            <template v-if="menu==16">
+              <registro></registro>
+            </template>
+
             @elseif(Auth::user()->idrol == 4)
             </template>
             <template v-if="menu==8">

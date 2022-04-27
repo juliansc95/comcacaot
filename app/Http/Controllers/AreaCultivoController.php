@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\AreaCultivo;
+use App\MantenimientoAreaCultivo;
 
 class AreaCultivoController extends Controller
 {
@@ -109,7 +110,16 @@ class AreaCultivoController extends Controller
         $cultivo->variedadotros = $request->variedadotros;
         $cultivo->arbolesProduccion = $request->arbolesProduccion;
         $cultivo->estado_id = $request->estado_id;
-        $cultivo->mantenimiento_id = $request->mantenimiento_id;
+
+        $mantenimientos = json_decode($request->mantenimientosC, true);//Array de detalles
+        //Recorro todos los elementos
+        foreach($mantenimientos as $mantenimiento)
+        {
+            $newmantenimientos = new MantenimientoAreaCultivo();
+            $newmantenimientos -> manteninimiento_id = $mantenimiento['manteninimiento_id'];
+            $newmantenimientos -> areacultivo_id = $mantenimiento['areacultivo_id'];
+            $newmantenimientos->save();
+        }    
         $cultivo->save();
     }
 }

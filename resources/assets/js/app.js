@@ -23,6 +23,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
  */
 
 Vue.component('productor', require('./components/ComponenteSocialProductor.vue'));
+Vue.component('registro', require('./components/Registro.vue'));
 Vue.component('rol', require('./components/Rol.vue'));
 Vue.component('user', require('./components/User.vue'));
 Vue.component('finca', require('./components/Finca.vue'));

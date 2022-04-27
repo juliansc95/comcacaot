@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\FincaComcacaot;
+use App\ViaAccesoFinca;
 
 class FincaComcacaotController extends Controller
 {
@@ -77,7 +78,15 @@ class FincaComcacaotController extends Controller
         $finca->vereda_id = $request->vereda_id;
         $finca->zona_id = $request->zona_id;
         $finca->areaTotal = $request->areaTotal;
-        $finca->viasAcceso = $request->viasAcceso;
+        $viasAccesos = json_decode($request->vias, true);//Array de detalles
+        //Recorro todos los elementos
+        foreach($viasAccesos as $viasAcceso)
+        {
+            $newvias = new ViaAccesoFinca();
+            $newvias -> via_id = $viasAcceso['via_id'];
+            $newvias -> finca_id = $viasAcceso['finca_id'];
+            $newvias->save();
+        }    
         $finca->latitud = $request->latitud;
         $finca->longitud = $request->longitud;
         $finca->altitud = $request->altitud;

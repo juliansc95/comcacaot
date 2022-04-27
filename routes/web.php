@@ -147,7 +147,12 @@ Route::group(['middleware'=>['auth']],function(){
      Route::post('/economico/registrar','ComponenteEconomicoController@store');
      Route::put('/economico/actualizar','ComponenteEconomicoController@update');
      
+    //Rutas registro agil
+    Route::post('/registro/registrar','RegistroController@store');
+    Route::get('/registro','RegistroController@index');
 
+
+     
      //Rutas roles
      Route::get('/rol','RolController@index');
      Route::get('/rol/selectRol','RolController@selectRol');

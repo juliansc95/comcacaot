@@ -6,6 +6,9 @@
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Productores</a>
+                        <li @click="menu=16" class="nav-item">
+                                <a class="nav-link" href="#"><i class="icon-wallet"></i> Registro Rapido</a>
+                            </li>
                         <ul class="nav-dropdown-items">
                             <li @click="menu=6" class="nav-item">
                                 <a class="nav-link" href="#"><i class="icon-wallet"></i> Componente social</a>
