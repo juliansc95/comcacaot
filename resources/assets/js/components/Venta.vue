@@ -12,7 +12,20 @@
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
-                      
+                      <export-excel
+                        class   = "button btn btn-success"
+                        :data   = arrayVentaEx
+                        worksheet = "Ventas"
+                        name    = "ventass.xls">
+                        Excel
+                        </export-excel>
+                        <export-excel
+                        class   = "button btn btn-success"
+                        :data   = arrayVentaEx
+                        type="csv"
+                        name    = "ventass.xls">
+                        csv
+                    </export-excel>
                     </div>
                     <!-- Listado-->
                     <template v-if="listado==1">
@@ -459,6 +472,7 @@
                 totalParcial: 0.0,
 
                 arrayVenta : [],
+                arrayVentaEx : [],
                 arrayProductor: [],
                 arrayLugarVenta: [],
                 arrayVereda: [],
@@ -591,6 +605,17 @@
                     var respuesta= response.data;
                     me.arrayVenta = respuesta.ventas.data;
                     me.pagination= respuesta.pagination;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+             listarVentaEx(){
+                let me =this;
+                var url ='venta/excel';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayVentaEx= respuesta.ventas;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -1118,6 +1143,7 @@
             this.listarVenta(1,this.buscar,this.criterio);
             this.selectProductor();
             this.getCedula(this.productor_id);
+            this.listarVentaEx();
         }
     }
 </script>

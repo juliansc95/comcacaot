@@ -162,15 +162,11 @@
                                         <input type="number" v-model="areaTotal"  class="form-control" placeholder="">
                                     </div>
                                 </div>
-                                 <div class="form-group row">
+                                <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Vias de acceso</label>
                                     <div class="col-md-9">
-                                      <select class="form-control" v-model="viasAcceso">
-                                          <option value="Seleccione" disabled>Seleccione</option>
-                                          <option value="Rio">Rio</option>
-                                          <option value="Mar">Mar</option>
-                                          <option value="Carretera">Carretera</option>
-                                      </select>  
+                                      <multiselect class="form-control" v-model="viasAcceso_id"  placeholder="Seleccione uno o mas" label="nombre" track-by="id" :options="arrayVias" :multiple="true" :taggable="true">
+                                      </multiselect>  
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -225,6 +221,7 @@
 
 <script>
     import Datepicker from 'vuejs-datepicker';
+    import Multiselect from 'vue-multiselect';
     export default {
         data(){
             return{
@@ -238,13 +235,14 @@
                 zona_id:0,  
                 vereda_id:0,  
                 areaTotal :0,
-                viasAcceso :'Seleccione',
+                viasAcceso_id :[],
                 latitud :0,
                 longitud:0,
                 altitud :0,
                 posesion_id:0,  
                 arrayFinca: [],
-                arrayCedula:[],
+                arrayVias: [],
+                arrayCedula:[],             
                 modal: 0,
                 tituloModal : '',
                 tipoAccion:0,
@@ -372,6 +370,17 @@
                     console.log(error);
                 });
             },
+             selectVia(){
+                let me =this;
+                var url ='via/selectVia';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayVias= respuesta.viaAcceso;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
            selectVereda(id){
                 let me =this;
                 var url ='vereda/selectVeredaZona/'+id;
@@ -405,7 +414,7 @@
                 'zona_id':this.zona_id,
                 'vereda_id':this.vereda_id,
                 'areaTotal':this.areaTotal,
-                'viasAcceso':this.viasAcceso,
+                'viasAcceso_id':this.viasAcceso_id,
                 'latitud':this.latitud,
                 'longitud':this.longitud,
                 'altitud':this.altitud,
@@ -436,7 +445,7 @@
                 'zona_id':this.zona_id,
                 'vereda_id':this.vereda_id,
                 'areaTotal':this.areaTotal,
-                'viasAcceso':this.viasAcceso,
+                'viasAcceso_id':this.viasAcceso_id,
                 'latitud':this.latitud,
                 'longitud':this.longitud,
                 'altitud':this.altitud,
@@ -474,7 +483,7 @@
                 this.zona_id=0,
                 this.vereda_id=0,
                 this.areaTotal=0,
-                this.viasAcceso='Seleccione',
+                this.viasAcceso_id=[],
                 this.latitud=0,
                 this.longitud=0,
                 this.altitud=0,
@@ -498,7 +507,7 @@
                         this.municipio_id=0;
                         this.zona_id=0;
                         this.vereda_id=0;
-                        this.viasAcceso='Seleccione';    
+                        this.viasAcceso_id=[];    
                         this.areaTotal=0;
                         this.latitud=0;
                         this.longitud=0;
@@ -521,7 +530,7 @@
                         this.municipio_id=data['municipio_id'];
                         this.zona_id=data['zona_id'];
                         this.vereda_id=data['vereda_id'];
-                        this.viasAcceso=data['viasAcceso'];    
+                        this.viasAcceso_id=data['viasAcceso_id'];    
                         this.areaTotal=data['areaTotal'];
                         this.latitud=data['latitud'];
                         this.longitud=data['longitud'];
@@ -539,11 +548,13 @@
             this.selectProductor();
             this.selectPosesion();
             this.getCedula(this.productor_id);
-             
+            this.selectVia();
+
         }
         },        
         mounted() {
            this.listarFinca(1,this.buscar,this.criterio);
+
         }
     }
 </script>
@@ -574,3 +585,4 @@
     overflow-y: auto;
     }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

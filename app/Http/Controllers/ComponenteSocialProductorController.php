@@ -568,4 +568,52 @@ class ComponenteSocialProductorController extends Controller
         ->orderBy('personas.id','asc')->get();
         return['persona'=>$persona];
     }
+
+    public function excel(Request $request)
+    {       
+        $personas= ComponenteSocialProductor::join('personas','componentesocialproductors.id','=','personas.id')
+        ->join('estadocivils','componentesocialproductors.estadoCivil_id','=','estadocivils.id')
+        ->join('etnias','componentesocialproductors.etnia_id','=','etnias.id')
+        ->join('sexos','componentesocialproductors.sexo_id','=','sexos.id')
+        ->join('veredascoms','componentesocialproductors.vereda_id','=','veredascoms.id')
+        ->join('zonas','componentesocialproductors.zona_id','=','zonas.id')
+        ->join('viviendas','componentesocialproductors.vivienda_id','=','viviendas.id')
+        ->join('tipoviviendas','componentesocialproductors.tipovivienda_id','=','tipoviviendas.id')
+        ->join('gradoescolaridads','componentesocialproductors.escolaridad_id','=','gradoescolaridads.id')
+        ->join('opcions AS op1','componentesocialproductors.carnetSalud','=','op1.id')
+        ->join('opcions AS op2','componentesocialproductors.discapacitado','=','op2.id')
+        ->join('opcions AS op3','componentesocialproductors.desplazado','=','op3.id')
+        ->join('opcions AS op4','componentesocialproductors.asistencia','=','op4.id')
+        ->join('opcions AS op5','componentesocialproductors.capacitacion','=','op5.id')
+        ->join('asociacions','componentesocialproductors.asociacion_id','=','asociacions.id')
+        ->join('programaestados','componentesocialproductors.programaEstado_id','=','programaestados.id')
+        ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento','personas.telefono','personas.email',
+        'componentesocialproductors.estadoCivil_id','estadocivils.nombre as estadocivil_nombre',
+        'componentesocialproductors.etnia_id','etnias.nombre as nombre_etnia',
+        'componentesocialproductors.sexo_id','sexos.nombre as nombre_sexo',
+        'componentesocialproductors.fechaNacimiento',
+        'componentesocialproductors.vereda_id','veredascoms.nombre as nombre_vereda',
+        'componentesocialproductors.zona_id','zonas.nombre as nombre_zona',
+        'componentesocialproductors.vivienda_id','viviendas.nombre as nombre_vivienda',
+        'componentesocialproductors.tipovivienda_id','tipoviviendas.nombre as nombre_tipoVivienda',
+        'componentesocialproductors.escolaridad_id','gradoescolaridads.nombre as nombre_escolaridad',
+        'componentesocialproductors.carnetSalud','op1.nombre as opcion_salud',
+        'componentesocialproductors.discapacitado','op2.nombre as opcion_discapacitado',
+        'componentesocialproductors.personasAcargo',
+        'componentesocialproductors.desplazado','op3.nombre as opcion_desplazado',
+        'componentesocialproductors.asociacion_id','asociacions.nombre as nombre_asociacion',
+        'componentesocialproductors.programaEstado_id','programaestados.nombre as nombre_programa',
+        'componentesocialproductors.asistencia','op4.nombre as opcion_asistencia',
+        'componentesocialproductors.entidad',
+        'componentesocialproductors.capacitacion','op5.nombre as opcion_capacitacion',
+        'componentesocialproductors.temas'
+        )
+        ->orderBy('componentesocialproductors.id','desc')->get();
+            
+            return [
+                'personas' => $personas
+            ];
+       
+    }
+
 }

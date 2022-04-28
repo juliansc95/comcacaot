@@ -200,6 +200,13 @@
                                      </select>  
                                     </div>
                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">¿Por que?</label>
+                                    <div class="col-md-9">
+                                      <multiselect class="form-control" v-model="mantenimiento_id"  placeholder="Seleccione uno o mas" label="nombre" track-by="id" :options="arrayMantenimiento" :multiple="true" :taggable="true">
+                                      </multiselect>  
+                                    </div>
+                                </div>
                                 <div v-show="errorCultivo" class="form-group row div-error">
                                     <div class="text-center text-error">
                                         <div v-for="error in errorMostrarMsjCultivo" :key="error" v-text="error">
@@ -225,6 +232,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker';
+import Multiselect from 'vue-multiselect';
     export default {
         data(){
             return{
@@ -244,7 +252,7 @@ import Datepicker from 'vuejs-datepicker';
                 variedadotros :0,
                 arbolesProduccion:0,
                 estado_id:0,
-                mantenimiento_id:0,
+                mantenimiento_id:[],
                 arrayCultivo: [],
                 arrayPersonas: [],
                 modal: 0,
@@ -474,7 +482,7 @@ import Datepicker from 'vuejs-datepicker';
                 this.variedadotros=0;
                 this.arbolesProduccion=0;
                 this.estado_id=0;
-                this.mantenimiento_id=0;
+                this.mantenimiento_id=[];
 		        this.errorCultivo=0;
         },
             abrirModal(modelo,accion,data = []){
@@ -501,7 +509,7 @@ import Datepicker from 'vuejs-datepicker';
                         this.variedadotros=0;
                         this.arbolesProduccion=0;
                         this.estado_id=0;
-                        this.mantenimiento_id=0;
+                        this.mantenimiento_id=[];
                         this.tipoAccion=1;
                         break;
                     }    
@@ -572,3 +580,4 @@ import Datepicker from 'vuejs-datepicker';
     overflow-y: auto;
     }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

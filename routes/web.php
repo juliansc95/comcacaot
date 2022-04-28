@@ -55,6 +55,11 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/productor/selectProductor','ComponenteSocialProductorController@selectProductor');
      Route::get('/productor/selectProductor2','ComponenteSocialProductorController@selectProductor2');
      Route::get('/productor/getCedula/{id}','ComponenteSocialProductorController@getCedula');
+     Route::get('/productor/excel/','ComponenteSocialProductorController@excel');
+
+
+     Route::get('/via/selectVia','selectVia@ViaAccesoController');
+
 
      
      Route::get('/posesion/selectPosesion','PosesionController@selectPosesion');
@@ -96,6 +101,8 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/venta/ticket/{id}','VentaComController@pdfTicket')->name('venta_pdf');
      Route::get('/venta/listarPdf','VentaComController@listarPdf')->name('ventas_pdf');
      Route::get('/venta/listarDiario','VentaComController@listarPdfDiario')->name('ventas_dia_pdf');
+     Route::get('/venta/excel','VentaComController@excel');
+
     
 
      //Rutas Lugares de Venta
@@ -155,6 +162,8 @@ Route::group(['middleware'=>['auth']],function(){
     Route::put('/registro/actualizar','RegistroController@update');
     Route::get('/registro/selectProductor','RegistroController@selectProductor');
     Route::get('/registro/getPersona/{id}','RegistroController@getPersona');
+
+    Route::get('/via/selectVia','ViaAccesoController@selectVia');
 
 
 

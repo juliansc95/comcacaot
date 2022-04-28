@@ -236,4 +236,27 @@ class VentaComController extends Controller
         return $pdf->download('venta-'.$nombrePdf[0]->fechaVenta.'.pdf');
     }
 
+    public function excel(Request $request)
+    {       
+        $ventas = VentaCom::join('personas','ventacoms.productor_id','=','personas.id')
+        ->join('componentesocialproductors','ventacoms.productor_id','=','componentesocialproductors.id')
+        ->join('lugarventas','ventacoms.lugarVenta_id','=','lugarventas.id')
+        ->join('veredascoms','ventacoms.vereda_id','=','veredascoms.id')
+        ->join('zonas','ventacoms.zona_id','=','zonas.id')
+        ->join('estadoventas','ventacoms.estado_id','=','estadoventas.id')
+        ->select('ventacoms.id','ventacoms.productor_id','ventacoms.lugarVenta_id','ventacoms.vereda_id',
+        'ventacoms.zona_id','ventacoms.fechaVenta','ventacoms.totalKilos','ventacoms.totalKilosNetos',
+        'ventacoms.totalIncentivoXkg','ventacoms.totalIncentivo','ventacoms.totalNeto','ventacoms.estado_id',
+        'ventacoms.observaciones','personas.nombre as nombre_persona','estadoventas.nombre as nombre_estadoVenta',
+        'lugarventas.nombre as nombre_lugarVenta','veredascoms.nombre as nombre_vereda','zonas.nombre as nombre_zona'
+        )
+        ->orderBy('ventacoms.id','desc')->get();
+            
+            return [
+                'ventas' => $ventas
+            ];
+       
+    }
+
+
 }

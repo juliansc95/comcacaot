@@ -11,7 +11,11 @@ window.Vue = require('vue');
 import Vue from 'vue';
 import vSelect from 'vue-select';
 import Datepicker from 'vuejs-datepicker';
-import * as VueGoogleMaps from 'vue2-google-maps'
+import * as VueGoogleMaps from 'vue2-google-maps';
+import Multiselect from 'vue-multiselect';
+import excel from 'vue-excel-export' 
+
+ 
  
 
 
@@ -36,6 +40,7 @@ Vue.component('economico',require('./components/ProductorEconomico.vue'));
 Vue.component('categoriamora', require('./components/categoriaMora.vue'));
 Vue.component('v-select', vSelect);
 Vue.component('v-datepicker', Datepicker);
+Vue.component('multiselect', Multiselect);
 Vue.component('venta', require('./components/Venta.vue'));
 Vue.component('ventavendedor', require('./components/VentaVendedor.vue'));
 Vue.component('lugarventa', require('./components/LugarVenta.vue'));
@@ -50,4 +55,4 @@ const app = new Vue({
         menu:0
     }
 });
-
+Vue.use(excel);    

@@ -139,6 +139,13 @@
                                         </select> 
                                     </div>
                                 </div> 
+                                   <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">¿Realiza poda?</label>
+                                    <div class="col-md-9">
+                                      <multiselect class="form-control" v-model="poda_id"  placeholder="Seleccione uno o mas" label="nombre" track-by="id" :options="arrayPoda" :multiple="true" :taggable="true">
+                                      </multiselect>  
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Observacion</label>
                                     <div class="col-md-9">
@@ -274,6 +281,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker';
+import Multiselect from 'vue-multiselect';
     export default {
         data(){
             return{
@@ -283,7 +291,7 @@ import Datepicker from 'vuejs-datepicker';
                 control:0,
                 metodo :'Seleccione',
                 observacionMetodo :'',
-                poda_id :0,
+                poda_id :[],
                 observacionPoda :'',
                 drenaje :'Seleccione',
                 estado_id:0,
@@ -544,7 +552,7 @@ import Datepicker from 'vuejs-datepicker';
                 this.control=0;
                 this.metodo='Seleccione';
                 this.observacionMetodo='';
-                this.poda_id=0;
+                this.poda_id=[];
                 this.observacionPoda='';
                 this.drenaje='Seleccione';
                 this.estado_id=0;
@@ -574,7 +582,7 @@ import Datepicker from 'vuejs-datepicker';
                         this.control=0;
                         this.metodo='Seleccione';
                         this.observacionMetodo='';
-                        this.poda_id=0;
+                        this.poda_id=[];
                         this.observacionPoda='';
                         this.drenaje='Seleccione';
                         this.estado_id=0;
@@ -663,3 +671,4 @@ import Datepicker from 'vuejs-datepicker';
     overflow-y: auto;
     }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

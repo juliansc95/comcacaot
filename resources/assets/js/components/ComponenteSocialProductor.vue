@@ -12,6 +12,20 @@
                         <button type="button" @click="mostrarDetalle()" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
+                        <export-excel
+                        class   = "button btn btn-success"
+                        :data   = arrayProductorEx
+                        worksheet = "Componente Social"
+                        name    = "componenteSocial.xls">
+                        Excel
+                        </export-excel>
+                        <export-excel
+                        class   = "button btn btn-success"
+                        :data   = arrayProductorEx
+                        type="csv"
+                        name    = "componenteSocial.xls">
+                        csv
+                    </export-excel>
                       
                     </div>
                     <!-- Listado-->
@@ -954,6 +968,7 @@
                 arrayVeredaView:[],
                 arrayPersona:[],                
                 arrayDetalle : [],
+                arrayProductorEx:[],
                 listado:1,
                 modal : 0,
                 tituloModal : '',
@@ -1034,6 +1049,17 @@
                     var respuesta= response.data;
                     me.arrayProductor = respuesta.personas.data;
                     me.pagination= respuesta.pagination;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+              listarProductorEx(){
+                let me =this;
+                var url ='productor/excel';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayProductorEx= respuesta.personas;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -1888,6 +1914,7 @@
         },
         mounted() {
             this.listarProductor(1,this.buscar,this.criterio);
+            this.listarProductorEx();
         }
     }
 </script>

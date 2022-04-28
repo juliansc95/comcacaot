@@ -78,7 +78,7 @@ class FincaComcacaotController extends Controller
         $finca->vereda_id = $request->vereda_id;
         $finca->zona_id = $request->zona_id;
         $finca->areaTotal = $request->areaTotal;
-        $viasAccesos = json_decode($request->vias, true);//Array de detalles
+        $viasAccesos = json_decode($request->viasAcceso_id, true);//Array de detalles
         //Recorro todos los elementos
         foreach($viasAccesos as $viasAcceso)
         {
