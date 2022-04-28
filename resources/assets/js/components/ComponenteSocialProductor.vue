@@ -1449,6 +1449,7 @@
                     me.listarProductor(1,'','personas');
                     me.nombre='';
                     me.tipo_id=0;
+                    me.productor_id=0;
                     me.num_documento=0;
                     me.telefono=0;
                     me.email='';   
@@ -1574,6 +1575,7 @@
                 this.getPersona(this.productor_id);
                 me.nombre ='';
                 me.tipo_id = 0;
+                me.productor_id=0;
                 me.num_documento = '';
                 me.telefono = '';
                 me.email = '';

@@ -40987,6 +40987,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.listarProductor(1, '', 'personas');
                 me.nombre = '';
                 me.tipo_id = 0;
+                me.productor_id = 0;
                 me.num_documento = 0;
                 me.telefono = 0;
                 me.email = '';
@@ -41112,6 +41113,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.getPersona(this.productor_id);
             me.nombre = '';
             me.tipo_id = 0;
+            me.productor_id = 0;
             me.num_documento = '';
             me.telefono = '';
             me.email = '';
@@ -65401,9 +65403,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selectVereda(this.zona_id);
         },
         ocultarDetalle: function ocultarDetalle() {
+            var me = this;
             this.listado = 1;
             this.selectZona();
             this.selectVereda(this.zona_id);
+            me.productor_id = 0;
+            me.lugarVenta_id = 0;
+            me.vereda_id = 0;
+            me.zona_id = 0;
+            me.fechaVenta = 0;
+            me.totalKilos = 0;
+            me.totalKilosNetos = 0;
+            me.totalIncentivoXkg = 0;
+            me.totalNeto = 0;
+            me.observaciones = '';
+
+            me.categoria_id = 0;
+            me.categoria = '';
+            me.peso = 0;
+            me.humedad = 0;
+            me.fermentacion = 0;
+            me.descuentoHumedadKg = 0;
+            me.valorUnitario = 0;
+            me.subtotal = 0;
+            me.codigo = '';
+            me.arrayDetalle = [];
         },
         verVenta: function verVenta(id) {
             var me = this;

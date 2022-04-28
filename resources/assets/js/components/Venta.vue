@@ -882,9 +882,31 @@
                 this.selectVereda(this.zona_id);
             },
             ocultarDetalle(){
+                let me = this;
                 this.listado=1;
                 this.selectZona();
                 this.selectVereda(this.zona_id);
+                  me.productor_id=0;
+                    me.lugarVenta_id=0;
+                    me.vereda_id=0;
+                    me.zona_id=0;
+                    me.fechaVenta=0;
+                    me.totalKilos=0;
+                    me.totalKilosNetos=0;
+                    me.totalIncentivoXkg=0;
+                    me.totalNeto=0;
+                    me.observaciones='';
+
+                    me.categoria_id=0;
+                    me.categoria='';
+                    me.peso=0;
+                    me.humedad=0;
+                    me.fermentacion=0;
+                    me.descuentoHumedadKg=0;
+                    me.valorUnitario=0;
+                    me.subtotal=0;
+                    me.codigo='';
+                    me.arrayDetalle=[];
             },
             verVenta(id){
                 let me=this;
