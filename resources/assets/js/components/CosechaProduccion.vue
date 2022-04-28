@@ -93,6 +93,12 @@
                                       </select>  
                                     </div>
                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Numero Documento</label>
+                                    <div class="col-md-9">
+                                    <input type="text" class="form-control" v-for="cedula in arrayCedula" :key="cedula.num_documento" :value="cedula.num_documento" v-text="cedula.num_documento" disabled>  
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Finca</label>
                                     <div class="col-md-9">
@@ -238,7 +244,8 @@ import Datepicker from 'vuejs-datepicker';
                 arrayFinca : [],
                 arrayOpcion: [],
                 arrayFermentacion: [],
-                arrayLugarVenta:[]           
+                arrayLugarVenta:[],
+                arrayCedula:[]           
             }
         },
         computed:{
@@ -296,6 +303,15 @@ import Datepicker from 'vuejs-datepicker';
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayFinca= respuesta.fincas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+
+                var url2 ='productor/getCedula/'+id;    
+                axios.get(url2).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayCedula= respuesta.persona;
                 })
                 .catch(function (error) {
                     console.log(error);

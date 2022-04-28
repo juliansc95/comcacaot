@@ -40499,7 +40499,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             ccP5: 0,
             fechaNacimientoP5: '',
             escolaridad_idP5: '',
-
+            productor_id: 0,
             arrayTipoId: [],
             arrayEstadoCivil: [],
             arrayEtnia: [],
@@ -40518,7 +40518,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayProgramaEstado: [],
             arrayProductorT: [],
             arrayVeredaView: [],
-
+            arrayPersona: [],
             arrayDetalle: [],
             listado: 1,
             modal: 0,
@@ -40540,6 +40540,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             criterioA: 'nombre',
             buscarA: 'Cacao',
             arrayCategoriaMoras: [],
+            arrayProductorR: [],
             categoria_id: 0,
             categoria: '',
             codigo: 0,
@@ -40610,6 +40611,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayTipoId = respuesta.tipoIds;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        selectProductor: function selectProductor() {
+            var me = this;
+            var url = 'registro/selectProductor';
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayProductorR = respuesta.personas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getPersona: function getPersona(id) {
+            var me = this;
+            var url = 'registro/getPersona/' + id;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayPersona = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -40910,12 +40931,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var me = this;
             axios.post('productor/registrar', {
-                'nombre': this.nombre,
-                'tipo_id': this.tipo_id,
-                'num_documento': this.num_documento,
-                'direccion': this.direccion,
-                'telefono': this.telefono,
-                'email': this.email,
+                'productor_id': this.arrayPersona[0]['id'],
+                'nombre': this.arrayPersona[0]['nombre'],
+                'tipo_id': this.arrayPersona[0]['tipo_id'],
+                'num_documento': this.arrayPersona[0]['num_documento'],
+                'direccion': this.arrayPersona[0]['direccion'],
+                'telefono': this.arrayPersona[0]['telefono'],
+                'email': this.arrayPersona[0]['email'],
                 'estadoCivil_id': this.estadoCivil_id,
                 'etnia_id': this.etnia_id,
                 'sexo_id': this.sexo_id,
@@ -41020,7 +41042,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.errorProductor = 0;
             this.errorMostrarMsjProductor = [];
 
-            if (this.tipo_id == 0) this.errorMostrarMsjProductor.push("Seleccione un tipo de documento");
             if (this.estadoCivil_id == 0) this.errorMostrarMsjProductor.push("Seleccione su estado civil");
             if (this.etnia_id == 0) this.errorMostrarMsjProductor.push("Seleccione su etnia");
             if (this.sexo_id == 0) this.errorMostrarMsjProductor.push("Seleccione su sexo");
@@ -41056,6 +41077,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             me.precio = 0;
             me.arrayDetalle = [];
             this.selectTipoId();
+            this.selectProductor();
             this.selectEstadoCivil();
             this.selectEtnia();
             this.selectSexo();
@@ -41068,11 +41090,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selectProgramaEstado();
             this.selectZona();
             this.selectVereda(this.zona_id);
+            this.getPersona(this.productor_id);
         },
         ocultarDetalle: function ocultarDetalle() {
             var me = this;
             this.listado = 1;
             this.selectTipoId();
+            this.selectProductor();
             this.selectEstadoCivil();
             this.selectEtnia();
             this.selectSexo();
@@ -41085,6 +41109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selectProgramaEstado();
             this.selectZona();
             this.selectVereda(this.zona_id);
+            this.getPersona(this.productor_id);
             me.nombre = '';
             me.tipo_id = 0;
             me.num_documento = '';
@@ -41710,41 +41735,8 @@ var render = function() {
                   _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Nombre Productor")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.nombre,
-                              expression: "nombre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Nombre del productor"
-                          },
-                          domProps: { value: _vm.nombre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.nombre = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Tipo documento")
+                        _c("label", { attrs: { for: "text-input" } }, [
+                          _vm._v("Productor")
                         ]),
                         _vm._v(" "),
                         _c(
@@ -41754,25 +41746,34 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.tipo_id,
-                                expression: "tipo_id"
+                                value: _vm.productor_id,
+                                expression: "productor_id"
                               }
                             ],
                             staticClass: "form-control",
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.tipo_id = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                              click: function($event) {
+                                return _vm.getPersona(_vm.productor_id)
+                              },
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.productor_id = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  return _vm.getPersona(_vm.productor_id)
+                                }
+                              ]
                             }
                           },
                           [
@@ -41782,12 +41783,12 @@ var render = function() {
                               [_vm._v("Seleccione")]
                             ),
                             _vm._v(" "),
-                            _vm._l(_vm.arrayTipoId, function(tipoId) {
+                            _vm._l(_vm.arrayProductorR, function(productor) {
                               return _c("option", {
-                                key: tipoId.id,
+                                key: productor.id,
                                 domProps: {
-                                  value: tipoId.id,
-                                  textContent: _vm._s(tipoId.nombre)
+                                  value: productor.id,
+                                  textContent: _vm._s(productor.nombre)
                                 }
                               })
                             })
@@ -41798,91 +41799,101 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Numero Documento")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.num_documento,
-                              expression: "num_documento"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "" },
-                          domProps: { value: _vm.num_documento },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Tipo documento")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.arrayPersona, function(persona) {
+                            return _c("input", {
+                              key: persona.id,
+                              staticClass: "form-control",
+                              attrs: { type: "text", disabled: "" },
+                              domProps: {
+                                value: persona.nombre_id,
+                                textContent: _vm._s(persona.nombre_id)
                               }
-                              _vm.num_documento = $event.target.value
-                            }
-                          }
-                        })
-                      ])
+                            })
+                          })
+                        ],
+                        2
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Telefono")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.telefono,
-                              expression: "telefono"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "" },
-                          domProps: { value: _vm.telefono },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Num Documento")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.arrayPersona, function(persona) {
+                            return _c("input", {
+                              key: persona.id,
+                              staticClass: "form-control",
+                              attrs: { type: "number", disabled: "" },
+                              domProps: {
+                                value: persona.num_documento,
+                                textContent: _vm._s(persona.num_documento)
                               }
-                              _vm.telefono = $event.target.value
-                            }
-                          }
-                        })
-                      ])
+                            })
+                          })
+                        ],
+                        2
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-2" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Correo electronico ")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.email,
-                              expression: "email"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Telefono")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.arrayPersona, function(persona) {
+                            return _c("input", {
+                              key: persona.id,
+                              staticClass: "form-control",
+                              attrs: { type: "number", disabled: "" },
+                              domProps: {
+                                value: persona.telefono,
+                                textContent: _vm._s(persona.telefono)
                               }
-                              _vm.email = $event.target.value
-                            }
-                          }
-                        })
-                      ])
+                            })
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", [_vm._v("Correo electronico ")]),
+                          _vm._v(" "),
+                          _vm._l(_vm.arrayPersona, function(persona) {
+                            return _c("input", {
+                              key: persona.id,
+                              staticClass: "form-control",
+                              attrs: { type: "text", disabled: "" },
+                              domProps: {
+                                value: persona.email,
+                                textContent: _vm._s(persona.email)
+                              }
+                            })
+                          })
+                        ],
+                        2
+                      )
                     ])
                   ]),
                   _vm._v(" "),
@@ -49973,6 +49984,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -49994,6 +50011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             altitud: 0,
             posesion_id: 0,
             arrayFinca: [],
+            arrayCedula: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -50061,6 +50079,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayProductor = respuesta.personas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCedula: function getCedula(id) {
+            var me = this;
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -50256,6 +50284,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selectVereda(this.zona_id);
             this.selectProductor();
             this.selectPosesion();
+            this.getCedula(this.productor_id);
         }
     },
     mounted: function mounted() {
@@ -50658,19 +50687,28 @@ var render = function() {
                             ],
                             staticClass: "form-control",
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.productor_id = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                              click: function($event) {
+                                return _vm.getCedula(_vm.productor_id)
+                              },
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.productor_id = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  return _vm.getCedula(_vm.productor_id)
+                                }
+                              ]
                             }
                           },
                           [
@@ -50693,6 +50731,34 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Numero Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-9" },
+                        _vm._l(_vm.arrayCedula, function(cedula) {
+                          return _c("input", {
+                            key: cedula.num_documento,
+                            staticClass: "form-control",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value: cedula.num_documento,
+                              textContent: _vm._s(cedula.num_documento)
+                            }
+                          })
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -51724,6 +51790,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -51747,6 +51819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             estado_id: 0,
             mantenimiento_id: 0,
             arrayCultivo: [],
+            arrayPersonas: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -51824,6 +51897,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayFinca = respuesta.fincas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -52420,6 +52501,34 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Numero Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-9" },
+                        _vm._l(_vm.arrayCedula, function(cedula) {
+                          return _c("input", {
+                            key: cedula.num_documento,
+                            staticClass: "form-control",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value: cedula.num_documento,
+                              textContent: _vm._s(cedula.num_documento)
+                            }
+                          })
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -53561,6 +53670,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53587,6 +53702,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             tipoControlPlagas: 0,
             observacionPlaga: '',
             arrayLabor: [],
+            arrayCedula: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -53666,6 +53782,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayFinca = respuesta.fincas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -54296,6 +54420,34 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Numero Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-9" },
+                        _vm._l(_vm.arrayCedula, function(cedula) {
+                          return _c("input", {
+                            key: cedula.num_documento,
+                            staticClass: "form-control",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value: cedula.num_documento,
+                              textContent: _vm._s(cedula.num_documento)
+                            }
+                          })
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -58560,6 +58712,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -58598,7 +58756,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayFinca: [],
             arrayOpcion: [],
             arrayFermentacion: [],
-            arrayLugarVenta: []
+            arrayLugarVenta: [],
+            arrayCedula: []
         };
     },
 
@@ -58655,6 +58814,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayFinca = respuesta.fincas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -59237,6 +59404,34 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Numero Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-9" },
+                        _vm._l(_vm.arrayCedula, function(cedula) {
+                          return _c("input", {
+                            key: cedula.num_documento,
+                            staticClass: "form-control",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value: cedula.num_documento,
+                              textContent: _vm._s(cedula.num_documento)
+                            }
+                          })
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -60163,6 +60358,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -60197,7 +60398,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayProductor: [],
             arrayFinca: [],
             arrayOpcion: [],
-            arrayResiduo: []
+            arrayResiduo: [],
+            arrayCedula: []
         };
     },
 
@@ -60254,6 +60456,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayFinca = respuesta.fincas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -60795,6 +61004,34 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Numero Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-9" },
+                        _vm._l(_vm.arrayCedula, function(cedula) {
+                          return _c("input", {
+                            key: cedula.num_documento,
+                            staticClass: "form-control",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value: cedula.num_documento,
+                              textContent: _vm._s(cedula.num_documento)
+                            }
+                          })
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -61683,6 +61920,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61706,6 +61949,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             numeroAcciones: 0,
             interesadoCompra: 0,
             arrayEconomico: [],
+            arrayCedula: [],
             modal: 0,
             tituloModal: '',
             tipoAccion: 0,
@@ -61782,6 +62026,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayFinca = respuesta.fincas;
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -62382,6 +62634,34 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "number-input" }
+                        },
+                        [_vm._v("Numero Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-9" },
+                        _vm._l(_vm.arrayCedula, function(cedula) {
+                          return _c("input", {
+                            key: cedula.num_documento,
+                            staticClass: "form-control",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value: cedula.num_documento,
+                              textContent: _vm._s(cedula.num_documento)
+                            }
+                          })
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -64688,6 +64968,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -64717,6 +65001,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayVereda: [],
             arrayZona: [],
             arrayDetalle: [],
+            arrayCedula: [],
             listado: 1,
             modal: 0,
             tituloModal: '',
@@ -64847,16 +65132,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        selectProductor: function selectProductor(search, loading) {
+        selectProductor: function selectProductor() {
             var me = this;
-            loading(true);
-
-            var url = 'productor/selectProductor2?filtro=' + search;
+            var url = 'productor/selectProductor2';
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
-                q: search;
                 me.arrayProductor = respuesta.personas;
-                loading(false);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCedula: function getCedula(id) {
+            var me = this;
+            var url2 = 'productor/getCedula/' + id;
+            axios.get(url2).then(function (response) {
+                var respuesta = response.data;
+                me.arrayCedula = respuesta.persona;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -65291,6 +65582,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.listarVenta(1, this.buscar, this.criterio);
+        this.selectProductor();
+        this.getCedula(this.productor_id);
     }
 });
 
@@ -65652,30 +65945,97 @@ var render = function() {
             ? [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row border" }, [
-                    _c("div", { staticClass: "col-md-3" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Productor(*)")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.productor_id,
+                                expression: "productor_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              click: function($event) {
+                                return _vm.getCedula(_vm.productor_id)
+                              },
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.productor_id = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  return _vm.getCedula(_vm.productor_id)
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arrayProductor, function(productor) {
+                              return _c("option", {
+                                key: productor.id,
+                                domProps: {
+                                  value: productor.id,
+                                  textContent: _vm._s(productor.nombre)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
                         [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Productor(*)")
+                          _c("label", { attrs: { for: "number-input" } }, [
+                            _vm._v("Numero Documento")
                           ]),
                           _vm._v(" "),
-                          _c("v-select", {
-                            attrs: {
-                              "on-search": _vm.selectProductor,
-                              label: "nombre",
-                              options: _vm.arrayProductor,
-                              placeholder: "Buscar Productor...",
-                              onChange: _vm.getDatosProductor
-                            }
+                          _vm._l(_vm.arrayCedula, function(cedula) {
+                            return _c("input", {
+                              key: cedula.num_documento,
+                              staticClass: "form-control",
+                              attrs: { type: "text", disabled: "" },
+                              domProps: {
+                                value: cedula.num_documento,
+                                textContent: _vm._s(cedula.num_documento)
+                              }
+                            })
                           })
                         ],
-                        1
+                        2
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -65696,9 +66056,11 @@ var render = function() {
                         ],
                         1
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", [_vm._v("Zona ")]),
                         _vm._v(" "),
@@ -65761,7 +66123,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "" } }, [_vm._v("Vereda")]),
                         _vm._v(" "),

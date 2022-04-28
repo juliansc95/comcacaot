@@ -54,6 +54,8 @@ Route::group(['middleware'=>['auth']],function(){
    
      Route::get('/productor/selectProductor','ComponenteSocialProductorController@selectProductor');
      Route::get('/productor/selectProductor2','ComponenteSocialProductorController@selectProductor2');
+     Route::get('/productor/getCedula/{id}','ComponenteSocialProductorController@getCedula');
+
      
      Route::get('/posesion/selectPosesion','PosesionController@selectPosesion');
      Route::get('/linea/selectLinea','LineaController@selectLinea');
@@ -151,6 +153,10 @@ Route::group(['middleware'=>['auth']],function(){
     Route::post('/registro/registrar','RegistroController@store');
     Route::get('/registro','RegistroController@index');
     Route::put('/registro/actualizar','RegistroController@update');
+    Route::get('/registro/selectProductor','RegistroController@selectProductor');
+    Route::get('/registro/getPersona/{id}','RegistroController@getPersona');
+
+
 
 
 

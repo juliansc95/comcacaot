@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\ComponenteSocialProductor;
 use App\Persona;
 use App\User;
+use App\Registro;
 
 class ComponenteSocialProductorController extends Controller
 {
@@ -389,14 +390,17 @@ class ComponenteSocialProductorController extends Controller
         //if(!$request->ajax()) return redirect('/');
         try{
         DB::beginTransaction();
-        $persona = new Persona();
-            $persona->nombre = $request->nombre;
-            $persona->tipo_id = $request->tipo_id;
-            $persona->num_documento = $request->num_documento;
-            $persona->direccion = $request->direccion;
-            $persona->telefono = $request->telefono;
-            $persona->email = $request->email;
-            $persona->save();
+        $productor = new ComponenteSocialProductor();
+        $productor->id = $request->productor_id;
+        $persona =Persona::findorFail($productor->id);
+
+        $persona->nombre = $request->nombre;
+        $persona->tipo_id = $request->tipo_id;
+        $persona->num_documento = $request->num_documento;
+        $persona->direccion = $request->direccion;
+        $persona->telefono = $request->telefono;
+        $persona->email = $request->email;
+        $persona->save();
 
 
             $nacimiento= Carbon::parse($request->fechaNacimiento)->toDateString();
@@ -406,7 +410,6 @@ class ComponenteSocialProductorController extends Controller
             $nacimientoP4= Carbon::parse($request->fechaNacimientoP4)->toDateString();
             $nacimientoP5= Carbon::parse($request->fechaNacimientoP5)->toDateString();
 
-            $productor = new ComponenteSocialProductor();
             $productor->estadoCivil_id = $request->estadoCivil_id;
             $productor->etnia_id = $request->etnia_id;
             $productor->sexo_id = $request->sexo_id;
@@ -455,7 +458,6 @@ class ComponenteSocialProductorController extends Controller
             $productor->ccP5 = $request->ccP5;
             $productor->fechaNacimientoP5 = $nacimientoP5;
             $productor->escolaridad_idP5 = $request->escolaridad_idP5;
-            $productor->id = $persona->id;
             $productor->save();
             DB::commit();
         }catch(Exception $e){
@@ -552,12 +554,18 @@ class ComponenteSocialProductorController extends Controller
 
     public function selectProductor2(Request $request){
         if(!$request->ajax()) return redirect('/');
-        $filtro = $request->filtro;
-        $personas= ComponenteSocialProductor::join('personas','componentesocialproductors.id','=','personas.id')
-        ->where('personas.nombre', 'like', '%'. $filtro . '%')
-        ->orWhere('personas.num_documento', 'like', '%'. $filtro . '%')
-        ->select('componentesocialproductors.id','personas.nombre','personas.num_documento')
+        $personas= Registro::join('personas','registros.id','=','personas.id')
+        ->select('registros.id','personas.nombre','personas.num_documento')
         ->orderBy('personas.nombre', 'asc')->get();
         return['personas'=>$personas];
+    }
+
+    public function getCedula(Request $request){
+        //if(!$request->ajax()) return redirect('/');
+        $id=$request->id;
+        $persona= Persona::select('personas.num_documento')
+        ->where('personas.id','=',$id)
+        ->orderBy('personas.id','asc')->get();
+        return['persona'=>$persona];
     }
 }

@@ -89,20 +89,22 @@
                     <template v-else-if="listado==0">
                     <div class="card-body">
                         <div class="form-group row border">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Productor(*)</label>
-                                    <v-select
-                                        :on-search="selectProductor"
-                                        label="nombre"
-                                        :options="arrayProductor"
-                                        placeholder="Buscar Productor..."
-                                        :onChange="getDatosProductor"                                        
-                                    >
-                                    </v-select>
+                                    <select class="form-control" v-model="productor_id" @click="getCedula(productor_id)" @change="getCedula(productor_id)">
+                                            <option value="0" disabled>Seleccione</option>
+                                            <option v-for="productor in arrayProductor" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
+                                      </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="number-input">Numero Documento</label>
+                                    <input type="text" class="form-control" v-for="cedula in arrayCedula" :key="cedula.num_documento" :value="cedula.num_documento" v-text="cedula.num_documento" disabled>  
+                                </div>
+                             </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Punto de compra(*)</label>
                                     <v-select
@@ -115,7 +117,9 @@
                                     </v-select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Zona </label>
                                     <select class="form-control" v-model="zona_id" @click="selectVereda(zona_id)" @change="selectVereda(zona_id)">
@@ -124,7 +128,7 @@
                                     </select> 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Vereda</label>
                                     <select class="form-control" v-model="vereda_id">
@@ -460,6 +464,7 @@
                 arrayVereda: [],
                 arrayZona:[],
                 arrayDetalle : [],
+                arrayCedula:[],
                 listado:1,
                 modal : 0,
                 tituloModal : '',
@@ -591,20 +596,27 @@
                     console.log(error);
                 });
             },
-            selectProductor(search,loading){
-                let me=this;
-                loading(true)
-
-                var url= 'productor/selectProductor2?filtro='+search;
+            selectProductor(){
+                let me =this;
+                var url ='productor/selectProductor2';
                 axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayProductor=respuesta.personas;
-                    loading(false)
+                    var respuesta = response.data;
+                    me.arrayProductor= respuesta.personas;
                 })
                 .catch(function (error) {
                     console.log(error);
-                });
+                })
+            },
+             getCedula(id){
+                let me =this;
+                var url2 ='productor/getCedula/'+id;    
+                axios.get(url2).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayCedula= respuesta.persona;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
             },
             getDatosProductor(val1){
                 let me = this;
@@ -1082,6 +1094,8 @@
         },
         mounted() {
             this.listarVenta(1,this.buscar,this.criterio);
+            this.selectProductor();
+            this.getCedula(this.productor_id);
         }
     }
 </script>

@@ -87,36 +87,36 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">Nombre Productor</label>
-                                     <input type="text" v-model="nombre"  class="form-control" placeholder="Nombre del productor">
-                                </div>
+                            <div class="form-group">
+                            <label for="text-input">Productor</label>
+                            <select class="form-control" v-model="productor_id" @click="getPersona(productor_id)" @change="getPersona(productor_id)">
+                                    <option value="0" disabled>Seleccione</option>
+                                    <option v-for="productor in arrayProductorR" :key="productor.id" :value="productor.id" v-text="productor.nombre" ></option>
+                            </select>  
+                            </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="">Tipo documento</label>
-                                     <select class="form-control" v-model="tipo_id">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="tipoId in arrayTipoId" :key="tipoId.id" :value="tipoId.id" v-text="tipoId.nombre" ></option>
-                                      </select>  
+                                    <input type="text" class="form-control" v-for="persona in arrayPersona" :key="persona.id" :value="persona.nombre_id" v-text="persona.nombre_id" disabled>  
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="">Numero Documento</label>
-                                      <input type="number" v-model="num_documento"  class="form-control" placeholder="">
+                                    <label for="">Num Documento</label>
+                                      <input type="number" class="form-control" v-for="persona in arrayPersona" :key="persona.id" :value="persona.num_documento" v-text="persona.num_documento" disabled>  
                                 </div>
                             </div>
                              <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="">Telefono</label>
-                                       <input type="number" v-model="telefono"  class="form-control" placeholder="">
+                                    <input type="number" class="form-control" v-for="persona in arrayPersona" :key="persona.id" :value="persona.telefono" v-text="persona.telefono" disabled>  
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Correo electronico </label>
-                                    <input type="text" v-model="email" class="form-control" >
+                                    <input type="text" class="form-control" v-for="persona in arrayPersona" :key="persona.id" :value="persona.email" v-text="persona.email" disabled>              
                                 </div>
                             </div>
                         </div>
@@ -933,7 +933,7 @@
                 ccP5:0,
                 fechaNacimientoP5:'',
                 escolaridad_idP5:'',
-
+                productor_id:0,
                 arrayTipoId:[],
                 arrayEstadoCivil:[],
                 arrayEtnia:[],
@@ -952,7 +952,7 @@
                 arrayProgramaEstado:[],
                 arrayProductorT:[],
                 arrayVeredaView:[],
-                
+                arrayPersona:[],                
                 arrayDetalle : [],
                 listado:1,
                 modal : 0,
@@ -974,6 +974,7 @@
                 criterioA:'nombre',
                 buscarA: 'Cacao',
                 arrayCategoriaMoras: [],
+                arrayProductorR: [],
                 categoria_id: 0,
                 categoria:'',
                 codigo:0,
@@ -1048,6 +1049,28 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+            selectProductor(){
+                let me =this;
+                var url ='registro/selectProductor';
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayProductorR= respuesta.personas;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+           getPersona(id){
+                let me =this;
+                var url ='registro/getPersona/'+id;
+                axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayPersona= respuesta.persona;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
             },
              selectEstadoCivil(){
                 let me =this;
@@ -1370,12 +1393,13 @@
                 
                 let me = this;
                 axios.post('productor/registrar',{
-                    'nombre':this.nombre,
-                    'tipo_id':this.tipo_id,
-                    'num_documento' :this.num_documento,
-                    'direccion' :this.direccion,
-                    'telefono' :this.telefono,
-                    'email' :this.email,   
+                    'productor_id':this.arrayPersona[0]['id'],  
+                    'nombre':this.arrayPersona[0]['nombre'],
+                    'tipo_id':this.arrayPersona[0]['tipo_id'],
+                    'num_documento' :this.arrayPersona[0]['num_documento'],
+                    'direccion' :this.arrayPersona[0]['direccion'],
+                    'telefono' :this.arrayPersona[0]['telefono'],
+                    'email' :this.arrayPersona[0]['email'], 
                     'estadoCivil_id':this.estadoCivil_id,
                     'etnia_id':this.etnia_id,
                     'sexo_id':this.sexo_id,
@@ -1480,7 +1504,6 @@
                 this.errorProductor=0;
                 this.errorMostrarMsjProductor =[];
 
-                if (this.tipo_id==0) this.errorMostrarMsjProductor.push("Seleccione un tipo de documento");
                 if (this.estadoCivil_id==0) this.errorMostrarMsjProductor.push("Seleccione su estado civil");
                 if (this.etnia_id==0) this.errorMostrarMsjProductor.push("Seleccione su etnia");
                 if (this.sexo_id==0) this.errorMostrarMsjProductor.push("Seleccione su sexo");
@@ -1516,6 +1539,7 @@
                 me.precio=0;
                 me.arrayDetalle=[];
                 this.selectTipoId();
+                this.selectProductor();
                 this.selectEstadoCivil();
                 this.selectEtnia();
                 this.selectSexo();
@@ -1528,11 +1552,13 @@
                 this.selectProgramaEstado();
                 this.selectZona();
                 this.selectVereda(this.zona_id);
+                this.getPersona(this.productor_id);
             },
             ocultarDetalle(){
                 let me=this;
                 this.listado=1;
                 this.selectTipoId();
+                this.selectProductor();
                 this.selectEstadoCivil();
                 this.selectEtnia();
                 this.selectSexo();
@@ -1545,6 +1571,7 @@
                 this.selectProgramaEstado();
                 this.selectZona();
                 this.selectVereda(this.zona_id);
+                this.getPersona(this.productor_id);
                 me.nombre ='';
                 me.tipo_id = 0;
                 me.num_documento = '';

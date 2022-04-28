@@ -96,10 +96,16 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Productor</label>
                                     <div class="col-md-9">
-                                      <select class="form-control" v-model="productor_id">
+                                      <select class="form-control" v-model="productor_id" @click="getCedula(productor_id)" @change="getCedula(productor_id)">
                                             <option value="0" disabled>Seleccione</option>
                                             <option v-for="productor_id in arrayProductor" :key="productor_id.id" :value="productor_id.id" v-text="productor_id.nombre" ></option>
                                       </select>  
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="number-input">Numero Documento</label>
+                                    <div class="col-md-9">
+                                    <input type="text" class="form-control" v-for="cedula in arrayCedula" :key="cedula.num_documento" :value="cedula.num_documento" v-text="cedula.num_documento" disabled>  
                                     </div>
                                 </div>
                                  <div class="form-group row">
@@ -238,6 +244,7 @@
                 altitud :0,
                 posesion_id:0,  
                 arrayFinca: [],
+                arrayCedula:[],
                 modal: 0,
                 tituloModal : '',
                 tipoAccion:0,
@@ -309,6 +316,17 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+             getCedula(id){
+                let me = this; 
+                var url2 ='productor/getCedula/'+id;    
+                axios.get(url2).then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayCedula= respuesta.persona;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
             },
             selectPosesion(){
                 let me =this;
@@ -520,6 +538,7 @@
             this.selectVereda(this.zona_id);
             this.selectProductor();
             this.selectPosesion();
+            this.getCedula(this.productor_id);
              
         }
         },        

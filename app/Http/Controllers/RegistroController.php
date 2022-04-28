@@ -110,6 +110,26 @@ class RegistroController extends Controller
         ];
     }
 
+    public function selectProductor(Request $request){
+        //if(!$request->ajax()) return redirect('/');
+        $personas= Registro::join('personas','registros.id','=','personas.id')
+        ->select('registros.id','personas.nombre')
+        ->where('registros.socio','=','1')
+        ->orderBy('registros.id','asc')->get();
+        return['personas'=>$personas];
+    }
+
+    public function getPersona(Request $request){
+        //if(!$request->ajax()) return redirect('/');
+        $id=$request->id;
+        $persona= Persona::join('tipoids','personas.tipo_id','=','tipoids.id')
+        ->select('personas.id','personas.nombre','personas.tipo_id','personas.num_documento','personas.direccion',
+        'personas.telefono','personas.email','tipoids.nombre as nombre_id')
+        ->where('personas.id','=',$id)
+        ->orderBy('personas.id','asc')->get();
+        return['persona'=>$persona];
+    }
+
 
    
 }
