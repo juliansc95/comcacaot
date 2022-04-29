@@ -78,20 +78,20 @@ class FincaComcacaotController extends Controller
         $finca->vereda_id = $request->vereda_id;
         $finca->zona_id = $request->zona_id;
         $finca->areaTotal = $request->areaTotal;
-        $viasAccesos = json_decode($request->viasAcceso_id, true);//Array de detalles
-        //Recorro todos los elementos
-        foreach($viasAccesos as $viasAcceso)
-        {
-            $newvias = new ViaAccesoFinca();
-            $newvias -> via_id = $viasAcceso['via_id'];
-            $newvias -> finca_id = $viasAcceso['finca_id'];
-            $newvias->save();
-        }    
         $finca->latitud = $request->latitud;
         $finca->longitud = $request->longitud;
         $finca->altitud = $request->altitud;
         $finca->posesion_id = $request->posesion_id;
+        $finca->viasAcceso = "";
         $finca->save();
+        $viasAccesos = json_decode($request->viasAcceso_id, true);//Array de detalles
+        foreach($viasAccesos as $viasAcceso)
+        {
+            $newvias = new ViaAccesoFinca();
+            $newvias -> via_id = $viasAcceso;
+            $newvias -> finca_id = $finca->id;
+            $newvias->save();
+        }
             DB::commit();
         }catch(Exception $e){
             DB::rollback();

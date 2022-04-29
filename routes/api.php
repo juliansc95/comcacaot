@@ -34,7 +34,7 @@ Route::group([
 
 Route::get('/app/version', function () {
     return [
-        "version" => '1.1',
+        "version" => '1.8',
         "url" =>  "https://comcacaot.com/src/comcacaot.apk"
     ];
 });

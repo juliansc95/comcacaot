@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\LaborCultivo;
+use App\TiposPodaLaborCultivo;
 
 class LaborCultivoController extends Controller
 {
@@ -89,16 +90,7 @@ class LaborCultivoController extends Controller
         $labor->control = $request->control;
         $labor->metodo = $request->metodo;
         $labor->observacionMetodo = $request->observacionMetodo;
-        $labor->poda_id = $request->poda_id;
-        $podas = json_decode($request->podasC, true);//Array de detalles
-        //Recorro todos los elementos
-        foreach($podas as $poda)
-        {
-            $newpodas = new MantenimientoAreaCultivo();
-            $newpodas -> tipopoda_id = $poda['tipopoda_id'];
-            $newpodas -> laborcultivo_id = $poda['laborcultivo_id'];
-            $newpodas->save();
-        }    
+        //$labor->poda_id = $request->poda_id;
         // $labor->observacionPoda = $request->observacionPoda;
         $labor->drenaje = $request->drenaje;
         $labor->estado_id = $request->estado_id;
@@ -113,6 +105,15 @@ class LaborCultivoController extends Controller
         $labor->tipoControlPlagas = $request->tipoControlPlagas;
         $labor->observacionPlaga = $request->observacionPlaga;
         $labor->save();
+        $podas = json_decode($request->podasC, true);//Array de detalles
+        //Recorro todos los elementos
+        foreach($podas as $poda)
+        {
+            $newpodas = new TiposPodaLaborCultivo();
+            $newpodas -> tipopoda_id = $poda;
+            $newpodas -> laborcultivo_id = $labor->id;
+            $newpodas->save();
+        }    
             DB::commit();
         }catch(Exception $e){
             DB::rollback();

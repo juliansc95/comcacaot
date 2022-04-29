@@ -26,6 +26,7 @@ class CambiosSeleccionMultiple extends Migration
             $table->increments('id');
             $table->unsignedInteger('via_id');
             $table->unsignedInteger('finca_id');
+            $table->timestamps();
         });
         Schema::table('viasaccesofincas', function (Blueprint $table) {
             $table->foreign('via_id')->references('id')->on('viasaccesos');
@@ -37,6 +38,7 @@ class CambiosSeleccionMultiple extends Migration
             $table->increments('id');
             $table->unsignedInteger('manteninimiento_id');
             $table->unsignedInteger('areacultivo_id');
+            $table->timestamps();
         });
         Schema::table('mantenimientoareacultivos', function (Blueprint $table) {
             $table->foreign('manteninimiento_id')->references('id')->on('mantenimientoplantacions');
@@ -48,6 +50,7 @@ class CambiosSeleccionMultiple extends Migration
             $table->increments('id');
             $table->unsignedInteger('tipopoda_id');
             $table->unsignedInteger('laborcultivo_id');
+            $table->timestamps();
         });
         Schema::table('tipospodalaborcultivos', function (Blueprint $table) {
             $table->foreign('tipopoda_id')->references('id')->on('tipospodas');
